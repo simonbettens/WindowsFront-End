@@ -122,6 +122,17 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Destination.cs" />
+    <Compile Include="Model\DestinationRoute.cs" />
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\ItemCategory.cs" />
+    <Compile Include="Model\ItemType.cs" />
+    <Compile Include="Model\Person.cs" />
+    <Compile Include="Model\PersonTrip.cs" />
+    <Compile Include="Model\Route.cs" />
+    <Compile Include="Model\TravelerTrip.cs" />
+    <Compile Include="Model\Trip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +164,10 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
