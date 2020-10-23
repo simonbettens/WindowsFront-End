@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace WindowsFront_end.Model
 {
-    public class Trip
+    public class Trip : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public int TripId { get; }
-        public string Name { get; set; }
+
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; RaisePropertyChanged("TripName"); }
+        }
+
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public List<Route> Routes { get; set; } = new List<Route>();
@@ -23,6 +34,12 @@ namespace WindowsFront_end.Model
 
         public Trip()
         {
+
         }
+        protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }
