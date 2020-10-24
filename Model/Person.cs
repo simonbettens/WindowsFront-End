@@ -37,7 +37,7 @@ namespace WindowsFront_end.Model
             get { return _address; }
             set { _address = value; RaisePropertyChanged("PersonAddress"); }
         }
-        public List<TravelerTrip> Trips { get; set; } = new List<TravelerTrip>();
+        public List<Trip> Trips { get; set; } = new List<Trip>();
 
         public Person(string sirName, string name, string email, string address)
         {

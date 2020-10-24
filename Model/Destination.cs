@@ -31,7 +31,7 @@ namespace WindowsFront_end.Model
             set { _address = value; RaisePropertyChanged("DestinationAddress"); }
         }
 
-        public List<DestinationRoute> Routes { get; set; } = new List<DestinationRoute>();
+        public List<Route> Routes { get; set; } = new List<Route>();
 
         public Destination(string name, string description, string address)
         {

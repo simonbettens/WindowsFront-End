@@ -33,7 +33,7 @@ namespace WindowsFront_end.Model
             get { return _itemType; }
             set { _itemType = value; RaisePropertyChanged("ItemItemType"); }
         }
-        public List<ItemCategory> Categories { get; set; } = new List<ItemCategory>();
+        public List<Category> Categories { get; set; } = new List<Category>();
 
         public Item(string name)
         {

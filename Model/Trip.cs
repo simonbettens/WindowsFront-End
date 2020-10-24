@@ -22,7 +22,7 @@ namespace WindowsFront_end.Model
         public DateTime End { get; set; }
         public List<Route> Routes { get; set; } = new List<Route>();
         public List<Item> Items { get; set; } = new List<Item>();
-        public List<TravelerTrip> Travelers { get; set; } = new List<TravelerTrip>();
+        public List<Trip> Travelers { get; set; } = new List<Trip>();
 
         public Trip(string name, DateTime start, DateTime end)
         {
