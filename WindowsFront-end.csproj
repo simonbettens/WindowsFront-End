@@ -119,6 +119,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RegistratieScherm.xaml.cs">
+      <DependentUpon>RegistratieScherm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LogInScherm.xaml.cs">
+      <DependentUpon>LogInScherm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DateFormatter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Converters\DateFormatter.cs" />
@@ -169,6 +176,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="RegistratieScherm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LogInScherm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -16,7 +16,7 @@
             <TextBox x:Name="naam" Text="Gebruikersnaam" TextWrapping="Wrap" TextAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,0,0,0" FontSize="25" />
             <TextBox x:Name="ww" Text="Wachtwoord" TextWrapping="Wrap" TextAlignment="Center"  RelativePanel.Below="naam" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Width="300" Margin="0,15,0,0" FontSize="25"/>
             <Button x:Name="btn" Style="{StaticResource AccentButtonStyle}" Content="Log In" HorizontalAlignment="Center"  RelativePanel.Below="ww"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,14,0,0" FontSize="25" Width="100" Height="48" Background="#FF060606"/>
-            
+
             <RelativePanel.Background>
                 <ImageBrush ImageSource="/Assets/Journey-background.jpeg" ></ImageBrush>
             </RelativePanel.Background>

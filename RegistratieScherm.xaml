@@ -19,7 +19,7 @@
             <TextBox x:Name="naam" Text="Email" TextWrapping="Wrap" RelativePanel.Below="adres" TextAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,15,0,0" FontSize="25" />
             <TextBox x:Name="ww" Text="Wachtwoord" TextWrapping="Wrap" TextAlignment="Center"  RelativePanel.Below="naam" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Width="300" Margin="0,15,0,0" FontSize="25"/>
             <Button x:Name="btn" Style="{StaticResource AccentButtonStyle}" Content="Registreer" HorizontalAlignment="Center"  RelativePanel.Below="ww"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,14,0,0" FontSize="25" Background="#FF060606"/>
-            <HyperlinkButton Content="Log in" RelativePanel.RightOf="btn" Click="HyperlinkButton_Click" RelativePanel.Below="ww" Margin="10,30,0,0" FontSize="20"/>
+            <HyperlinkButton Content="Log in" RelativePanel.RightOf="btn" Click="LogIn_Click" RelativePanel.Below="ww" Margin="10,30,0,0" FontSize="20"/>
             <RelativePanel.Background>
                 <ImageBrush ImageSource="/Assets/Journey-background.jpeg" ></ImageBrush>
             </RelativePanel.Background>
