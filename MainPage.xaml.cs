@@ -12,8 +12,13 @@ namespace WindowsFront_end
         public MainPage()
         {
             this.InitializeComponent();
+
         }
         private void Profile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+
+        }
+        private void Trips_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
 
         }
