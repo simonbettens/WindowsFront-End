@@ -31,9 +31,10 @@ namespace WindowsFront_end.Model
         public List<Item> Items { get; set; } = new List<Item>();
         public List<Trip> Travelers { get; set; } = new List<Trip>();
 
-        public Trip(string name, DateTime start, DateTime end)
+        public Trip(string name, string color, DateTime start, DateTime end)
         {
             Name = name;
+            Color = color;
             Start = start;
             End = end;
 

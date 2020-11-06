@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
+using WindowsFront_end.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -9,10 +10,17 @@ namespace WindowsFront_end.View
     /// </summary>
     public sealed partial class TripoverzichtPage : Page
     {
+        public TripOverzichtViewModel ViewModel { get; set; }
         public TripoverzichtPage()
         {
-            //this.InitializeComponent();
+            this.InitializeComponent();
+            ViewModel = new TripOverzichtViewModel();
+            this.DataContext = ViewModel;
         }
 
+        private void AddButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ViewModel.Add();
+        }
     }
 }

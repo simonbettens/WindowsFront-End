@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
+using WindowsFront_end.View;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -20,7 +21,7 @@ namespace WindowsFront_end
         }
         private void Trips_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            contentFrame.Navigate(typeof(TripoverzichtPage));
         }
 
         private void Members_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
