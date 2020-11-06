@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
+using WindowsFront_end.Model;
 using WindowsFront_end.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -21,6 +22,12 @@ namespace WindowsFront_end.View
         private void AddButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ViewModel.Add();
+        }
+
+        private void TripsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Trip selectedToDoList = (Trip)TripsGrid.SelectedItem;
+
         }
     }
 }
