@@ -7,8 +7,30 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="#00368f"/>
+        <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="#00368f" />
+        <SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="White"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="White"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelected" Color="White"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPointerOver" Color="White"/>
+        <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="White"/>
+    </Page.Resources>
 
-    <Grid>
+    
+        <NavigationView x:Name="nvSample" PaneTitle="Journey" Background="White" Foreground="White" >
+            <NavigationView.MenuItems>
+            <NavigationViewItem Content="Profiel" x:Name="Profile" Icon="Contact" Tapped="Profile_Tapped" Margin="0,5,0,5"></NavigationViewItem>
+            <NavigationViewItem Content="Reizen" x:Name="Trips" Icon="Directions" Tapped="Trips_Tapped" Margin="0,5,0,5"></NavigationViewItem>
+            <NavigationViewItem Content="Leden beheren" Icon="AddFriend" x:Name="Members" Tapped="Members_Tapped"  Margin="0,5,0,5"></NavigationViewItem>
+            <NavigationViewItem Content="Archief" Icon="Calendar" x:Name="Archive" Tapped="Archive_Tapped" Margin="0,5,0,5" ></NavigationViewItem>
+            </NavigationView.MenuItems>
+            <NavigationView.PaneFooter>
+                <NavigationViewItem Content="Uitloggen" Icon="Cancel" Tapped="Logout_Tapped" Margin="0,5,0,5"></NavigationViewItem>
+            </NavigationView.PaneFooter>
+            <Frame x:Name="contentFrame"/>
+        </NavigationView>
+    
 
-    </Grid>
 </Page>
