@@ -18,6 +18,13 @@ namespace WindowsFront_end.Model
             set { _name = value; RaisePropertyChanged("TripName"); }
         }
 
+        private string _color;
+        public string Color
+        {
+            get { return _color; }
+            set { _color = value; RaisePropertyChanged("TripColor"); }
+        }
+
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public List<Route> Routes { get; set; } = new List<Route>();
