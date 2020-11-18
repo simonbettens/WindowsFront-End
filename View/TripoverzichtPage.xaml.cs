@@ -21,7 +21,7 @@ namespace WindowsFront_end.View
 
         private void AddButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            ViewModel.Add();
+            Frame.Navigate(typeof(AddTripPage));
         }
 
         private void TripsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

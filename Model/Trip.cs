@@ -25,8 +25,19 @@ namespace WindowsFront_end.Model
             set { _color = value; RaisePropertyChanged("TripColor"); }
         }
 
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
+        private DateTime _start;
+        public DateTime Start
+        {
+            get { return _start; }
+            set { _start = value; RaisePropertyChanged("TripStart"); }
+        }
+
+        private DateTime _end;
+        public DateTime End
+        {
+            get { return _end; }
+            set { _end = value; RaisePropertyChanged("TripEnd"); }
+        }
         public List<Route> Routes { get; set; } = new List<Route>();
         public List<Item> Items { get; set; } = new List<Item>();
         public List<Trip> Travelers { get; set; } = new List<Trip>();

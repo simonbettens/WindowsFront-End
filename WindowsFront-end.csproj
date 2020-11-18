@@ -126,6 +126,10 @@
     </Compile>
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Destination.cs" />
+    <Compile Include="Model\DTO%27s\CategoryDTO.cs" />
+    <Compile Include="Model\DTO%27s\ItemDTO.cs" />
+    <Compile Include="Model\DTO%27s\ItemPersonDTO.cs" />
+    <Compile Include="Model\DTO%27s\TripDTO.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\ItemType.cs" />
     <Compile Include="Model\Person.cs" />
@@ -134,7 +138,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="Util\UrlUtil.cs" />
+    <Compile Include="ViewModel\AddTripViewModel.cs" />
     <Compile Include="ViewModel\TripOverzichtViewModel.cs" />
+    <Compile Include="View\AddTripPage.xaml.cs">
+      <DependentUpon>AddTripPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TripoverzichtPage.xaml.cs">
       <DependentUpon>TripoverzichtPage.xaml</DependentUpon>
     </Compile>
@@ -162,6 +170,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AddTripPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\TripoverzichtPage.xaml">
       <SubType>Designer</SubType>
