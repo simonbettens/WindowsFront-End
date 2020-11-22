@@ -15,6 +15,7 @@ namespace WindowsFront_end.View
         public TripoverzichtPage()
         {
             this.InitializeComponent();
+
             ViewModel = new TripOverzichtViewModel();
             this.DataContext = ViewModel;
         }
