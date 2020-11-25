@@ -15,7 +15,7 @@ namespace WindowsFront_end.Model
         public string Name
         {
             get { return _name; }
-            set { _name = value; RaisePropertyChanged("TripName"); }
+            set { _name = value; RaisePropertyChanged("Name"); }
         }
 
         private string _color;

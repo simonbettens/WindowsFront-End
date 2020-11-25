@@ -39,7 +39,7 @@
                     <SymbolIcon Symbol="Add"></SymbolIcon>
                 </Button>
             </StackPanel>
-            <ProgressRing x:Name="LoadingIndicator" IsActive="{Binding IsBusy}" Margin="0,10,0,0" />
+            <ProgressRing x:Name="LoadingIndicator" IsActive="{Binding IsBusy}" VerticalAlignment="Center"  Width="70" Height="70" MinWidth="70" MinHeight="70"/>
         </StackPanel>
     </ScrollViewer>
 </Page>

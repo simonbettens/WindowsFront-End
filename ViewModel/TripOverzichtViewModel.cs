@@ -10,6 +10,11 @@ using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
 {
+    /// <author>
+    /// 
+    /// </author>
+    /// <summary>
+    /// </summary>
     public class TripOverzichtViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Trip> TripList { get; set; }

@@ -28,7 +28,7 @@
 
         <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center"
                    HorizontalAlignment="Right" Margin="50" Grid.Column="0" Text="Geef de naam van de reis in:"></TextBlock>
-        <TextBox Text="{Binding Trip.Name}" x:Name="TripName"  Grid.Column="1" Grid.ColumnSpan="2" 
+        <TextBox Text="{Binding Trip.Name ,Mode=TwoWay}" x:Name="TripName"  Grid.Column="1" Grid.ColumnSpan="2" 
                  VerticalAlignment="Center" Height="30" Margin="20,0,20,0" />
 
         <!--Date pickers-->
