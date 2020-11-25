@@ -119,11 +119,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RegistratieScherm.xaml.cs">
-      <DependentUpon>RegistratieScherm.xaml</DependentUpon>
+    <Compile Include="LogIn.xaml.cs">
+      <DependentUpon>LogIn.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LogInScherm.xaml.cs">
-      <DependentUpon>LogInScherm.xaml</DependentUpon>
+    <Compile Include="Registratie.xaml.cs">
+      <DependentUpon>Registratie.xaml</DependentUpon>
     </Compile>
     <Compile Include="DateFormatter.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -160,11 +160,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="RegistratieScherm.xaml">
+    <Page Include="LogIn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LogInScherm.xaml">
+    <Page Include="Registratie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,6 +176,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
