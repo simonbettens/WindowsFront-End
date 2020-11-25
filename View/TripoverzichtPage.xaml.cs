@@ -12,10 +12,10 @@ namespace WindowsFront_end.View
     public sealed partial class TripoverzichtPage : Page
     {
         public TripOverzichtViewModel ViewModel { get; set; }
+
         public TripoverzichtPage()
         {
             this.InitializeComponent();
-
             ViewModel = new TripOverzichtViewModel();
             this.DataContext = ViewModel;
         }
