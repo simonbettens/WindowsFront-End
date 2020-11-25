@@ -49,8 +49,8 @@ namespace WindowsFront_end.View
 
         private void Save_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            AddTripViewModel.Save();
-            Frame.Navigate(typeof(TripoverzichtPage));
+            //AddTripViewModel.Save();
+            Frame.Navigate(typeof(AddRoute));
         }
 
     }

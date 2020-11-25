@@ -1,0 +1,19 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WindowsFront_end.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Custom="using:Windows.UI.Xaml.Controls.Maps"
+    x:Class="WindowsFront_end.View.AddRoute"
+    mc:Ignorable="d"
+    Background="LightBlue">
+
+    <Grid>
+        <Custom:MapControl 
+            x:Name="MapControl1"            
+            ZoomInteractionMode="GestureAndControl"
+            TiltInteractionMode="GestureAndControl"   
+            MapServiceToken="Aio33Ix2vt4lmc7JLAlRqurP9Z1uX2gAL7B5TcOPxLkEZAmf1W4qd4nsyWgDOjwN"/>
+    </Grid>
+</Page>
