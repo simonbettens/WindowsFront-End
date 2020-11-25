@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.System;
 
 namespace WindowsFront_end.Model
 {
@@ -47,7 +48,7 @@ namespace WindowsFront_end.Model
             Address = address;
         }
 
-        public Person()
+        public Person(Windows.UI.Xaml.Controls.TextBox naam, Windows.UI.Xaml.Controls.TextBox voornaam)
         {
 
         }

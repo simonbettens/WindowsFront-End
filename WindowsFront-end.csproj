@@ -119,11 +119,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RegistratieScherm.xaml.cs">
-      <DependentUpon>RegistratieScherm.xaml</DependentUpon>
+    <Compile Include="LogIn.xaml.cs">
+      <DependentUpon>LogIn.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LogInScherm.xaml.cs">
-      <DependentUpon>LogInScherm.xaml</DependentUpon>
+    <Compile Include="Registratie.xaml.cs">
+      <DependentUpon>Registratie.xaml</DependentUpon>
     </Compile>
     <Compile Include="DateFormatter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
@@ -176,11 +176,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="RegistratieScherm.xaml">
+    <Page Include="LogIn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LogInScherm.xaml">
+    <Page Include="Registratie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,6 +206,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.4.3</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
