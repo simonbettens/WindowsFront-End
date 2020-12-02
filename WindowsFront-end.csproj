@@ -148,12 +148,16 @@
     <Compile Include="Util\UrlUtil.cs" />
     <Compile Include="ViewModel\AddDestinationsViewModel.cs" />
     <Compile Include="ViewModel\AddTripViewModel.cs" />
+    <Compile Include="ViewModel\TripDetailViewModel.cs" />
     <Compile Include="ViewModel\TripOverzichtViewModel.cs" />
     <Compile Include="View\AddRoute.xaml.cs">
       <DependentUpon>AddRoute.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AddTripPage.xaml.cs">
       <DependentUpon>AddTripPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TripDetailsPage.xaml.cs">
+      <DependentUpon>TripDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TripoverzichtPage.xaml.cs">
       <DependentUpon>TripoverzichtPage.xaml</DependentUpon>
@@ -165,6 +169,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\europe.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -188,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AddTripPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TripDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

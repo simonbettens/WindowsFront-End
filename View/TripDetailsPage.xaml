@@ -1,0 +1,129 @@
+﻿<Page
+    x:Class="WindowsFront_end.View.TripDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WindowsFront_end.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:model="using:WindowsFront_end.Model"
+    mc:Ignorable="d"
+    Background="LightBlue">
+
+    <Page.Resources>
+        <DataTemplate 
+            x:Key="TodoViewTemplate" 
+            x:DataType="model:Item">
+            <StackPanel
+                Orientation="Horizontal">
+                <CheckBox>
+                    
+                </CheckBox>
+                <TextBlock 
+                    Text="{x:Bind Name}"
+                    x:Phase="1" 
+                    Margin="5"
+                   />
+                <TextBlock
+                    Text="{x:Bind Categories.Count}"
+                    x:Phase="1" 
+                    Margin="5"/>
+
+            </StackPanel>
+            
+        </DataTemplate>
+        <DataTemplate 
+            x:Key="RouteTemplate" 
+            x:DataType="model:Route">
+            <StackPanel>
+                <TextBlock 
+                    Text="{x:Bind Description}"
+                    x:Phase="1" 
+                    Margin="5">
+                    
+                </TextBlock>
+                <ListView 
+                    x:Name="Desinations"
+                    ItemTemplate="{StaticResource DestinationTemplate}"
+                    HorizontalAlignment="Left"
+                    ItemsSource="{x:Bind Destinations}"
+                    IsHitTestVisible="True">
+                </ListView>
+            </StackPanel>
+           
+        </DataTemplate>
+        <DataTemplate 
+            x:Key="DestinationTemplate" 
+            x:DataType="model:Destination">
+            <StackPanel
+                Orientation="Horizontal">
+                <TextBlock
+                    Text="{x:Bind Name}" 
+                    x:Phase="1" 
+                    Margin="5"/>
+                <AppBarSeparator />
+                <TextBlock
+                    Text="{x:Bind Description}" 
+                    x:Phase="1" 
+                    Margin="5"/>
+                <AppBarSeparator />
+                <TextBlock
+                    Text="{x:Bind Address}"
+                    x:Phase="1" 
+                    Margin="5"/>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <StackPanel>
+        
+        <Pivot
+            Title="{Binding Trip.Name, Mode=OneWay}">
+            <PivotItem Header="To-do">
+                <StackPanel
+                    Orientation="Horizontal">
+                    <ListView
+                        x:Name="ToDoList"
+                        ItemTemplate="{StaticResource TodoViewTemplate}"
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                        HorizontalAlignment="Left"
+                        ItemsSource="{Binding ToDoList}">
+                    </ListView>
+                    <ListView
+                        x:Name="ToPackList"
+                        ItemTemplate="{StaticResource TodoViewTemplate}"
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                        HorizontalAlignment="Left"
+                        ItemsSource="{Binding ToPackList}">
+
+                    </ListView>
+
+                </StackPanel>
+               
+            </PivotItem>
+            <PivotItem Header="Route">
+                <StackPanel>
+                    <ListView  
+                        x:Name="Routes"
+                        ItemTemplate="{StaticResource RouteTemplate}"
+                        BorderThickness="1"
+                        BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                        HorizontalAlignment="Left"
+                        ItemsSource="{Binding Trip.Routes}"
+                        IsItemClickEnabled="False"
+                        IsHitTestVisible="False">
+                    </ListView>
+                    <Image 
+                        Source="/Assets/europe.scale-200.png" 
+                        Height="500" Stretch="UniformToFill" 
+                        VerticalAlignment="Bottom" />
+                </StackPanel>
+            </PivotItem>
+            <PivotItem Header="Info">
+                
+            </PivotItem>
+        </Pivot>
+    </StackPanel>
+</Page>

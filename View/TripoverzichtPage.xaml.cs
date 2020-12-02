@@ -30,5 +30,11 @@ namespace WindowsFront_end.View
             Trip selectedToDoList = (Trip)TripsGrid.SelectedItem;
 
         }
+
+        private void Trip_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var l = e as ItemClickEventArgs;
+            Frame.Navigate(typeof(TripDetailsPage), l.ClickedItem);
+        }
     }
 }

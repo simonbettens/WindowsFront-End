@@ -5,5 +5,6 @@
     xmlns:local="using:WindowsFront_end"
     xmlns:muxm="using:Microsoft.UI.Xaml.Media">
     <Application.Resources>
+        <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
     </Application.Resources>
 </Application>

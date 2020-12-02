@@ -1,4 +1,5 @@
-﻿namespace WindowsFront_end.Models.DTO_s
+namespace WindowsFront_end.Models.DTO_s
+
 {
     public class ItemPersonDTO
     {

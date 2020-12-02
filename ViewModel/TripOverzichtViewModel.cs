@@ -99,7 +99,7 @@ namespace WindowsFront_end.ViewModel
         {
             TripList.Add(newTrip);
         }
-        protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
