@@ -27,9 +27,12 @@ namespace WindowsFront_end.View
         {
             base.OnNavigatedTo(e);
 
+            
+
             Trip trip = e.Parameter as Trip;
+            ViewModel.GetTripAsync(trip.TripId);
             // TESTING PURPOSES
-            var itemLijst = new List<Item>();
+            /*var itemLijst = new List<Item>();
             itemLijst.Add(new Item("item 1"));
             itemLijst[0].ItemType = ItemType.ToPack;
             itemLijst.Add(new Item("item 2"));
@@ -56,7 +59,7 @@ namespace WindowsFront_end.View
 
             trip.Items = itemLijst;
             trip.Routes.Add(route);
-            ViewModel.Trip = trip;
+            ViewModel.Trip = trip;*/
         }
     }
 }
