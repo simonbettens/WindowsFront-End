@@ -18,11 +18,11 @@
             <StackPanel Orientation="Vertical">
             <Grid Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                 <TextBlock x:Name="txtError" Visibility="{Binding GotDataNotSuccesfull, Converter={StaticResource bool2vis} }" Text="Er is iets fout gelopen bij het opvragen van de trips" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Top" SelectionHighlightColor="#FFFF0318" FocusVisualPrimaryBrush="#FFFE0505" Foreground="Red" FontWeight="Bold"/>
-                <GridView x:Name="TripsGrid"  ItemsSource="{Binding TripList}" HorizontalAlignment="Center" SelectionChanged="TripsGrid_SelectionChanged">
+                <GridView IsItemClickEnabled="True" x:Name="TripsGrid" ItemClick="Trip_Click"  ItemsSource="{Binding TripList}" HorizontalAlignment="Center">
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="20" Background="{Binding Color, Converter={StaticResource ColorConverter}}" Width="100" Height="100" CornerRadius="5,5,5,5">
-                                <TextBlock Text="{Binding Name}" Foreground="Black"  HorizontalTextAlignment="Center"  VerticalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
+                            <Grid  Margin="20" Background="{Binding Color, Converter={StaticResource ColorConverter}}" Width="100" Height="100" CornerRadius="5,5,5,5">
+                                <TextBlock  Text="{Binding Name}" Foreground="Black"  HorizontalTextAlignment="Center"  VerticalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
