@@ -50,7 +50,7 @@
         <!--Buttons-->
 
         <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Click="Cancel_Click" Content="Annuleren " HorizontalAlignment="Center" CornerRadius="5,5,5,5"/>
-        <Button IsEnabled="{Binding AreFieldValid, Mode=OneWay}" Click="Save_Click" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Content="Opslaan" HorizontalAlignment="Center" CornerRadius="5,5,5,5"/>
+        <Button IsEnabled="{Binding AreFieldsValid, Mode=OneWay}" Click="Save_Click" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Content="Opslaan" HorizontalAlignment="Center" CornerRadius="5,5,5,5"/>
 
 
     </Grid>

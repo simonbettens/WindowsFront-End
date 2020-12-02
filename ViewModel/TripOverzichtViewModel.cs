@@ -50,15 +50,15 @@ namespace WindowsFront_end.ViewModel
 
         private void GetData()
         {
-            var polen = new Trip("Polen", "#008a02", DateTime.Now, DateTime.Now.AddDays(5));
+            var polen = new Trip(1,"Polen", "#008a02", DateTime.Now, DateTime.Now.AddDays(5));
             TripList.Add(polen);
-            var frankrijk = new Trip("Frankrijk", "#d8e305", DateTime.Now, DateTime.Now.AddDays(6));
+            var frankrijk = new Trip(2,"Frankrijk", "#d8e305", DateTime.Now, DateTime.Now.AddDays(6));
             TripList.Add(frankrijk);
-            var wallonie = new Trip("Wallonie", "#e30505", DateTime.Now, DateTime.Now.AddDays(7));
+            var wallonie = new Trip(3, "Wallonie", "#e30505", DateTime.Now, DateTime.Now.AddDays(7));
             TripList.Add(wallonie);
-            var zweden = new Trip("Zweden", "#63bef7", DateTime.Now, DateTime.Now.AddDays(5));
+            var zweden = new Trip(4, "Zweden", "#63bef7", DateTime.Now, DateTime.Now.AddDays(5));
             TripList.Add(zweden);
-            var singapore = new Trip("Singapore", "#ba0ba6", DateTime.Now, DateTime.Now.AddDays(5));
+            var singapore = new Trip(5, "Singapore", "#ba0ba6", DateTime.Now, DateTime.Now.AddDays(5));
             TripList.Add(singapore);
             GotDataNotSuccesfull = false;
         }
@@ -70,7 +70,7 @@ namespace WindowsFront_end.ViewModel
             {
                 //test
                 //https://localhost:5001/api/Trip/GetAllTrips
-                json = await client.GetStringAsync(new Uri(UrlUtil.PorjectURL + "Trip/GetAllTrips"));
+                json = await client.GetStringAsync(new Uri(UrlUtil.ProjectURL + "trip"));
                 GotDataNotSuccesfull = false;
             }
             catch (Exception)

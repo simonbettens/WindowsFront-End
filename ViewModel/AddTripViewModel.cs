@@ -54,7 +54,7 @@ namespace WindowsFront_end.ViewModel
             try
             {
                 //https://localhost:5001/api/Trip/GetAllTrips
-                response = await client.PostAsync(new Uri(UrlUtil.PorjectURL + "Trip/CreateTrip"), data);
+                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + "trip"), data);
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Gelukt");

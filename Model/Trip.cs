@@ -9,7 +9,12 @@ namespace WindowsFront_end.Model
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int TripId { get; }
+        private int _tripId;
+        public int TripId
+        {
+            get { return _tripId; }
+            set { _tripId = value; RaisePropertyChanged("TripId"); }
+        }
 
         private string _name;
         public string Name
@@ -42,8 +47,9 @@ namespace WindowsFront_end.Model
         public List<Item> Items { get; set; } = new List<Item>();
         public List<Trip> Travelers { get; set; } = new List<Trip>();
 
-        public Trip(string name, string color, DateTime start, DateTime end)
+        public Trip(int tripId, string name, string color, DateTime start, DateTime end)
         {
+            TripId = tripId;
             Name = name;
             Color = color;
             Start = start;
