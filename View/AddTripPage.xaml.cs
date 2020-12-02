@@ -12,6 +12,7 @@ namespace WindowsFront_end.View
     public sealed partial class AddTripPage : Page
     {
         public AddTripViewModel AddTripViewModel { get; set; }
+
         public AddTripPage()
         {
             this.InitializeComponent();
@@ -37,7 +38,6 @@ namespace WindowsFront_end.View
         {
             AddTripViewModel.Trip.End = TripEnd.Date.DateTime;
             AddTripViewModel.CheckAreFieldValid();
-
         }
         /// <summary>
         /// Cancel en navigate back
@@ -50,6 +50,9 @@ namespace WindowsFront_end.View
         private void Save_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             AddTripViewModel.Save();
+            Frame.Navigate(typeof(TripoverzichtPage));
         }
+
     }
+
 }

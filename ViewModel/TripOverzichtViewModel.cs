@@ -10,6 +10,11 @@ using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
 {
+    /// <author>
+    /// 
+    /// </author>
+    /// <summary>
+    /// </summary>
     public class TripOverzichtViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Trip> TripList { get; set; }
@@ -85,13 +90,9 @@ namespace WindowsFront_end.ViewModel
             LoadingDone = true;
         }
 
-        public void Add()
+        public void Add(Trip newTrip)
         {
-
-
-            var test = new Trip("test", "#81fcd9", DateTime.Now, DateTime.Now.AddDays(5));
-            TripList.Add(test);
-
+            TripList.Add(newTrip);
         }
         protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {

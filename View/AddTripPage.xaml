@@ -12,11 +12,11 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -26,23 +26,23 @@
         </Grid.ColumnDefinitions>
         <!--Name trip-->
 
-        <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center"
-                   HorizontalAlignment="Right" Margin="50" Grid.Column="0" Text="Geef de naam van de reis in:"></TextBlock>
-        <TextBox Text="{Binding Trip.Name}" x:Name="TripName"  Grid.Column="1" Grid.ColumnSpan="2" 
-                 VerticalAlignment="Center" Height="30" Margin="20,0,20,0" />
+        <TextBlock Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Margin="20,0,20,0" Grid.Column="0" Text="Geef de naam van de reis in:"></TextBlock>
+        <TextBox Text="{Binding Trip.Name ,Mode=TwoWay}" x:Name="TripName"  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
+                 VerticalAlignment="Center" Height="30" Margin="67,50,20,0" />
 
         <!--Date pickers-->
 
-        <DatePicker x:Name="TripStart" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+        <DatePicker x:Name="TripStart" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                     VerticalAlignment="Center" HorizontalAlignment="Center" Header="Kies start datum " DateChanged="TripStart_DateChanged" />
-        <DatePicker x:Name="TripEnd" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" 
+        <DatePicker x:Name="TripEnd" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
                     VerticalAlignment="Center" HorizontalAlignment="Center" Header="Kies eind datum "  DateChanged="TripEnd_DateChanged"/>
 
         <!--Color picker-->
 
-        <TextBlock Text="Geef deze reis een kleur: " Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" TextAlignment="Center" 
-                   HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <ColorPicker x:Name="TripColor" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" ColorChanged="TripColor_ColorChanged"
+        <TextBlock Text="Geef deze reis een kleur: " Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" TextAlignment="Center" 
+                   HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20"/>
+        <ColorPicker x:Name="TripColor" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" ColorChanged="TripColor_ColorChanged"
                      VerticalAlignment="Center" HorizontalAlignment="Center" 
                      ColorSpectrumShape="Ring" IsMoreButtonVisible="False" IsColorSliderVisible="False" IsColorChannelTextInputVisible="False" 
                      IsHexInputVisible="False" IsAlphaEnabled="False"  IsAlphaSliderVisible="True" IsAlphaTextInputVisible="True" />
