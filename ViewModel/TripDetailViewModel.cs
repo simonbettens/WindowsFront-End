@@ -46,17 +46,20 @@ namespace WindowsFront_end.ViewModel
             set { _travelers = value; RaisePropertyChanged("Travelers"); }
         }
 
-
+        private List<Item> _toDoList;
         public List<Item> ToDoList
         {
-            get { return _trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList(); }
+            get { return _toDoList; }
+            set { _toDoList = value; RaisePropertyChanged("ToDoList"); }
         }
 
+        //return Trip != null? Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList(): null;
 
-
+        private List<Item> _toPackList;
         public List<Item> ToPackList
         {
-            get { return _trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList(); }
+            get { return _toPackList; }
+            set { _toPackList = value; RaisePropertyChanged("ToPackList"); }
         }
 
 
@@ -86,45 +89,14 @@ namespace WindowsFront_end.ViewModel
                 GotDataNotSuccesfull = true;
             }
 
-            if(!GotDataNotSuccesfull)
+            if (!GotDataNotSuccesfull)
             {
                 this.Trip = JsonConvert.DeserializeObject<Trip>(json);
-                GetItemsAsync();
+                ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
+                ToPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
             }
             IsBusy = false;
             LoadingDone = true;
-        }
-
-        public async void GetItemsAsync()
-        {
-            HttpClient client = new HttpClient();
-            var json = "";
-            try
-            {
-                json = await client.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"trip/{Trip.TripId}/item"));
-                GotDataNotSuccesfull = false;
-            }
-            catch
-            {
-                GotDataNotSuccesfull = true;
-            }
-
-            if (!GotDataNotSuccesfull)
-            {
-                var lst = JsonConvert.DeserializeObject<List<Item>>(json);
-                foreach (Item item in lst)
-                {
-                    if (item.ItemType ==  ItemType.ToDo)
-                    {
-                        this.ToDoList.Add(item);
-                    }
-                    else
-                    {
-                        this.ToPackList.Add(item);
-                    }
-                    
-                }
-            }
         }
 
     }

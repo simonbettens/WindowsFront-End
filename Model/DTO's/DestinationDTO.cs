@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WindowsFront_end.Model.DTO_s
+{
+    public static class DestinationDTO
+    {
+        public class Overview
+        {
+            public int DestinationId { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string Address { get; set; }
+
+            public Overview(Destination destination)
+            {
+                DestinationId = destination.DestinationId;
+                Name = destination.Name;
+                Description = destination.Description;
+                Address = destination.Address;
+            }
+
+        }
+
+        public class Create
+        {
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string Address { get; set; }
+        }
+
+    }
+}

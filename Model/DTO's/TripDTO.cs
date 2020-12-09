@@ -1,19 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using WindowsBackend.Models.DTO_s;
+using WindowsFront_end.Model.DTO_s;
 
 namespace WindowsBackend.Models
 {
-    public class TripDTO
+    public static class TripDTO
     {
+        public class Overview
+        {
+            public int TripId { get; set; }
+            public string Name { get; set; }
+            public string Color { get; set; }
+            public DateTime Start { get; set; }
+            public DateTime End { get; set; }
+        }
 
-        public int TripId { get; set; }
-        public string Name { get; set; }
-        public string Color { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public List<int> RouteIds { get; set; } = new List<int>();
-        public List<int> ItemIds { get; set; } = new List<int>();
-        public List<int> TravelerIds { get; set; } = new List<int>();
+        public class Create
+        {
+            public string Name { get; set; }
+            public string Color { get; set; }
+            public DateTime Start { get; set; }
+            public DateTime End { get; set; }
+            public RouteDTO.Overview Route { get; set; }
+            public List<ItemDTO.Overview> Items { get; set; } = new List<ItemDTO.Overview>();
+            public List<PersonDTO.Overview> Travelers { get; set; } = new List<PersonDTO.Overview>();
+        }
 
+        public class Detail
+        {
+            public int TripId { get; set; }
+            public string Name { get; set; }
+            public string Color { get; set; }
+            public DateTime Start { get; set; }
+            public DateTime End { get; set; }
+            public RouteDTO.Overview Route { get; set; }
+            public List<ItemDTO.Overview> Items { get; set; } = new List<ItemDTO.Overview>();
+            public List<PersonDTO.Overview> Travelers { get; set; } = new List<PersonDTO.Overview>();
+        }
     }
+
 }

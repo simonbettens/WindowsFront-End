@@ -43,9 +43,18 @@ namespace WindowsFront_end.Model
             get { return _end; }
             set { _end = value; RaisePropertyChanged("TripEnd"); }
         }
-        public List<Route> Routes { get; set; } = new List<Route>();
+        private Route _route;
+        public Route Route
+        {
+            get { return _route; }
+            set { _route = value; RaisePropertyChanged("Route"); }
+        }
+
+        
+
         public List<Item> Items { get; set; } = new List<Item>();
-        public List<Trip> Travelers { get; set; } = new List<Trip>();
+        public List<Person> Travelers { get; set; } = new List<Person>();
+        public List<string> Categories { get; set; } = new List<string>();
 
         public Trip(int tripId, string name, string color, DateTime start, DateTime end)
         {

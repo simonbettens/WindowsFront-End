@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using WindowsBackend.Models;
+using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Model;
+using WindowsFront_end.Model.DTO_s;
 using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
@@ -39,14 +41,14 @@ namespace WindowsFront_end.ViewModel
         public async void Save()
         {
             HttpClient client = new HttpClient();
-            TripDTO tripDTO = new TripDTO
+            TripDTO.Create tripDTO = new TripDTO.Create
             {
                 Name = Trip.Name,
                 Color = Trip.Color,
                 End = Trip.End,
                 Start = Trip.Start,
-                ItemIds = Trip.Items.Select(i => i.ItemId).ToList(),
-                RouteIds = Trip.Routes.Select(i => i.RoutId).ToList(),
+                Items = Trip.Items.Select(i => new ItemDTO.Overview(i)).ToList(),
+                Route = new RouteDTO.Overview(Trip.Route)
             };
             var json = JsonConvert.SerializeObject(tripDTO);
             var data = new StringContent(json, Encoding.UTF8, "application/json");

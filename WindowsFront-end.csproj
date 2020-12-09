@@ -128,10 +128,14 @@
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Destination.cs" />
     <Compile Include="Model\DTO%27s\CategoryDTO.cs" />
+    <Compile Include="Model\DTO%27s\DestinationDTO.cs" />
     <Compile Include="Model\DTO%27s\ItemDTO.cs" />
     <Compile Include="Model\DTO%27s\ItemPersonDTO.cs" />
+    <Compile Include="Model\DTO%27s\PersonDTO.cs" />
+    <Compile Include="Model\DTO%27s\RouteDTO.cs" />
     <Compile Include="Model\DTO%27s\TripDTO.cs" />
     <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\ItemPerson.cs" />
     <Compile Include="Model\ItemType.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="Model\Route.cs" />
@@ -195,6 +199,9 @@
       <Version>6.2.11</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>6.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
       <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">

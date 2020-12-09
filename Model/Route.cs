@@ -8,7 +8,7 @@ namespace WindowsFront_end.Model
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int RoutId { get; set; }
+        public int RouteId { get; set; }
 
         private string _description;
         public string Description

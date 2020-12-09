@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using WindowsBackend.Models.DTO_s;
 
 namespace WindowsFront_end.Model
 {
@@ -33,7 +34,8 @@ namespace WindowsFront_end.Model
             get { return _itemType; }
             set { _itemType = value; RaisePropertyChanged("ItemItemType"); }
         }
-        public List<Category> Categories { get; set; } = new List<Category>();
+        public List<string> Categories { get; set; } = new List<string>();
+        public List<ItemDTO.ForItemOverview> Travelers { get; set; } = new List<ItemDTO.ForItemOverview>();
 
         public Item(string name)
         {
