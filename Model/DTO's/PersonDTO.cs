@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using WindowsBackend.Models;
 using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Model;
 
@@ -88,4 +91,4 @@ namespace WindowsFront_end.Models.DTO_s
         }
 
     }
-}
+    }

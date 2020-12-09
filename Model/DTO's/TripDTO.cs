@@ -37,8 +37,6 @@ namespace WindowsFront_end.Models.DTO_s
             public List<ItemDTO.Overview> Items { get; set; } = new List<ItemDTO.Overview>();
             public List<PersonDTO.Overview> Travelers { get; set; } = new List<PersonDTO.Overview>();
         }
-
-
-
     }
+
 }

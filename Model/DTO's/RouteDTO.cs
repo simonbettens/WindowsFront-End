@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using WindowsFront_end.Model;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace WindowsFront_end.Models.DTO_s
 {
