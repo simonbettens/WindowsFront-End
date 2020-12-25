@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Windows.Devices.Geolocation;
+using Windows.Foundation;
 using Windows.Services.Maps;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -18,6 +19,7 @@ namespace WindowsFront_end.View
     public sealed partial class AddRoute : Page
     {
         public AddDestinationsViewModel ViewModel { get; set; }
+        public MapElementsLayer CurrentLayer { get; set; }
         public AddRoute()
         {
             this.InitializeComponent();
@@ -32,8 +34,7 @@ namespace WindowsFront_end.View
             var tappedGeoPosition = args.Location.Position;
             try
             {
-
-
+                DrawPoint(tappedGeoPosition);
                 Geopoint pointToReverseGeocode = new Geopoint(tappedGeoPosition);
                 result = await MapLocationFinder.FindLocationsAtAsync(pointToReverseGeocode, MapLocationDesiredAccuracy.High);
             }
@@ -70,6 +71,34 @@ namespace WindowsFront_end.View
         {
             ViewModel.SaveDestination();
             DrawRouteAsync();
+        }
+
+        private async void DrawPoint(BasicGeoposition snPosition)
+        {
+            var MyLandmarks = new List<MapElement>();
+
+            Geopoint snPoint = new Geopoint(snPosition);
+
+            var spaceNeedleIcon = new MapIcon
+            {
+                Location = snPoint,
+                NormalizedAnchorPoint = new Point(0.5, 1.0),
+                ZIndex = 0,
+                Title = "Nu geselecteerd"
+            };
+            MyLandmarks.Add(spaceNeedleIcon);
+
+            var LandmarksLayer = new MapElementsLayer
+            {
+                ZIndex = 1,
+                MapElements = MyLandmarks
+            };
+            Map.Layers.Remove(CurrentLayer);
+            Map.Layers.Add(LandmarksLayer);
+
+            Map.Center = snPoint;
+            Map.ZoomLevel = 14;
+            CurrentLayer = LandmarksLayer;
         }
 
         private async void DrawRouteAsync()
