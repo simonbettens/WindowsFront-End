@@ -8,7 +8,7 @@ namespace WindowsFront_end.Model
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int RoutId { get; set; }
+        public int RouteId { get; set; }
 
         private string _description;
         public string Description
@@ -17,7 +17,6 @@ namespace WindowsFront_end.Model
             set { _description = value; RaisePropertyChanged("RouteDescription"); }
         }
         public List<Destination> Destinations { get; set; } = new List<Destination>();
-        public Trip Trip { get; set; }
 
 
         public Route(string description)

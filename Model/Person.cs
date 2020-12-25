@@ -10,11 +10,11 @@ namespace WindowsFront_end.Model
 
         public string PersonId { get; set; }
 
-        private string _surName;
-        public string SurName
+        private string _firstName;
+        public string FirstName
         {
-            get { return _surName; }
-            set { _surName = value; RaisePropertyChanged("PersonSurName"); }
+            get { return _firstName; }
+            set { _firstName = value; RaisePropertyChanged("PersonSurName"); }
         }
 
         private string _name;
@@ -37,11 +37,12 @@ namespace WindowsFront_end.Model
             get { return _address; }
             set { _address = value; RaisePropertyChanged("PersonAddress"); }
         }
-        public List<Trip> Trips { get; set; } = new List<Trip>();
+        public List<TravelerTrip> Trips { get; set; } = new List<TravelerTrip>();
+        public List<ItemPerson> Items { get; set; } = new List<ItemPerson>();
 
         public Person(string sirName, string name, string email, string address)
         {
-            SurName = sirName;
+            FirstName = sirName;
             Name = name;
             Email = email;
             Address = address;

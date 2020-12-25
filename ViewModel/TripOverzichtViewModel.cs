@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using WindowsFront_end.Model;
-using WindowsFront_end.Util;
+using WindowsFront_end.Repository;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -65,27 +63,34 @@ namespace WindowsFront_end.ViewModel
         private async void GetDataAsync()
         {
             HttpClient client = new HttpClient();
-            var json = "";
             try
             {
                 //test
                 //https://localhost:5001/api/Trip/GetAllTrips
-                json = await client.GetStringAsync(new Uri(UrlUtil.PorjectURL + "Trip/GetAllTrips"));
+                //json = await client.GetStringAsync(new Uri(UrlUtil.PorjectURL + "Trip"));
+                var list = await TripRepository.GetAllAsync();
+                foreach (var trip in list)
+                {
+                    this.TripList.Add(trip);
+                }
+
                 GotDataNotSuccesfull = false;
             }
             catch (Exception)
             {
                 GotDataNotSuccesfull = true;
             }
+            /*
             if (!GotDataNotSuccesfull)
             {
                 ///https://localhost:44372/api/Trip/GetAllTrips
-                var lst = JsonConvert.DeserializeObject<List<Trip>>(json);
-                foreach (Trip trip in lst)
+                var lst = JsonConvert.DeserializeObject<List<TripDTO.Overview>>(json);
+                foreach (var tripdto in lst)
                 {
+                    var trip = new Trip(tripdto);
                     this.TripList.Add(trip);
                 }
-            }
+            }*/
             IsBusy = false;
             LoadingDone = true;
         }

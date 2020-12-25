@@ -10,10 +10,47 @@
     Background="LightBlue">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="mapOutput" Text="Tik op de kaart">
+
+            </TextBlock>
+            <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DestinationInMaking.Description}" Margin="25">
+
+            </TextBox>
+            <Button Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"  Content="Sla bestemming op" Click="Button_Click"></Button>
+
+        </Grid>
+
+        <ListView x:Name="FruitsList" Grid.Column="0"
+                    Grid.Row="1" ItemsSource="{Binding DestinationsList}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Address}"  Margin="0,5,0,5"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
         <Custom:MapControl 
-            x:Name="MapControl1"            
+            Grid.Column="1"
+            x:Name="Map"            
             ZoomInteractionMode="GestureAndControl"
             TiltInteractionMode="GestureAndControl"   
-            MapServiceToken="Aio33Ix2vt4lmc7JLAlRqurP9Z1uX2gAL7B5TcOPxLkEZAmf1W4qd4nsyWgDOjwN"/>
+            MapServiceToken="JgmWRYIYzmYgbMh4hvWR~OhL3ZDrSPoQeI-PDC3owow~ArOjM7tKkf3GS9Xr45_idgO58fGVP1IXePZHMNlNtDMIbe5xvEzbE9eUbY1VPr31" Grid.RowSpan="2" Grid.ColumnSpan="2" MapTapped="Map_MapTapped"/>
     </Grid>
 </Page>

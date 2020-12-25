@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using WindowsFront_end.Models.DTO_s;
 
 namespace WindowsFront_end.Model
 {
@@ -38,9 +39,10 @@ namespace WindowsFront_end.Model
             get { return _end; }
             set { _end = value; RaisePropertyChanged("TripEnd"); }
         }
-        public List<Route> Routes { get; set; } = new List<Route>();
+        public Route Route { get; set; } = new Route();
         public List<Item> Items { get; set; } = new List<Item>();
-        public List<Trip> Travelers { get; set; } = new List<Trip>();
+        public List<Category> Categories { get; set; } = new List<Category>();
+        public List<TravelerTrip> Travelers { get; set; } = new List<TravelerTrip>();
 
         public Trip(string name, string color, DateTime start, DateTime end)
         {
@@ -48,6 +50,14 @@ namespace WindowsFront_end.Model
             Color = color;
             Start = start;
             End = end;
+
+        }
+        public Trip(TripDTO.Overview dto)
+        {
+            Name = dto.Name;
+            Color = dto.Color;
+            Start = dto.Start;
+            End = dto.End;
 
         }
 

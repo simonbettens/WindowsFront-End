@@ -17,7 +17,7 @@ namespace WindowsFront_end.Model
             set { _name = value; RaisePropertyChanged("CategoryName"); }
         }
 
-        public List<Item> Items { get; set; } = new List<Item>();
+        public List<ItemCategory> Items { get; set; } = new List<ItemCategory>();
 
         public Category(string name)
         {

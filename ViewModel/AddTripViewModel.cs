@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using WindowsBackend.Models;
 using WindowsFront_end.Model;
+using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
@@ -39,14 +38,12 @@ namespace WindowsFront_end.ViewModel
         public async void Save()
         {
             HttpClient client = new HttpClient();
-            TripDTO tripDTO = new TripDTO
+            var tripDTO = new TripDTO.Create
             {
                 Name = Trip.Name,
                 Color = Trip.Color,
                 End = Trip.End,
                 Start = Trip.Start,
-                ItemIds = Trip.Items.Select(i => i.ItemId).ToList(),
-                RouteIds = Trip.Routes.Select(i => i.RoutId).ToList(),
             };
             var json = JsonConvert.SerializeObject(tripDTO);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
