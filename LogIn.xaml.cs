@@ -50,8 +50,8 @@ namespace WindowsFront_end
                 Email = email.Text,
                 Password = ww.Password
             };
-            string token = await ViewModel.LogInPerson(login);
-            if(token.Length > 10){
+            bool succes = await ViewModel.LogInPerson(login);
+            if(succes){
                 GotDataNotSuccesfull = false;
             }
 

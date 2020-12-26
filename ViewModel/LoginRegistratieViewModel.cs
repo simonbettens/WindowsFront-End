@@ -34,8 +34,8 @@ namespace WindowsFront_end.ViewModel
             {
                 var data = new StringContent(registerJson, Encoding.UTF8, "application/json");
                 //test
-                //https://localhost:5001/api/person/register
-                response = await client.PostAsync(new Uri(UrlUtil.PorjectURL + "person/register"),
+                //https://localhost:5001/person/register
+                response = await client.PostAsync(new Uri("https://localhost:5001/person/register"),
                     data);
                 if (response.IsSuccessStatusCode)
                 {
@@ -55,29 +55,35 @@ namespace WindowsFront_end.ViewModel
             return GotDataNotSuccesfull;
         }
 
-        public async Task<string> LogInPerson(LoginDTO login)
+        public async Task<bool> LogInPerson(LoginDTO login)
         {
             var loginJson = JsonConvert.SerializeObject(login);
 
             HttpClient client = new HttpClient();
             var data = new StringContent(loginJson, Encoding.UTF8, "application/json");
-            string json = "";
+            HttpResponseMessage response;
             try
             {
                 //test
-                //https://localhost:5001/api/person/login
-                var jsonstring = await client.PostAsync(new Uri(UrlUtil.PorjectURL + "person/login"),
+                //https://localhost:5001/person/login
+                response = await client.PostAsync(new Uri("https://localhost:5001/person/login"),
                    data);
 
-                json = jsonstring.ToString();
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
 
             }
             catch (Exception e)
             {
-                json = null;
                 throw new Exception(e.Message);
             }
-            return json;
         }
     }
 }
