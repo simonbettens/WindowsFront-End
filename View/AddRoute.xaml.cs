@@ -5,6 +5,7 @@ using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Services.Maps;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using WindowsFront_end.ViewModel;
@@ -42,7 +43,7 @@ namespace WindowsFront_end.View
             catch (Exception)
             {
 
-                System.Diagnostics.Debug.WriteLine("method end");
+                Debug.WriteLine("method end");
             }
 
             // If the query returns results, display the name of the town
@@ -51,13 +52,9 @@ namespace WindowsFront_end.View
             {
                 try
                 {
-                    mapOutput.Text = "town = " +
-                      result.Locations[0].Address.Town + " street = " + result.Locations[0].Address.Street + " streetnumber = " + result.Locations[0].Address.StreetNumber;
-                    var town = result.Locations[0].Address.Town;
-                    var street = result.Locations[0].Address.Street;
-                    var streetnumber = result.Locations[0].Address.StreetNumber;
-                    var address = String.Format("{0}, {1} {2}", town, street, streetnumber);
-                    ViewModel.InputLocation(tappedGeoPosition.Latitude, tappedGeoPosition.Longitude, address);
+                    var loc = result.Locations[0];
+                    mapOutput.Text = loc.Address.FormattedAddress;
+                    ViewModel.InputLocation(tappedGeoPosition.Latitude, tappedGeoPosition.Longitude, loc.Address.FormattedAddress);
 
                 }
                 catch (Exception)
@@ -68,12 +65,48 @@ namespace WindowsFront_end.View
             }
         }
 
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void GeocodeButton_Click(object sender, RoutedEventArgs e)
+        {
+            // The address or business to geocode.
+            string addressToGeocode = txbAddress.Text;
+
+            // The nearby location to use as a query hint.
+            BasicGeoposition queryHint = new BasicGeoposition();
+            queryHint.Latitude = 47.643;
+            queryHint.Longitude = -122.131;
+            Geopoint hintPoint = new Geopoint(queryHint);
+
+            // Geocode the specified address, using the specified reference point
+            // as a query hint. Return no more than 3 results.
+            MapLocationFinderResult result =
+                  await MapLocationFinder.FindLocationsAsync(
+                                    addressToGeocode,
+                                    null,
+                                    3);
+
+            // If the query returns results, display the coordinates
+            // of the first result.
+            if (result.Status == MapLocationFinderStatus.Success)
+            {
+                var loc = result.Locations[0];
+                mapOutput.Text = loc.Address.FormattedAddress;
+                ViewModel.InputLocation(loc.Point.Position.Latitude, loc.Point.Position.Longitude, loc.Address.FormattedAddress);
+
+                DrawPoint(loc.Point.Position, "Nu geselecteerd");
+            }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.SaveDestination();
             AddLine();
+            mapOutput.Text = "Geen locatie geselecteerd";
         }
-
+        /// <summary>
+        /// adds a point on the map
+        /// </summary>
+        /// <param name="snPosition">the positions where the point needs to be placed</param>
+        /// <param name="text">text for context with the marker</param>
         private void DrawPoint(BasicGeoposition snPosition, string text)
         {
             var MyLandmarks = new List<MapElement>();
@@ -98,10 +131,13 @@ namespace WindowsFront_end.View
             Map.Layers.Add(LandmarksLayer);
 
             Map.Center = snPoint;
-            Map.ZoomLevel = 14;
+            Map.ZoomLevel = 20;
+
             CurrentPOI = LandmarksLayer;
         }
-
+        /// <summary>
+        /// adds a polyline on the map
+        /// </summary>
         private void AddLine()
         {
             var size = ViewModel.DestinationsList.Count;
@@ -116,6 +152,7 @@ namespace WindowsFront_end.View
 
             }
             Geopath path = new Geopath(coords);
+
 
             MapPolyline polygon = new MapPolyline();
             polygon.StrokeColor = Colors.Blue;
@@ -136,8 +173,12 @@ namespace WindowsFront_end.View
             }
             Map.Layers.Add(LinesLayer);
             this.CurrentLine = LinesLayer;
-        }
 
+
+        }
+        /// <summary>
+        /// method for drawning a route on the map
+        /// </summary>
         private async void DrawRouteAsync()
         {
             var size = ViewModel.DestinationsList.Count;

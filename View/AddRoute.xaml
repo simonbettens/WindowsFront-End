@@ -11,46 +11,66 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0">
+
+        <!--start grid inside grid-->
+        <Grid Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="mapOutput" Text="Tik op de kaart">
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="mapOutput" Text="Geen locatie geselecteerd" FontWeight="Bold" FontSize="18">
 
             </TextBlock>
-            <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DestinationInMaking.Description}" Margin="25">
 
+            <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DestinationInMaking.Description}" Margin="10,10,10,15" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
             </TextBox>
-            <Button Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"  Content="Sla bestemming op" Click="Button_Click"></Button>
-
+            <Button Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,15" Content="Sla bestemming op" Click="Save_Click"></Button>
+            <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Black" 
+            BorderThickness="0,0,0,1" Background="{x:Null}" />
         </Grid>
-
-        <ListView x:Name="FruitsList" Grid.Column="0"
-                    Grid.Row="1" ItemsSource="{Binding DestinationsList}">
+        
+        <!-- end grid inside grid-->
+        <ListView x:Name="FruitsList" Grid.Column="0" Grid.Row="3" BorderBrush="DarkBlue" Background="Azure" Margin="25" BorderThickness="2"
+                     ItemsSource="{Binding DestinationsList}" Grid.RowSpan="2">
+            <ListView.Resources>
+                <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="Aquamarine" />
+                <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="Aquamarine" />
+            </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Address}"  Margin="0,5,0,5"/>
+                    <TextBlock Text="{Binding Address}" Foreground="Black"  Margin="0,5,0,5"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        
+        <Border Grid.Column="1" Grid.RowSpan="4" BorderBrush="Black" 
+            BorderThickness="1,0,0,0" Background="{x:Null}" />
+        <StackPanel Grid.Column="1" Orientation="Vertical" Width="Auto">
+            <TextBlock Margin="0,10,0,0" Text="Zoek op een address of klik op de kaart" HorizontalAlignment="Center"></TextBlock>
+            <TextBox x:Name="txbAddress" Margin="0,10,0,0" Width="500" PlaceholderText="Vul een address in"></TextBox>
+            <Button Margin="0,15,0,0" Content="Zoeken" HorizontalAlignment="Center" Click="GeocodeButton_Click" ></Button>
+        </StackPanel>
+        
         <Custom:MapControl 
             Grid.Column="1"
+            Grid.Row="1"
+            Margin="15,30,15,15"
             x:Name="Map"            
             ZoomInteractionMode="GestureAndControl"
             TiltInteractionMode="GestureAndControl"   
-            MapServiceToken="JgmWRYIYzmYgbMh4hvWR~OhL3ZDrSPoQeI-PDC3owow~ArOjM7tKkf3GS9Xr45_idgO58fGVP1IXePZHMNlNtDMIbe5xvEzbE9eUbY1VPr31" Grid.RowSpan="2" Grid.ColumnSpan="2" MapTapped="Map_MapTapped"/>
+            MapServiceToken="JgmWRYIYzmYgbMh4hvWR~OhL3ZDrSPoQeI-PDC3owow~ArOjM7tKkf3GS9Xr45_idgO58fGVP1IXePZHMNlNtDMIbe5xvEzbE9eUbY1VPr31" Grid.RowSpan="2" MapTapped="Map_MapTapped"/>
     </Grid>
 </Page>
