@@ -11,11 +11,11 @@ namespace WindowsFront_end.Model
 
         public string PersonId { get; set; }
 
-        private string _surName;
-        public string SurName
+        private string _firstName;
+        public string FirstName
         {
-            get { return _surName; }
-            set { _surName = value; RaisePropertyChanged("PersonSurName"); }
+            get { return _firstName; }
+            set { _firstName = value; RaisePropertyChanged("PersonFirstName"); }
         }
 
         private string _name;
@@ -38,14 +38,30 @@ namespace WindowsFront_end.Model
             get { return _address; }
             set { _address = value; RaisePropertyChanged("PersonAddress"); }
         }
+
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; RaisePropertyChanged("PersonPassword"); }
+        }
+
+        private string _passwordConfirm;
+        public string PasswordConfirm
+        {
+            get { return _passwordConfirm; }
+            set { _passwordConfirm = value; RaisePropertyChanged("PersonPasswordConfirm"); }
+        }
         public List<Trip> Trips { get; set; } = new List<Trip>();
 
-        public Person(string sirName, string name, string email, string address)
+        public Person(string email, string password,string firstName, string name,string passwordConfirm, string address)
         {
-            SurName = sirName;
+            FirstName = firstName;
             Name = name;
-            Email = email;
+            PasswordConfirm = passwordConfirm;
             Address = address;
+            Email = email;
+            Password = password;
         }
 
         public Person(Windows.UI.Xaml.Controls.TextBox naam, Windows.UI.Xaml.Controls.TextBox voornaam)

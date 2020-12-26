@@ -18,19 +18,26 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 using WindowsFront_end.Model;
+using WindowsFront_end.Model.DTO_s;
+using WindowsFront_end.View;
+using WindowsFront_end.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace WindowsFront_end
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Pagina waar men zich registreert
     /// </summary>
     public sealed partial class Registratie : Page
     {
+        public LoginRegistratieViewModel ViewModel { get; set; }
         public Registratie()
         {
             this.InitializeComponent();
+
+            ViewModel = new LoginRegistratieViewModel();
+            this.DataContext = ViewModel;
         }
 
         private void LogIn_Click(object sender, RoutedEventArgs e)
@@ -41,17 +48,33 @@ namespace WindowsFront_end
 
         private async void Registreer_Click(object sender, RoutedEventArgs e)
         {
-            Person person = new Person(achternaam.ToString(), voornaam.ToString(), email.ToString(), adres.ToString());
-            var personJson = JsonConvert.SerializeObject(person);
 
-            HttpClient client = new HttpClient();
-            var res = await client.PostAsync(new Uri("http://localhost:5001/api/Account/registerAdolescent"),
-                new HttpStringContent(personJson,Windows.Storage.Streams.UnicodeEncoding.Utf8,"application/json"));
+            RegisterDTO person = new RegisterDTO{
+                Email = email.Text,
+                Password = ww.Password, 
+                Name = achternaam.Text, 
+                FirstName = voornaam.Text, 
+                PasswordConfirmation = wwConfirm.Password, 
+                Address = adres.Text 
+            };
+            bool GotDataNotSuccesfull = await ViewModel.RegistrationPerson(person);
 
-            if(res.IsSuccessStatusCode)
+            if (GotDataNotSuccesfull)
             {
+                ContentDialog noWifiDialog = new ContentDialog()
+                {
+                    Title = "Fout",
+                    Content = "Er liep iets mis bij het registreren. Zijn alle parrameters juist ingevuld?",
+                    CloseButtonText = "Ok"
+                };
 
+                await noWifiDialog.ShowAsync();
             }
+            else
+            {
+                this.Frame.Navigate(typeof(TripoverzichtPage), null, new SuppressNavigationTransitionInfo());
+            }
+            
 
         }
 

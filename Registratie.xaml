@@ -9,18 +9,19 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
             <RelativePanel>
-                <Rectangle Fill="White" Width="500" Height="500" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802" />
-                <TextBlock x:Name="welkom" Text="Welkom bij uw Journey" TextWrapping="Wrap" Grid.Row="0"   FontSize="50" Margin="30,30,0,5" FontWeight="Bold"/>
+                <Rectangle Fill="White" Width="650" Height="600" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802" />
+                <TextBlock x:Name="welkom" Text="Welkom bij jouw Journey" TextWrapping="Wrap" Grid.Row="0"   FontSize="50" Margin="30,30,0,5" FontWeight="Bold"/>
                 <TextBlock x:Name="life" Text="Your journey, your life" TextWrapping="Wrap" Grid.Row="1" Grid.Column="0"  Margin="30,5,0,0" RelativePanel.Below="welkom" FontSize="35" FontWeight="Bold"/>
 
-            <TextBlock x:Name="registr" Text="Registreren" TextWrapping="Wrap"  Margin="0,0,0,90" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.Above="voornaam" FontSize="35" FontWeight="Bold"/>
-            <TextBox x:Name="achternaam" PlaceholderText="Naam" RelativePanel.Above="voornaam" TextWrapping="Wrap"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,0,0,15" Width="300" FontSize="25" />
-            <TextBox x:Name="voornaam" PlaceholderText="Voornaam" TextWrapping="Wrap" RelativePanel.Above="adres"   RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300"  FontSize="25" />
-            <TextBox x:Name="adres" PlaceholderText="Adres" TextWrapping="Wrap"   RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,15,0,0" FontSize="25" />
-            <TextBox x:Name="email" PlaceholderText="Email" TextWrapping="Wrap" RelativePanel.Below="adres"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,15,0,0" FontSize="25" />
+            <TextBlock x:Name="registr" Text="Registreren"   Margin="0,0,0,90" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.Above="voornaam" FontSize="35" FontWeight="Bold" Foreground="Black"/>
+            <TextBox x:Name="achternaam"  PlaceholderText="Naam" RelativePanel.Above="voornaam"   RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,0,0,15" Width="300" FontSize="25" />
+            <TextBox x:Name="voornaam" PlaceholderText="Voornaam"  RelativePanel.Above="adres"   RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300"  FontSize="25" />
+            <TextBox x:Name="adres" PlaceholderText="Adres"    RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,15,0,0" FontSize="25" />
+            <TextBox x:Name="email" PlaceholderText="Email"  RelativePanel.Below="adres"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,15,0,0" FontSize="25" />
             <PasswordBox x:Name="ww" PlaceholderText="Wachtwoord"    RelativePanel.Below="email" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Width="300" Margin="0,15,0,0" FontSize="25"/>
-            <Button x:Name="btn" Style="{StaticResource AccentButtonStyle}" Content="Registreer" Click="Registreer_Click" HorizontalAlignment="Center"  RelativePanel.Below="ww"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,14,0,0" FontSize="25" Background="#FF060606"/>
-                <HyperlinkButton Content="Log in" RelativePanel.RightOf="btn" Click="LogIn_Click" RelativePanel.Below="ww" Margin="10,30,0,0" FontSize="20"/>
+            <PasswordBox x:Name="wwConfirm" PlaceholderText="Wachtwoord bevestigen"    RelativePanel.Below="ww" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Width="300" Margin="0,15,0,0" FontSize="25"/>
+            <Button x:Name="btn" Style="{StaticResource AccentButtonStyle}" Content="Registreer" Click="Registreer_Click" HorizontalAlignment="Center"  RelativePanel.Below="wwConfirm"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,14,0,0" FontSize="25" Background="#FF060606"/>
+                <HyperlinkButton Content="Log in" RelativePanel.RightOf="btn" Click="LogIn_Click" RelativePanel.Below="wwConfirm" Margin="10,30,0,0" FontSize="20"/>
                 <RelativePanel.Background>
                     <ImageBrush ImageSource="/Assets/Journey-background.jpeg" ></ImageBrush>
                 </RelativePanel.Background>

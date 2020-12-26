@@ -9,7 +9,7 @@ using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
 {
-    public class AddTripViewModel
+     public class AddTripViewModel
     {
         public Trip Trip { get; set; }
         public bool AreFieldsValid { get; set; }
