@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using WindowsFront_end.Model;
 
 namespace WindowsFront_end.ViewModel
@@ -15,12 +16,17 @@ namespace WindowsFront_end.ViewModel
         public void SaveDestination()
         {
             this.DestinationsList.Add(DestinationInMaking);
+            DestinationInMaking = new Destination();
         }
         public void InputLocation(double lat, double lon, string address)
         {
             DestinationInMaking.Latitude = lat;
             DestinationInMaking.Longitude = lon;
             DestinationInMaking.Address = address;
+        }
+        public Destination[] GetDestinationsAsArray()
+        {
+            return DestinationsList.ToList().ToArray();
         }
     }
 }

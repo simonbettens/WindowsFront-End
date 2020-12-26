@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Services.Maps;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
-using WindowsFront_end.Model;
 using WindowsFront_end.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -19,7 +19,8 @@ namespace WindowsFront_end.View
     public sealed partial class AddRoute : Page
     {
         public AddDestinationsViewModel ViewModel { get; set; }
-        public MapElementsLayer CurrentLayer { get; set; }
+        public MapElementsLayer CurrentPOI { get; set; }
+        public MapElementsLayer CurrentLine { get; set; }
         public AddRoute()
         {
             this.InitializeComponent();
@@ -34,7 +35,7 @@ namespace WindowsFront_end.View
             var tappedGeoPosition = args.Location.Position;
             try
             {
-                DrawPoint(tappedGeoPosition);
+                DrawPoint(tappedGeoPosition, "Nu geselecteerd");
                 Geopoint pointToReverseGeocode = new Geopoint(tappedGeoPosition);
                 result = await MapLocationFinder.FindLocationsAtAsync(pointToReverseGeocode, MapLocationDesiredAccuracy.High);
             }
@@ -62,7 +63,7 @@ namespace WindowsFront_end.View
                 catch (Exception)
                 {
 
-                    System.Diagnostics.Debug.WriteLine("method end");
+                    Debug.WriteLine("method end");
                 }
             }
         }
@@ -70,10 +71,10 @@ namespace WindowsFront_end.View
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ViewModel.SaveDestination();
-            DrawRouteAsync();
+            AddLine();
         }
 
-        private async void DrawPoint(BasicGeoposition snPosition)
+        private void DrawPoint(BasicGeoposition snPosition, string text)
         {
             var MyLandmarks = new List<MapElement>();
 
@@ -84,7 +85,7 @@ namespace WindowsFront_end.View
                 Location = snPoint,
                 NormalizedAnchorPoint = new Point(0.5, 1.0),
                 ZIndex = 0,
-                Title = "Nu geselecteerd"
+                Title = text
             };
             MyLandmarks.Add(spaceNeedleIcon);
 
@@ -93,24 +94,70 @@ namespace WindowsFront_end.View
                 ZIndex = 1,
                 MapElements = MyLandmarks
             };
-            Map.Layers.Remove(CurrentLayer);
+            Map.Layers.Remove(CurrentPOI);
             Map.Layers.Add(LandmarksLayer);
 
             Map.Center = snPoint;
             Map.ZoomLevel = 14;
-            CurrentLayer = LandmarksLayer;
+            CurrentPOI = LandmarksLayer;
+        }
+
+        private void AddLine()
+        {
+            var size = ViewModel.DestinationsList.Count;
+            if (size <= 1) return;
+            var destArray = ViewModel.GetDestinationsAsArray();
+            var coords = new List<BasicGeoposition>();
+            for (var i = 0; i < destArray.Length; i++)
+            {
+                var dest = destArray[i];
+                BasicGeoposition point = new BasicGeoposition() { Latitude = dest.Latitude, Longitude = dest.Longitude };
+                coords.Add(point);
+
+            }
+            Geopath path = new Geopath(coords);
+
+            MapPolyline polygon = new MapPolyline();
+            polygon.StrokeColor = Colors.Blue;
+            polygon.StrokeThickness = 5;
+            polygon.Path = path;
+
+            var MyLines = new List<MapElement>();
+            MyLines.Add(polygon);
+            var LinesLayer = new MapElementsLayer
+            {
+                ZIndex = 1,
+                MapElements = MyLines
+            };
+
+            if (CurrentLine != null)
+            {
+                Map.Layers.Remove(CurrentLine);
+            }
+            Map.Layers.Add(LinesLayer);
+            this.CurrentLine = LinesLayer;
         }
 
         private async void DrawRouteAsync()
         {
             var size = ViewModel.DestinationsList.Count;
             if (size <= 1) return;
-            var destArray = new Destination[size];
-            ViewModel.DestinationsList.CopyTo(destArray, 0);
+            var destArray = ViewModel.GetDestinationsAsArray();
             var path = new List<EnhancedWaypoint>();
+            /*
+            BasicGeoposition point1 = new BasicGeoposition() { Latitude = 47.649693, Longitude = -122.144908 };
+            BasicGeoposition point2 = new BasicGeoposition() { Latitude = 47.6205, Longitude = -122.3493 };
+            BasicGeoposition point3 = new BasicGeoposition() { Latitude = 48.649693, Longitude = -122.144908 };
+
+            path.Add(new EnhancedWaypoint(new Geopoint(point1), WaypointKind.Stop));
+            path.Add(new EnhancedWaypoint(new Geopoint(point2), WaypointKind.Via));
+            path.Add(new EnhancedWaypoint(new Geopoint(point3), WaypointKind.Stop));
+            */
+
             for (var i = 0; i < destArray.Length; i++)
             {
-                BasicGeoposition point = new BasicGeoposition() { Latitude = destArray[i].Latitude, Longitude = destArray[i].Longitude };
+                var dest = destArray[i];
+                BasicGeoposition point = new BasicGeoposition() { Latitude = dest.Latitude, Longitude = dest.Longitude };
 
                 if (i == 0 || i == destArray.Length - 1)
                 {
@@ -139,9 +186,9 @@ namespace WindowsFront_end.View
 
                 // Fit the MapControl to the route.
                 await Map.TrySetViewBoundsAsync(
-                      routeResult.Route.BoundingBox,
-                      null,
-                      MapAnimationKind.Linear);
+                      routeResult.Route.BoundingBox, null
+                      ,
+                      MapAnimationKind.None);
             }
         }
     }
