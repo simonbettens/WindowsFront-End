@@ -51,7 +51,7 @@ namespace WindowsFront_end.Models
             set { _route = value; RaisePropertyChanged("Route"); }
         }
 
-        
+
 
         public List<Item> Items { get; set; } = new List<Item>();
         public List<Person> Travelers { get; set; } = new List<Person>();
@@ -79,7 +79,7 @@ namespace WindowsFront_end.Models
 
         public Trip()
         {
-
+            Route = new Route();
         }
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {

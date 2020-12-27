@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Navigation;
-using WindowsFront_end.Model;
+using WindowsFront_end.Models;
 using WindowsFront_end.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
