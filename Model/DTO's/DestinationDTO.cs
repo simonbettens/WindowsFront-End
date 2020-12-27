@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+namespace WindowsFront_end.Model.DTO_s
 {
     public static class DestinationDTO
     {
