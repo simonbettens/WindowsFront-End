@@ -12,46 +12,59 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition />
+
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <!--Name trip-->
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition  Width="3*" />
 
-        <TextBlock Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center"
-                   HorizontalAlignment="Center" Margin="20,0,20,0" Grid.Column="0" Text="Geef de naam van de reis in:"></TextBlock>
-        <TextBox Text="{Binding Trip.Name ,Mode=TwoWay}" x:Name="TripName"  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
-                 VerticalAlignment="Center" Height="30" Margin="67,50,20,0" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  TextAlignment="Center" 
+                   Text="Maak een nieuwe reis aan"
+                   FontWeight="Bold" FontSize="18"
+                   VerticalAlignment="Center">
+        </TextBlock>
+        <!--Name trip-->
+        <StackPanel Grid.Column="0"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top" Margin="0,38,0,0" Grid.RowSpan="2">
+            <TextBox Text="{Binding Trip.Name ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="TripName"  Header="Geef de naam van de reis in:"
+                 VerticalAlignment="Center"  Margin="25" />
+        </StackPanel>
+
+
+        <!-- Route description-->
+        <TextBox x:Name="RouteDesc" Text="{Binding Trip.Route.Description ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Margin="25,25,25,25" Header="Geef de beschrijving van de route hierin:" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
+
+        </TextBox>
 
         <!--Date pickers-->
 
-        <DatePicker x:Name="TripStart" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
-                    VerticalAlignment="Center" HorizontalAlignment="Center" Header="Kies start datum " DateChanged="TripStart_DateChanged" />
-        <DatePicker x:Name="TripEnd" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
-                    VerticalAlignment="Center" HorizontalAlignment="Center" Header="Kies eind datum "  DateChanged="TripEnd_DateChanged"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <DatePicker x:Name="TripStart" 
+                    Header="Kies start datum " DateChanged="TripStart_DateChanged" Margin="5"/>
+            <DatePicker x:Name="TripEnd"
+                    Header="Kies eind datum "  DateChanged="TripEnd_DateChanged" Margin="5"/>
+        </StackPanel>
+
 
         <!--Color picker-->
 
-        <TextBlock Text="Geef deze reis een kleur: " Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" TextAlignment="Center" 
-                   HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="20"/>
-        <ColorPicker x:Name="TripColor" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" ColorChanged="TripColor_ColorChanged"
-                     VerticalAlignment="Center" HorizontalAlignment="Center" 
+        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,15" >
+            <TextBlock Text="Geef deze reis een kleur: "  TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,25,0" />
+            <ColorPicker x:Name="TripColor" ColorChanged="TripColor_ColorChanged"
+                     VerticalAlignment="Center" HorizontalAlignment="Right" 
                      ColorSpectrumShape="Ring" IsMoreButtonVisible="False" IsColorSliderVisible="False" IsColorChannelTextInputVisible="False" 
                      IsHexInputVisible="False" IsAlphaEnabled="False"  IsAlphaSliderVisible="True" IsAlphaTextInputVisible="True" />
+        </StackPanel>
 
         <!--Buttons-->
-
-        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Click="Cancel_Click" Content="Annuleren " HorizontalAlignment="Center" CornerRadius="5,5,5,5"/>
-        <Button IsEnabled="{Binding AreFieldValid, Mode=OneWay}" Click="Save_Click" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Content="Opslaan" HorizontalAlignment="Center" CornerRadius="5,5,5,5"/>
-
-
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="513,0,0,0">
+            <Button  Click="Cancel_Click" Content="Annuleren" CornerRadius="5,5,5,5" Margin="25"/>
+            <Button IsEnabled="{Binding AreFieldValid, Mode=OneWay}" Click="Save_Click" Content="Opslaan" CornerRadius="5,5,5,5" Margin="25"/>
+        </StackPanel>
     </Grid>
 </Page>

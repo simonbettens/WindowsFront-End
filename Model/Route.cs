@@ -14,7 +14,7 @@ namespace WindowsFront_end.Model
         public string Description
         {
             get { return _description; }
-            set { _description = value; RaisePropertyChanged("RouteDescription"); }
+            set { _description = value; RaisePropertyChanged("Description"); }
         }
         public List<Destination> Destinations { get; set; } = new List<Destination>();
 

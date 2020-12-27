@@ -8,6 +8,8 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Navigation;
+using WindowsFront_end.Model;
 using WindowsFront_end.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -26,8 +28,17 @@ namespace WindowsFront_end.View
         {
             this.InitializeComponent();
             this.ViewModel = new AddDestinationsViewModel();
+            this.ViewModel.DestinationsList.CollectionChanged += (sender, e) => AddLine();
             this.DataContext = ViewModel;
             MapService.ServiceToken = "JgmWRYIYzmYgbMh4hvWR~OhL3ZDrSPoQeI - PDC3owow~ArOjM7tKkf3GS9Xr45_idgO58fGVP1IXePZHMNlNtDMIbe5xvEzbE9eUbY1VPr31";
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            Trip trip = (Trip)e.Parameter;
+            ViewModel.Trip = trip;
+            trip.Route.Destinations.ForEach((dest) => ViewModel.DestinationsList.Add(dest));
         }
 
         private async void Map_MapTapped(MapControl sender, MapInputEventArgs args)
@@ -69,13 +80,6 @@ namespace WindowsFront_end.View
         {
             // The address or business to geocode.
             string addressToGeocode = txbAddress.Text;
-
-            // The nearby location to use as a query hint.
-            BasicGeoposition queryHint = new BasicGeoposition();
-            queryHint.Latitude = 47.643;
-            queryHint.Longitude = -122.131;
-            Geopoint hintPoint = new Geopoint(queryHint);
-
             // Geocode the specified address, using the specified reference point
             // as a query hint. Return no more than 3 results.
             MapLocationFinderResult result =
@@ -141,6 +145,10 @@ namespace WindowsFront_end.View
         private void AddLine()
         {
             var size = ViewModel.DestinationsList.Count;
+            if (CurrentLine != null)
+            {
+                Map.Layers.Remove(CurrentLine);
+            }
             if (size <= 1) return;
             var destArray = ViewModel.GetDestinationsAsArray();
             var coords = new List<BasicGeoposition>();
@@ -231,6 +239,16 @@ namespace WindowsFront_end.View
                       ,
                       MapAnimationKind.None);
             }
+        }
+
+        private void GoBack(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(AddTripPage), ViewModel.Trip);
+        }
+
+        private void GoOn(object sender, RoutedEventArgs e)
+        {
+            //Frame.Navigate(typeof(AddTripPage), ViewModel.Trip);
         }
     }
 }
