@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFront_end.Model
+namespace WindowsFront_end.Models
 {
     public class ItemPerson
     {

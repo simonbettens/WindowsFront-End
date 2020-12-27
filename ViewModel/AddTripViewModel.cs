@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using WindowsBackend.Models;
 using WindowsBackend.Models.DTO_s;
-using WindowsFront_end.Model;
-using WindowsFront_end.Model.DTO_s;
+using WindowsFront_end.Models;
+using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel

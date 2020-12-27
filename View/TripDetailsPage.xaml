@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:model="using:WindowsFront_end.Model"
+    xmlns:model="using:WindowsFront_end.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="LightBlue">
@@ -27,7 +27,7 @@
 
                 </TextBlock>
                 <TextBlock 
-                    Text="{x:Bind SurName}">
+                    Text="{x:Bind FirstName}">
 
                 </TextBlock>
                 <TextBlock 
@@ -156,7 +156,8 @@
                
             </PivotItem>
             <PivotItem Header="Route">
-                <StackPanel>
+                <local:AddRoute></local:AddRoute>
+                <!--<StackPanel>
                     <TextBlock 
                     Text="{Binding Trip.Route.Description}"
                     Margin="5">
@@ -173,7 +174,7 @@
                         Source="/Assets/europe.scale-200.png" 
                         Height="500" Stretch="UniformToFill" 
                         VerticalAlignment="Bottom" />
-                </StackPanel>
+                </StackPanel> -->
             </PivotItem>
             <PivotItem Header="Info">
                 <StackPanel>

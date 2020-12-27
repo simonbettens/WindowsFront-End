@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WindowsFront_end.Model;
+using WindowsFront_end.Models;
 
 namespace WindowsBackend.Models.DTO_s
 {
@@ -19,8 +19,8 @@ namespace WindowsBackend.Models.DTO_s
                 ItemId = item.ItemId;
                 Name = item.Name;
                 ItemType = item.ItemType;
-                Categories = item.Categories.Select(c => c.Category.Name).ToList();
-                Persons = item.Travelers.Select(t => new ForItemOverview(t)).ToList();
+                Categories = item.Categories;
+                Persons = item.Travelers.ToList();
             }
 
         }

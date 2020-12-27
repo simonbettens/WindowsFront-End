@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WindowsFront_end.Model;
+using WindowsFront_end.Models;
 
 namespace WindowsFront_end.Models.DTO_s
 {
@@ -21,7 +21,7 @@ namespace WindowsFront_end.Models.DTO_s
             {
                 CategoryId = category.CategoryId;
                 Name = category.Name;
-                Items = category.Items.Select(i => i.Id).ToList();
+                Items = category.Items.Select(i => i.ItemId).ToList();
             }
         }
 

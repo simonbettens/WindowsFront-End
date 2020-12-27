@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using WindowsBackend.Models.DTO_s;
 
-namespace WindowsFront_end.Model
+namespace WindowsFront_end.Models
 {
     public class Item : INotifyPropertyChanged
     {

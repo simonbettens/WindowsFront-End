@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsBackend.Models;
 using WindowsBackend.Models.DTO_s;
-using WindowsFront_end.Model;
+using WindowsFront_end.Models;
 
 namespace WindowsFront_end.Models.DTO_s
 {
@@ -46,7 +46,7 @@ namespace WindowsFront_end.Models.DTO_s
                 FirstName = person.FirstName;
                 Name = person.Name;
                 Address = person.Address;
-                Trips = person.Trips.Select(t => t.Trip.TripId).ToList();
+                Trips = person.Trips.Select(t => t.TripId).ToList();
                 Items = person.Items.Select(i => new ItemDTO.ForPersonOverview(i)).ToList();
             }
         }

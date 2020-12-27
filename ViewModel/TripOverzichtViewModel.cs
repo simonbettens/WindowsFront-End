@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using WindowsFront_end.Model;
+using WindowsFront_end.Models;
 using WindowsFront_end.Repository;
 
 namespace WindowsFront_end.ViewModel

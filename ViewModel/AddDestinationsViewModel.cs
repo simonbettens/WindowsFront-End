@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using WindowsFront_end.Model;
+using WindowsFront_end.Models;
 
 namespace WindowsFront_end.ViewModel
 {

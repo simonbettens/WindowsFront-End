@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace WindowsFront_end.Model
+namespace WindowsFront_end.Models
 {
     public class Destination : INotifyPropertyChanged
     {

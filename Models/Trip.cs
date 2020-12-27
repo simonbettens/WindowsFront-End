@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using WindowsFront_end.Models.DTO_s;
 
-namespace WindowsFront_end.Model
+namespace WindowsFront_end.Models
 {
     public class Trip : INotifyPropertyChanged
     {
@@ -68,6 +68,7 @@ namespace WindowsFront_end.Model
         }
         public Trip(TripDTO.Overview dto)
         {
+            TripId = dto.TripId;
             Name = dto.Name;
             Color = dto.Color;
             Start = dto.Start;

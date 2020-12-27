@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsFront_end.Models.DTO_s;
 
 namespace WindowsFront_end.Models.DTO_s
 {

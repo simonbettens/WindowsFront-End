@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using WindowsFront_end.Model;
+using WindowsFront_end.Models;
 using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
