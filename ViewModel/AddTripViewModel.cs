@@ -55,6 +55,7 @@ namespace WindowsFront_end.ViewModel
             HttpResponseMessage response;
             try
             {
+                return;
                 //https://localhost:5001/api/Trip/GetAllTrips
                 response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + "trip"), data);
                 if (response.IsSuccessStatusCode)

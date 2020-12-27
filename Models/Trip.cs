@@ -28,21 +28,21 @@ namespace WindowsFront_end.Models
         public string Color
         {
             get { return _color; }
-            set { _color = value; RaisePropertyChanged("TripColor"); }
+            set { _color = value; RaisePropertyChanged("Color"); }
         }
 
         private DateTime _start;
         public DateTime Start
         {
             get { return _start; }
-            set { _start = value; RaisePropertyChanged("TripStart"); }
+            set { _start = value; RaisePropertyChanged("Start"); }
         }
 
         private DateTime _end;
         public DateTime End
         {
             get { return _end; }
-            set { _end = value; RaisePropertyChanged("TripEnd"); }
+            set { _end = value; RaisePropertyChanged("End"); }
         }
         private Route _route;
         public Route Route
@@ -64,6 +64,7 @@ namespace WindowsFront_end.Models
             Color = color;
             Start = start;
             End = end;
+            Route = new Route();
 
         }
         public Trip(TripDTO.Overview dto)

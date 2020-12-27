@@ -32,36 +32,75 @@
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="mapOutput" Text="Geen locatie geselecteerd" FontWeight="Bold" FontSize="18">
-
             </TextBlock>
 
-            <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DestinationInMaking.Description}" Margin="10,10,10,15" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
+            <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DestinationInMaking.Description ,Mode=TwoWay}" Margin="10,10,10,15" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
             </TextBox>
-            <Button Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,15" Content="Sla bestemming op" Click="Save_Click"></Button>
+            <Button Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Margin="0,0,0,15" Content="Sla bestemming op" Click="Save_Click"
+                    CornerRadius="5,5,5,5"
+                    ></Button>
             <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Black" 
             BorderThickness="0,0,0,1" Background="{x:Null}" />
         </Grid>
+        <StackPanel  Grid.Column="0" Grid.Row="3" >
+            <TextBlock Text="Uw route:" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"></TextBlock>
+            <!-- end grid inside grid-->
+            <ListView x:Name="ItemClass_ListView" BorderBrush="DarkBlue" Background="Azure" Margin="25,10,25,25" BorderThickness="2" Height="350"
+                     ItemsSource="{Binding DestinationsList}" Grid.RowSpan="2" SelectionMode="None">
+                <ListView.Resources>
+                    <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="Aquamarine" />
+                    <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="Aquamarine" />
+                </ListView.Resources>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid  HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                <TextBlock Text="{Binding Address}" Foreground="Black" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                <Button 
+                                    Command="{Binding ElementName=ItemClass_ListView, Path=DataContext.RemoveDestinationCommand}"
+                                    CommandParameter="{Binding Address}"
+                                    Foreground="Black"
+                                    VerticalAlignment="Top" 
+                                    HorizontalAlignment="Right"
+                                    CornerRadius="5,5,5,5"
+                                    >
+                                    <SymbolIcon Symbol="Remove" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+                <Grid HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Ga terug" Margin="50,0,50,0" CornerRadius="5,5,5,5" Click="GoBack" ></Button>
+                <Button Grid.Column="2" Content="Ga verder" Margin="50,0,50,0" HorizontalAlignment="Right" CornerRadius="5,5,5,5" Click="GoOn" ></Button>
+                </Grid>
+        </StackPanel>
         
-        <!-- end grid inside grid-->
-        <ListView x:Name="FruitsList" Grid.Column="0" Grid.Row="3" BorderBrush="DarkBlue" Background="Azure" Margin="25" BorderThickness="2"
-                     ItemsSource="{Binding DestinationsList}" Grid.RowSpan="2">
-            <ListView.Resources>
-                <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="Aquamarine" />
-                <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="Aquamarine" />
-            </ListView.Resources>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Address}" Foreground="Black"  Margin="0,5,0,5"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
         
         <Border Grid.Column="1" Grid.RowSpan="4" BorderBrush="Black" 
             BorderThickness="1,0,0,0" Background="{x:Null}" />
         <StackPanel Grid.Column="1" Orientation="Vertical" Width="Auto">
             <TextBlock Margin="0,10,0,0" Text="Zoek op een address of klik op de kaart" HorizontalAlignment="Center"></TextBlock>
             <TextBox x:Name="txbAddress" Margin="0,10,0,0" Width="500" PlaceholderText="Vul een address in"></TextBox>
-            <Button Margin="0,15,0,0" Content="Zoeken" HorizontalAlignment="Center" Click="GeocodeButton_Click" ></Button>
+            <Button Margin="0,15,0,0" Content="Zoeken" HorizontalAlignment="Center" Click="GeocodeButton_Click" CornerRadius="5,5,5,5" ></Button>
         </StackPanel>
         
         <Custom:MapControl 
