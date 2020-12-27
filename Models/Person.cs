@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Windows.System;
+using Windows.UI.Xaml.Controls;
 
 namespace WindowsFront_end.Models
 {
@@ -55,7 +55,7 @@ namespace WindowsFront_end.Models
         public List<Trip> Trips { get; set; } = new List<Trip>();
         public List<ItemPerson> Items { get; set; } = new List<ItemPerson>();
 
-        public Person(string email, string password,string firstName, string name,string passwordConfirm, string address)
+        public Person(string email, string password, string firstName, string name, string passwordConfirm, string address)
         {
             FirstName = firstName;
             Name = name;
@@ -65,7 +65,11 @@ namespace WindowsFront_end.Models
             Password = password;
         }
 
-        public Person(Windows.UI.Xaml.Controls.TextBox naam, Windows.UI.Xaml.Controls.TextBox voornaam)
+        public Person(TextBox naam, TextBox voornaam)
+        {
+
+        }
+        public Person()
         {
 
         }
