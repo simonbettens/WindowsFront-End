@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.System;
 
 namespace WindowsFront_end.Models
 {
@@ -14,7 +15,7 @@ namespace WindowsFront_end.Models
         public string FirstName
         {
             get { return _firstName; }
-            set { _firstName = value; RaisePropertyChanged("PersonSurName"); }
+            set { _firstName = value; RaisePropertyChanged("PersonFirstName"); }
         }
 
         private string _name;
@@ -37,18 +38,34 @@ namespace WindowsFront_end.Models
             get { return _address; }
             set { _address = value; RaisePropertyChanged("PersonAddress"); }
         }
+
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; RaisePropertyChanged("PersonPassword"); }
+        }
+
+        private string _passwordConfirm;
+        public string PasswordConfirm
+        {
+            get { return _passwordConfirm; }
+            set { _passwordConfirm = value; RaisePropertyChanged("PersonPasswordConfirm"); }
+        }
         public List<Trip> Trips { get; set; } = new List<Trip>();
         public List<ItemPerson> Items { get; set; } = new List<ItemPerson>();
 
-        public Person(string sirName, string name, string email, string address)
+        public Person(string email, string password,string firstName, string name,string passwordConfirm, string address)
         {
-            FirstName = sirName;
+            FirstName = firstName;
             Name = name;
-            Email = email;
+            PasswordConfirm = passwordConfirm;
             Address = address;
+            Email = email;
+            Password = password;
         }
 
-        public Person()
+        public Person(Windows.UI.Xaml.Controls.TextBox naam, Windows.UI.Xaml.Controls.TextBox voornaam)
         {
 
         }
