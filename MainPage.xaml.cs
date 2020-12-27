@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using WindowsFront_end.View;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -34,7 +35,7 @@ namespace WindowsFront_end
         }
         private void Logout_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            this.Frame.Navigate(typeof(LogIn),null, new SuppressNavigationTransitionInfo());
         }
     }
 }

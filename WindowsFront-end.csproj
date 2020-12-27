@@ -122,6 +122,8 @@
     <Compile Include="LogIn.xaml.cs">
       <DependentUpon>LogIn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTO%27s\LoginDTO.cs" />
+    <Compile Include="Models\DTO%27s\RegisterDTO.cs" />
     <Compile Include="Registratie.xaml.cs">
       <DependentUpon>Registratie.xaml</DependentUpon>
     </Compile>

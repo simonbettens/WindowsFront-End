@@ -4,8 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsFront_end.Model;
-using WindowsFront_end.Model.DTO_s;
+using WindowsFront_end.Models;
+using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
@@ -35,7 +35,7 @@ namespace WindowsFront_end.ViewModel
                 var data = new StringContent(registerJson, Encoding.UTF8, "application/json");
                 //test
                 //https://localhost:5001/person/register
-                response = await client.PostAsync(new Uri("https://localhost:5001/person/register"),
+                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + "person/register"),
                     data);
                 if (response.IsSuccessStatusCode)
                 {
@@ -66,7 +66,7 @@ namespace WindowsFront_end.ViewModel
             {
                 //test
                 //https://localhost:5001/person/login
-                response = await client.PostAsync(new Uri("https://localhost:5001/person/login"),
+                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + "person/login"),
                    data);
 
                 if (response.IsSuccessStatusCode)

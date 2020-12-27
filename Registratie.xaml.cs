@@ -17,8 +17,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
-using WindowsFront_end.Model;
-using WindowsFront_end.Model.DTO_s;
+using WindowsFront_end.Models;
+using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.View;
 using WindowsFront_end.ViewModel;
 
@@ -64,7 +64,7 @@ namespace WindowsFront_end
                 ContentDialog noWifiDialog = new ContentDialog()
                 {
                     Title = "Fout",
-                    Content = "Er liep iets mis bij het registreren. Zijn alle parrameters juist ingevuld?",
+                    Content = "Er liep iets mis bij het registreren. Zijn alle parameters juist ingevuld?",
                     CloseButtonText = "Ok"
                 };
 
@@ -72,7 +72,7 @@ namespace WindowsFront_end
             }
             else
             {
-                this.Frame.Navigate(typeof(TripoverzichtPage), null, new SuppressNavigationTransitionInfo());
+                this.Frame.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
             }
             
 
