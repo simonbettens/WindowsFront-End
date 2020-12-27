@@ -30,14 +30,14 @@
                    VerticalAlignment="Center">
         </TextBlock>
         <!--Name trip-->
-        <StackPanel Grid.Column="0"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top" Margin="0,38,0,0" Grid.RowSpan="2">
-            <TextBox Text="{Binding Trip.Name ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" x:Name="TripName"  Header="Geef de naam van de reis in:"
+        <StackPanel Grid.Column="0"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" >
+            <TextBox Text="{x:Bind AddTripViewModel.Trip.Name ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="TripName"  Header="Geef de naam van de reis in:"
                  VerticalAlignment="Center"  Margin="25" />
         </StackPanel>
 
 
         <!-- Route description-->
-        <TextBox x:Name="RouteDesc" Text="{Binding Trip.Route.Description ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Margin="25,25,25,25" Header="Geef de beschrijving van de route hierin:" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
+        <TextBox x:Name="RouteDesc" Text="{x:Bind AddTripViewModel.Trip.Route.Description ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Margin="25,25,25,25" Header="Geef de beschrijving van de route hierin:" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
 
         </TextBox>
 

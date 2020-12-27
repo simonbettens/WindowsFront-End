@@ -23,6 +23,7 @@ namespace WindowsFront_end.View
             AddTripViewModel = new AddTripViewModel();
             this.AddTripViewModel.Trip.PropertyChanged += (sender, e) =>
             {
+                var stringt = sender.ToString();
                 this.AddTripViewModel.CheckAreFieldValid();
             };
             this.DataContext = AddTripViewModel;
