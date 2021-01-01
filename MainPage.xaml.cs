@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.Storage;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using WindowsFront_end.View;
 
@@ -11,8 +12,10 @@ namespace WindowsFront_end
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public ApplicationDataContainer LocalSettings { get; set; }
         public MainPage()
         {
+            LocalSettings = ApplicationData.Current.LocalSettings;
             this.InitializeComponent();
 
         }
@@ -35,7 +38,8 @@ namespace WindowsFront_end
         }
         private void Logout_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(LogIn),null, new SuppressNavigationTransitionInfo());
+            LocalSettings.Values["token"] = null;
+            this.Frame.Navigate(typeof(LogIn), null, new SuppressNavigationTransitionInfo());
         }
     }
 }

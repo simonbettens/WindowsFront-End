@@ -1,23 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 using WindowsFront_end.Models.DTO_s;
-using WindowsFront_end.View;
 using WindowsFront_end.ViewModel;
-using Microsoft.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -29,12 +16,22 @@ namespace WindowsFront_end
     public sealed partial class LogIn : Page
     {
         public LoginRegistratieViewModel ViewModel { get; set; }
+        public ApplicationDataContainer LocalSettings { get; set; }
         public LogIn()
         {
             this.InitializeComponent();
-
-            ViewModel = new LoginRegistratieViewModel();
+            LocalSettings = ApplicationData.Current.LocalSettings;
+            ViewModel = new LoginRegistratieViewModel(LocalSettings);
             this.DataContext = ViewModel;
+        }
+
+        private void CheckIfLoggedIn()
+        {
+            string token = (string)LocalSettings.Values["token"];
+            if (token != null)
+            {
+                Navigate();
+            }
         }
 
         private void Registreer_Click(object sender, RoutedEventArgs e)
@@ -51,7 +48,8 @@ namespace WindowsFront_end
                 Password = ww.Password
             };
             bool succes = await ViewModel.LogInPerson(login);
-            if(succes){
+            if (succes)
+            {
                 GotDataNotSuccesfull = false;
             }
 
@@ -70,8 +68,17 @@ namespace WindowsFront_end
             }
             else
             {
-                this.Frame.Navigate(typeof(MainPage));
+                Navigate();
             }
+        }
+        private void Navigate()
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            CheckIfLoggedIn();
         }
     }
 }

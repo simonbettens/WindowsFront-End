@@ -1,25 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.VoiceCommands;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using System;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-using Windows.Web.Http;
-using WindowsFront_end.Models;
 using WindowsFront_end.Models.DTO_s;
-using WindowsFront_end.View;
 using WindowsFront_end.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -32,30 +16,41 @@ namespace WindowsFront_end
     public sealed partial class Registratie : Page
     {
         public LoginRegistratieViewModel ViewModel { get; set; }
+        public ApplicationDataContainer LocalSettings { get; set; }
+
         public Registratie()
         {
             this.InitializeComponent();
-
-            ViewModel = new LoginRegistratieViewModel();
+            LocalSettings = ApplicationData.Current.LocalSettings;
+            ViewModel = new LoginRegistratieViewModel(LocalSettings);
             this.DataContext = ViewModel;
+        }
+        private void CheckIfLoggedIn()
+        {
+            string token = (string)LocalSettings.Values["token"];
+            if (token != null)
+            {
+                Navigate();
+            }
         }
 
         private void LogIn_Click(object sender, RoutedEventArgs e)
         {
-           
-            this.Frame.Navigate(typeof(LogIn),null, new SuppressNavigationTransitionInfo());
+
+            this.Frame.Navigate(typeof(LogIn), null, new SuppressNavigationTransitionInfo());
         }
 
         private async void Registreer_Click(object sender, RoutedEventArgs e)
         {
 
-            RegisterDTO person = new RegisterDTO{
+            RegisterDTO person = new RegisterDTO
+            {
                 Email = email.Text,
-                Password = ww.Password, 
-                Name = achternaam.Text, 
-                FirstName = voornaam.Text, 
-                PasswordConfirmation = wwConfirm.Password, 
-                Address = adres.Text 
+                Password = ww.Password,
+                Name = achternaam.Text,
+                FirstName = voornaam.Text,
+                PasswordConfirmation = wwConfirm.Password,
+                Address = adres.Text
             };
             bool GotDataNotSuccesfull = await ViewModel.RegistrationPerson(person);
 
@@ -72,11 +67,20 @@ namespace WindowsFront_end
             }
             else
             {
-                this.Frame.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
+                Navigate();
+                //this.Frame.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
             }
-            
+
 
         }
+        private void Navigate()
+        {
+            this.Frame.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
+        }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            CheckIfLoggedIn();
+        }
     }
 }
