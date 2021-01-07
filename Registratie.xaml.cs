@@ -52,6 +52,7 @@ namespace WindowsFront_end
                 PasswordConfirmation = wwConfirm.Password,
                 Address = adres.Text
             };
+            LocalSettings.Values["current_user_email"] = email.Text;
             bool GotDataNotSuccesfull = await ViewModel.RegistrationPerson(person);
 
             if (GotDataNotSuccesfull)

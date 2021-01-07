@@ -1,0 +1,49 @@
+﻿<Page
+    x:Class="WindowsFront_end.View.ProfilePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WindowsFront_end.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:WindowsFront_end.Converters"
+    mc:Ignorable="d"
+    Background="LightBlue">
+    <Page.Resources>
+        <converter:ColorConverter x:Key="ColorConverter" />
+        <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
+    </Page.Resources>
+    <StackPanel Orientation="Vertical">
+        <TextBlock x:Name="txtError" Visibility="{Binding GotDataNotSuccesfull, Converter={StaticResource bool2vis} }" Text="Er is iets fout gelopen bij het opvragen van je account" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Top" SelectionHighlightColor="#FFFF0318" FocusVisualPrimaryBrush="#FFFE0505" Foreground="Red" FontWeight="Bold"/>
+        <Grid Visibility="{x:Bind ViewModel.LoadingDone,Mode=OneWay, Converter={StaticResource bool2vis} }">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <TextBox x:Name="txbVoornaam" Text="{x:Bind ViewModel.Person.FirstName, Mode=TwoWay}" Header="Voornaam" VerticalAlignment="Center" Margin="25" Width="300" MinWidth="50"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <TextBox x:Name="txbAchtenaam" Text="{x:Bind ViewModel.Person.Name, Mode=TwoWay}" Header="Achternaam" VerticalAlignment="Center" Margin="25" Width="300" MinWidth="50"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox x:Name="txbEmail" Text="{x:Bind ViewModel.Person.Email, Mode=TwoWay}" Header="Email" VerticalAlignment="Center" Margin="25" Width="500" MinWidth="50"/>
+                <TextBox x:Name="txbAddress" Text="{x:Bind ViewModel.Person.Address, Mode=TwoWay}" Header="Address" VerticalAlignment="Center" Margin="25" Width="500" MinWidth="50"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Margin="0,0,0,10" Content="Updaten" Command=""></Button>
+            </StackPanel>
+            <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="Black" 
+            BorderThickness="0,0,0,1" Background="{x:Null}" />
+        </Grid>
+        <ProgressRing x:Name="LoadingIndicator" IsActive="{x:Bind ViewModel.IsBusy,Mode=OneWay}"  VerticalAlignment="Center"  Margin="75" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
+    </StackPanel>
+    
+</Page>

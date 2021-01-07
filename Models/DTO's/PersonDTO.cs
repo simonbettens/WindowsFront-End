@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WindowsBackend.Models;
 using WindowsBackend.Models.DTO_s;
-using WindowsFront_end.Models;
 
 namespace WindowsFront_end.Models.DTO_s
 {
@@ -33,12 +29,17 @@ namespace WindowsFront_end.Models.DTO_s
 
         public class OverviewWithItems
         {
+
             public string Email { get; set; }
             public string FirstName { get; set; }
             public string Name { get; set; }
             public string Address { get; set; }
             public List<int> Trips { get; set; } = new List<int>();
             public List<ItemDTO.ForPersonOverview> Items { get; set; }
+            public OverviewWithItems()
+            {
+
+            }
 
             public OverviewWithItems(Person person)
             {
@@ -91,4 +92,4 @@ namespace WindowsFront_end.Models.DTO_s
         }
 
     }
-    }
+}

@@ -21,7 +21,7 @@ namespace WindowsFront_end
         }
         private void Profile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            contentFrame.Navigate(typeof(ProfilePage));
         }
         private void Trips_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {

@@ -47,6 +47,7 @@ namespace WindowsFront_end
                 Email = email.Text,
                 Password = ww.Password
             };
+            LocalSettings.Values["current_user_email"] = email.Text;
             bool succes = await ViewModel.LogInPerson(login);
             if (succes)
             {
