@@ -150,7 +150,7 @@
     <Compile Include="Models\TravelerTrip.cs" />
     <Compile Include="Models\Trip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\TripRepository.cs" />
+    <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="Util\UrlUtil.cs" />
     <Compile Include="ViewModel\AddDestinationsViewModel.cs" />

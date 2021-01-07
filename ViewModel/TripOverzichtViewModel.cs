@@ -68,7 +68,7 @@ namespace WindowsFront_end.ViewModel
                 //test
                 //https://localhost:5001/api/Trip/GetAllTrips
                 //json = await client.GetStringAsync(new Uri(UrlUtil.PorjectURL + "Trip"));
-                var list = await TripRepository.GetAllAsync();
+                var list = await TripController.GetAllAsync();
                 foreach (var trip in list)
                 {
                     this.TripList.Add(trip);

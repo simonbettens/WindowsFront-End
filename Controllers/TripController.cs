@@ -9,7 +9,7 @@ using WindowsFront_end.Util;
 
 namespace WindowsFront_end.Repository
 {
-    public static class TripRepository
+    public static class TripController
     {
         private static readonly HttpClient Client = new HttpClient();
         public static async Task<List<Trip>> GetAllAsync()
