@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace WindowsFront_end.Model
+namespace WindowsFront_end.Models
 {
     public class Category : INotifyPropertyChanged
     {
@@ -32,7 +32,7 @@ namespace WindowsFront_end.Model
 
 
 
-        protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

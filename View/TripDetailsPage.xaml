@@ -1,0 +1,193 @@
+﻿<Page
+    x:Class="WindowsFront_end.View.TripDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:WindowsFront_end.Converters"
+    xmlns:local="using:WindowsFront_end.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:model="using:WindowsFront_end.Models"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="LightBlue">
+
+    <Page.Resources>
+        <muxc:StackLayout x:Name="HorizontalStackLayout" Orientation="Horizontal" Spacing="8"/>
+        <converter:ColorConverter x:Key="ColorConverter" />
+        <converter:BooleanToVisibilityConverter 
+            x:Key="bool2vis"/>
+        <DataTemplate
+            x:Key="TravelersTemplate"
+            x:DataType="model:Person">
+            <StackPanel
+                Orientation="Horizontal">
+                <TextBlock 
+                    Text="{x:Bind Name}">
+
+                </TextBlock>
+                <TextBlock 
+                    Text="{x:Bind FirstName}">
+
+                </TextBlock>
+                <TextBlock 
+                    Text="{x:Bind Address}">
+
+                </TextBlock>
+                <TextBlock 
+                    Text="{x:Bind Items.Count}">
+
+                </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate 
+            x:Key="VerticalBarTemplate" 
+            x:DataType="x:String">
+            <TextBlock 
+                Text="{x:Bind}"
+                x:Phase="1" 
+                Margin="5"
+                >
+                
+            </TextBlock>
+        </DataTemplate>
+
+        <DataTemplate 
+            x:Key="TodoViewTemplate" 
+            x:DataType="model:Item">
+            <StackPanel
+                Orientation="Horizontal">
+                <CheckBox>
+
+                </CheckBox>
+                <TextBlock 
+                    Text="{x:Bind Name}"
+                    x:Phase="1" 
+                    Margin="5"
+                   />
+                <muxc:ItemsRepeater
+                    
+                    ItemsSource="{x:Bind Categories}"
+                    Layout="{StaticResource HorizontalStackLayout}"
+                    ItemTemplate="{StaticResource VerticalBarTemplate}" />
+
+
+            </StackPanel>
+
+        </DataTemplate>
+        <DataTemplate 
+            x:Key="DestinationTemplate" 
+            x:DataType="model:Destination">
+            <StackPanel
+                Orientation="Horizontal">
+                
+                <TextBlock
+                    Text="{x:Bind Name}" 
+                    x:Phase="1" 
+                    Margin="5"/>
+                <AppBarSeparator />
+                <TextBlock
+                    Text="{x:Bind Description}" 
+                    x:Phase="1" 
+                    Margin="5"/>
+                <AppBarSeparator />
+                <TextBlock
+                    Text="{x:Bind Address}"
+                    x:Phase="1" 
+                    Margin="5"/>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <StackPanel>
+        
+        <Pivot
+            Title="{Binding Trip.Name, Mode=OneWay}">
+            <PivotItem Header="To-do">
+                <StackPanel
+                    Orientation="Horizontal" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
+                    <controls:DataGrid 
+                        x:Name="toDoGrid" 
+                        AlternatingRowBackground="LightGray"
+                        HeadersVisibility="Column"
+                        ItemsSource="{Binding ToDoList}"
+                         AutoGenerateColumns="False"
+                        >
+                        <controls:DataGrid.Columns>
+                            <controls:DataGridCheckBoxColumn 
+                                Header="Gedaan" 
+                                Binding="{Binding IsDone}"/>
+                            <controls:DataGridTextColumn 
+                                Header="Titel" 
+                                Binding="{Binding Name}"/>
+                            <controls:DataGridTextColumn 
+                                Header="categorieen" 
+                                Binding="{Binding Categories.Count}"/>
+                            <controls:DataGridTextColumn
+                                Header="Wie moet het nog doen?"
+                                Binding="{Binding Travelers.Count}"/>
+                        </controls:DataGrid.Columns>
+                    </controls:DataGrid>
+
+                    <controls:DataGrid 
+                        x:Name="toPackGrid" 
+                        AlternatingRowBackground="LightGray"
+                        HeadersVisibility="Column"
+                        ItemsSource="{Binding ToPackList}"
+                         AutoGenerateColumns="False"
+                        >
+                        <controls:DataGrid.Columns>
+                            <controls:DataGridCheckBoxColumn 
+                                Header="Gedaan" 
+                                Binding="{Binding IsDone}"/>
+                            <controls:DataGridTextColumn 
+                                Header="Titel" 
+                                Binding="{Binding Name}"/>
+                            <controls:DataGridTextColumn 
+                                Header="categorieen" 
+                                Binding="{Binding Categories.Count}"/>
+                            <controls:DataGridTextColumn
+                                Header="Wie moet het nog doen?"
+                                Binding="{Binding Travelers.Count}"/>
+                        </controls:DataGrid.Columns>
+                    </controls:DataGrid>
+
+                </StackPanel>
+               
+            </PivotItem>
+            <PivotItem Header="Route">
+                <local:AddRoute></local:AddRoute>
+                <!--<StackPanel>
+                    <TextBlock 
+                    Text="{Binding Trip.Route.Description}"
+                    Margin="5">
+
+                    </TextBlock>
+                    <ListView 
+                    x:Name="Desinations"
+                    ItemTemplate="{StaticResource DestinationTemplate}"
+                    HorizontalAlignment="Left"
+                    ItemsSource="{Binding Trip.Route.Destinations}"
+                    IsHitTestVisible="True">
+                    </ListView>
+                    <Image 
+                        Source="/Assets/europe.scale-200.png" 
+                        Height="500" Stretch="UniformToFill" 
+                        VerticalAlignment="Bottom" />
+                </StackPanel> -->
+            </PivotItem>
+            <PivotItem Header="Info">
+                <StackPanel>
+                    <TextBlock Text="Deelnemers"></TextBlock>
+                    <ListView
+                        x:Name="Travelers"
+                        ItemTemplate="{StaticResource TravelersTemplate}"
+                        HorizontalAlignment="left"
+                        ItemsSource="{Binding Trip.Travelers}">
+                        
+                    </ListView>
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
+    </StackPanel>
+</Page>

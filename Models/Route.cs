@@ -2,22 +2,21 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace WindowsFront_end.Model
+namespace WindowsFront_end.Models
 {
     public class Route : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int RoutId { get; set; }
+        public int RouteId { get; set; }
 
         private string _description;
         public string Description
         {
             get { return _description; }
-            set { _description = value; RaisePropertyChanged("RouteDescription"); }
+            set { _description = value; RaisePropertyChanged("Description"); }
         }
         public List<Destination> Destinations { get; set; } = new List<Destination>();
-        public Trip Trip { get; set; }
 
 
         public Route(string description)
@@ -30,7 +29,7 @@ namespace WindowsFront_end.Model
 
         }
 
-        protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

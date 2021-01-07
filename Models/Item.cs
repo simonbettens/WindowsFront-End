@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using WindowsBackend.Models.DTO_s;
 
-namespace WindowsFront_end.Model
+namespace WindowsFront_end.Models
 {
     public class Item : INotifyPropertyChanged
     {
@@ -17,14 +18,6 @@ namespace WindowsFront_end.Model
             set { _name = value; RaisePropertyChanged("ItemName"); }
         }
 
-        private bool _isDone;
-        public bool IsDone
-        {
-            get { return _isDone; }
-            set { _isDone = value; RaisePropertyChanged("ItemIsDone"); }
-
-        }
-
         //Misschien niet nodig? 
         //voor mij lijkt het beter da het eenmaal wordt ingesteld en daarna niet meer kan veranderen
         private ItemType _itemType;
@@ -33,12 +26,12 @@ namespace WindowsFront_end.Model
             get { return _itemType; }
             set { _itemType = value; RaisePropertyChanged("ItemItemType"); }
         }
-        public List<Category> Categories { get; set; } = new List<Category>();
+        public List<string> Categories { get; set; } = new List<string>();
+        public List<ItemDTO.ForItemOverview> Travelers { get; set; } = new List<ItemDTO.ForItemOverview>();
 
         public Item(string name)
         {
             Name = name;
-            IsDone = false;
         }
 
         public Item()
@@ -46,7 +39,7 @@ namespace WindowsFront_end.Model
         }
 
 
-        protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

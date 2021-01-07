@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.Storage;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using WindowsFront_end.View;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -10,8 +12,10 @@ namespace WindowsFront_end
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public ApplicationDataContainer LocalSettings { get; set; }
         public MainPage()
         {
+            LocalSettings = ApplicationData.Current.LocalSettings;
             this.InitializeComponent();
 
         }
@@ -34,7 +38,8 @@ namespace WindowsFront_end
         }
         private void Logout_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            LocalSettings.Values["token"] = null;
+            this.Frame.Navigate(typeof(LogIn), null, new SuppressNavigationTransitionInfo());
         }
     }
 }

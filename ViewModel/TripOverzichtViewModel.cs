@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using WindowsFront_end.Model;
-using WindowsFront_end.Util;
+using WindowsFront_end.Models;
+using WindowsFront_end.Repository;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -50,42 +48,48 @@ namespace WindowsFront_end.ViewModel
 
         private void GetData()
         {
-            var polen = new Trip("Polen", "#008a02", DateTime.Now, DateTime.Now.AddDays(5));
+            var polen = new Trip(1,"Polen", "#008a02", DateTime.Now, DateTime.Now.AddDays(5));
             TripList.Add(polen);
-            var frankrijk = new Trip("Frankrijk", "#d8e305", DateTime.Now, DateTime.Now.AddDays(6));
+            var frankrijk = new Trip(2,"Frankrijk", "#d8e305", DateTime.Now, DateTime.Now.AddDays(6));
             TripList.Add(frankrijk);
-            var wallonie = new Trip("Wallonie", "#e30505", DateTime.Now, DateTime.Now.AddDays(7));
+            var wallonie = new Trip(3, "Wallonie", "#e30505", DateTime.Now, DateTime.Now.AddDays(7));
             TripList.Add(wallonie);
-            var zweden = new Trip("Zweden", "#63bef7", DateTime.Now, DateTime.Now.AddDays(5));
+            var zweden = new Trip(4, "Zweden", "#63bef7", DateTime.Now, DateTime.Now.AddDays(5));
             TripList.Add(zweden);
-            var singapore = new Trip("Singapore", "#ba0ba6", DateTime.Now, DateTime.Now.AddDays(5));
+            var singapore = new Trip(5, "Singapore", "#ba0ba6", DateTime.Now, DateTime.Now.AddDays(5));
             TripList.Add(singapore);
             GotDataNotSuccesfull = false;
         }
         private async void GetDataAsync()
         {
             HttpClient client = new HttpClient();
-            var json = "";
             try
             {
                 //test
                 //https://localhost:5001/api/Trip/GetAllTrips
-                json = await client.GetStringAsync(new Uri(UrlUtil.PorjectURL + "Trip/GetAllTrips"));
+                //json = await client.GetStringAsync(new Uri(UrlUtil.PorjectURL + "Trip"));
+                var list = await TripRepository.GetAllAsync();
+                foreach (var trip in list)
+                {
+                    this.TripList.Add(trip);
+                }
                 GotDataNotSuccesfull = false;
             }
             catch (Exception)
             {
                 GotDataNotSuccesfull = true;
             }
+            /*
             if (!GotDataNotSuccesfull)
             {
                 ///https://localhost:44372/api/Trip/GetAllTrips
-                var lst = JsonConvert.DeserializeObject<List<Trip>>(json);
-                foreach (Trip trip in lst)
+                var lst = JsonConvert.DeserializeObject<List<TripDTO.Overview>>(json);
+                foreach (var tripdto in lst)
                 {
+                    var trip = new Trip(tripdto);
                     this.TripList.Add(trip);
                 }
-            }
+            }*/
             IsBusy = false;
             LoadingDone = true;
         }
@@ -94,7 +98,7 @@ namespace WindowsFront_end.ViewModel
         {
             TripList.Add(newTrip);
         }
-        protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

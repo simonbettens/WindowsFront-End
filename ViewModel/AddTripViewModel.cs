@@ -4,12 +4,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using WindowsBackend.Models;
-using WindowsFront_end.Model;
+using WindowsBackend.Models.DTO_s;
+using WindowsFront_end.Models;
+using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
 {
-    public class AddTripViewModel
+     public class AddTripViewModel
     {
         public Trip Trip { get; set; }
         public bool AreFieldsValid { get; set; }
@@ -39,22 +41,23 @@ namespace WindowsFront_end.ViewModel
         public async void Save()
         {
             HttpClient client = new HttpClient();
-            TripDTO tripDTO = new TripDTO
+            TripDTO.Create tripDTO = new TripDTO.Create
             {
                 Name = Trip.Name,
                 Color = Trip.Color,
                 End = Trip.End,
                 Start = Trip.Start,
-                ItemIds = Trip.Items.Select(i => i.ItemId).ToList(),
-                RouteIds = Trip.Routes.Select(i => i.RoutId).ToList(),
+                Items = Trip.Items.Select(i => new ItemDTO.Overview(i)).ToList(),
+                Route = new RouteDTO.Overview(Trip.Route)
             };
             var json = JsonConvert.SerializeObject(tripDTO);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response;
             try
             {
+                return;
                 //https://localhost:5001/api/Trip/GetAllTrips
-                response = await client.PostAsync(new Uri(UrlUtil.PorjectURL + "Trip/CreateTrip"), data);
+                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + "trip"), data);
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Gelukt");

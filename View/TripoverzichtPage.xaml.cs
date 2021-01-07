@@ -1,5 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
-using WindowsFront_end.Model;
+using WindowsFront_end.Models;
 using WindowsFront_end.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -25,10 +25,10 @@ namespace WindowsFront_end.View
             Frame.Navigate(typeof(AddTripPage));
         }
 
-        private void TripsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Trip_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Trip selectedToDoList = (Trip)TripsGrid.SelectedItem;
-
+            var l = e as ItemClickEventArgs;
+            Frame.Navigate(typeof(TripDetailsPage), l.ClickedItem);
         }
     }
 }
