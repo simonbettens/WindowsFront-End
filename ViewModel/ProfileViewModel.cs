@@ -56,7 +56,7 @@ namespace WindowsFront_end.ViewModel
             try
             {
                 Person = await AccountController.GetPersonByEmail(currentuser);
-                GotDataNotSuccesfull = true;
+                GotDataNotSuccesfull = false;
 
             }
             catch (Exception)
