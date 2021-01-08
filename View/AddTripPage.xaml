@@ -17,7 +17,7 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*" />
             <RowDefinition Height="2*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -66,9 +66,12 @@
         </StackPanel>
 
         <!--Buttons-->
-        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="513,0,0,0">
-            <Button  Click="Cancel_Click" Content="Annuleren" CornerRadius="5,5,5,5" Margin="25"/>
-            <Button IsEnabled="{x:Bind AddTripViewModel.AreFieldsValid, Mode=OneWay}" Click="Save_Click" Content="Opslaan" CornerRadius="5,5,5,5" Margin="25"/>
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" MinWidth="700">
+            <TextBlock Text="{x:Bind AddTripViewModel.ErrorMessage,Mode=OneWay}" SelectionHighlightColor="#FFFF0318" FocusVisualPrimaryBrush="#FFFE0505" Foreground="Red" FontWeight="Bold" HorizontalAlignment="Center" ></TextBlock>
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                <Button  Click="Cancel_Click" Content="Annuleren" CornerRadius="5,5,5,5" Margin="50,10,50,10"/>
+                <Button IsEnabled="{x:Bind AddTripViewModel.AreFieldsValid, Mode=OneWay}" Click="Save_Click" Content="Opslaan" CornerRadius="5,5,5,5" Margin="50,10,50,10"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>
