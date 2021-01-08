@@ -12,42 +12,64 @@
         <converter:ColorConverter x:Key="ColorConverter" />
         <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
     </Page.Resources>
+   
     <StackPanel Orientation="Vertical">
-        <TextBlock Margin="10" Text="Profiel overzicht" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"></TextBlock>
-        <TextBlock x:Name="txtError" Visibility="{Binding GotDataNotSuccesfull, Converter={StaticResource bool2vis} }" Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Top" SelectionHighlightColor="#FFFF0318" FocusVisualPrimaryBrush="#FFFE0505" Foreground="Red" FontWeight="Bold"/>
-        <Grid Visibility="{x:Bind ViewModel.LoadingDone,Mode=OneWay, Converter={StaticResource bool2vis} }">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="narrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="pnlNames.Orientation" Value="Vertical"></Setter>
+                        <Setter Target="pnlMail_Address.Orientation" Value="Vertical"></Setter>
+                        <Setter Target="txbVoornaam.Width" Value="200"></Setter>
+                        <Setter Target="txbAchtenaam.Width" Value="200"></Setter>
+                        <Setter Target="txbEmail.Width" Value="250"></Setter>
+                        <Setter Target="txbAddress.Width" Value="250"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers >
+                        <AdaptiveTrigger MinWindowWidth="800"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="pnlNames.Orientation" Value="Horizontal"></Setter>
+                        <Setter Target="pnlMail_Address.Orientation" Value="Horizontal"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <TextBlock Margin="10" Text="Profiel overzicht" HorizontalAlignment="Center"  TextWrapping="Wrap" 
+                   VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"></TextBlock>
 
-            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
+        <TextBlock x:Name="txtError" Visibility="{Binding GotDataNotSuccesfull, Converter={StaticResource bool2vis} }" 
+                   Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" HorizontalAlignment="Center"  TextWrapping="Wrap" 
+                   VerticalAlignment="Top" SelectionHighlightColor="#FFFF0318" FocusVisualPrimaryBrush="#FFFE0505" Foreground="Red" FontWeight="Bold"/>
+
+        <StackPanel Visibility="{x:Bind ViewModel.LoadingDone,Mode=OneWay, Converter={StaticResource bool2vis} }">
+
+            <StackPanel x:Name="pnlNames" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBox x:Name="txbVoornaam" Text="{x:Bind ViewModel.Person.FirstName, Mode=TwoWay}" Header="Voornaam" VerticalAlignment="Center" Margin="15" Width="300" MinWidth="50"/>
-            </StackPanel>
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" >
                 <TextBox x:Name="txbAchtenaam" Text="{x:Bind ViewModel.Person.Name, Mode=TwoWay}" Header="Achternaam" VerticalAlignment="Center" Margin="15" Width="300" MinWidth="50"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBox x:Name="txbEmail" Text="{x:Bind ViewModel.Person.Email, Mode=TwoWay}" Header="Email" VerticalAlignment="Center" Margin="15" Width="500" MinWidth="50"/>
-                <TextBox x:Name="txbAddress" Text="{x:Bind ViewModel.Person.Address, Mode=TwoWay}" Header="Address" VerticalAlignment="Center" Margin="15" Width="500" MinWidth="50"/>
+
+            <StackPanel x:Name="pnlMail_Address" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBox x:Name="txbEmail" Text="{x:Bind ViewModel.Person.Email, Mode=TwoWay}" Header="Email" VerticalAlignment="Center" Margin="15" Width="350" MinWidth="50"/>
+                <TextBox x:Name="txbAddress" Text="{x:Bind ViewModel.Person.Address, Mode=TwoWay}" Header="Address" VerticalAlignment="Center" Margin="15" Width="350" MinWidth="50"/>
             </StackPanel>
+
             <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="0,0,0,10" Content="Updaten" Command="{x:Bind ViewModel.UpdateProfileCommand}" CornerRadius="5,5,5,5"></Button>
             </StackPanel>
-            <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="Black" 
+            <Border BorderBrush="Black" 
             BorderThickness="0,0,0,1" Background="{x:Null}" />
-            <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
                 <TextBlock Text="Statistieken" FontSize="15"  FontWeight="Bold" ></TextBlock>
             </StackPanel>
-        </Grid>
+        </StackPanel>
         <ProgressRing x:Name="LoadingIndicator" IsActive="{x:Bind ViewModel.IsBusy,Mode=OneWay}"  VerticalAlignment="Center"  Margin="75" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
+
     </StackPanel>
-    
+
 </Page>
