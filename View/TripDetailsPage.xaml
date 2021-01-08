@@ -156,7 +156,7 @@
                
             </PivotItem>
             <PivotItem Header="Route">
-                <local:AddRoute></local:AddRoute>
+                <local:AddRoute x:Name="AddRouteChildView"></local:AddRoute>
                 <!--<StackPanel>
                     <TextBlock 
                     Text="{Binding Trip.Route.Description}"

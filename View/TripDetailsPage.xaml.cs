@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using WindowsFront_end.Models;
 using WindowsFront_end.ViewModel;
@@ -21,16 +20,25 @@ namespace WindowsFront_end.View
             this.InitializeComponent();
             ViewModel = new TripDetailViewModel();
             DataContext = ViewModel;
+
+            ViewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName.Equals("Trip") && ViewModel.Trip != null)
+                {
+                    AddRouteChildView.SetTrip(ViewModel.Trip);
+                }
+            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            
+
 
             Trip trip = e.Parameter as Trip;
             ViewModel.GetTripAsync(trip.TripId);
+
             // TESTING PURPOSES
             /*var itemLijst = new List<Item>();
             itemLijst.Add(new Item("item 1"));

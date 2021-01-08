@@ -37,8 +37,17 @@ namespace WindowsFront_end.View
         {
             base.OnNavigatedTo(e);
             Trip trip = (Trip)e.Parameter;
-            ViewModel.Trip = trip;
-            trip.Route.Destinations.ForEach((dest) => ViewModel.DestinationsList.Add(dest));
+            SetTrip(trip);
+        }
+
+        public void SetTrip(Trip trip)
+        {
+            if (trip != null && trip != ViewModel.Trip)
+            {
+                ViewModel.Trip = trip;
+                ViewModel.DestinationsList.Clear();
+                trip.Route.Destinations.ForEach((dest) => ViewModel.DestinationsList.Add(dest));
+            }
         }
 
         private async void Map_MapTapped(MapControl sender, MapInputEventArgs args)

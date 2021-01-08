@@ -39,7 +39,7 @@ namespace WindowsFront_end.ViewModel
             set { _trip = value; RaisePropertyChanged("Trip"); }
         }
 
-       private List<Person> _travelers;
+        private List<Person> _travelers;
         public List<Person> Travelers
         {
             get { return _travelers; }
@@ -61,8 +61,6 @@ namespace WindowsFront_end.ViewModel
             get { return _toPackList; }
             set { _toPackList = value; RaisePropertyChanged("ToPackList"); }
         }
-
-
 
 
         public TripDetailViewModel()
