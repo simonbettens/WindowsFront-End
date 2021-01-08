@@ -17,6 +17,15 @@ namespace WindowsFront_end.ViewModel
             set { _person = value; RaisePropertyChanged("Person"); }
         }
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private string _errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set { _errorMessage = value; RaisePropertyChanged("ErrorMessage"); }
+        }
+
         private bool _gotDataNotSuccesfull;
         public bool GotDataNotSuccesfull
         {
@@ -57,11 +66,12 @@ namespace WindowsFront_end.ViewModel
             {
                 Person = await AccountController.GetPersonByEmail(currentuser);
                 GotDataNotSuccesfull = false;
-
+                ErrorMessage = "";
             }
             catch (Exception)
             {
                 GotDataNotSuccesfull = true;
+                ErrorMessage = "Kon profile niet opvragen";
             }
             LoadingDone = true;
             IsBusy = false;
@@ -77,14 +87,18 @@ namespace WindowsFront_end.ViewModel
                 if (response.IsSuccessStatusCode)
                 {
                     _localSettings.Values["current_user_email"] = Person.Email;
+                    ErrorMessage = "";
+                    GotDataNotSuccesfull = false;
                 }
                 else
                 {
+                    ErrorMessage = "Kon profile niet updaten";
                     GotDataNotSuccesfull = true;
                 }
             }
             catch (Exception)
             {
+                ErrorMessage = "Kon profile niet updaten";
                 GotDataNotSuccesfull = true;
             }
         }

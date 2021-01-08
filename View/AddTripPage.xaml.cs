@@ -26,6 +26,7 @@ namespace WindowsFront_end.View
                 var stringt = sender.ToString();
                 this.AddTripViewModel.CheckAreFieldValid();
             };
+            TripStart.MinDate = DateTime.Now;
             this.DataContext = AddTripViewModel;
         }
 
@@ -62,15 +63,16 @@ namespace WindowsFront_end.View
 
         }
 
-        private void TripStart_DateChanged(object sender, DatePickerValueChangedEventArgs e)
+        private void TripStart_DateChanged(object sender, CalendarDatePickerDateChangedEventArgs e)
         {
-            AddTripViewModel.Trip.Start = TripStart.Date.DateTime;
+            AddTripViewModel.Trip.Start = TripStart.Date.Value.DateTime;
+            TripEnd.MinDate = TripStart.Date.Value;
             AddTripViewModel.CheckAreFieldValid();
         }
 
-        private void TripEnd_DateChanged(object sender, DatePickerValueChangedEventArgs e)
+        private void TripEnd_DateChanged(object sender, CalendarDatePickerDateChangedEventArgs e)
         {
-            AddTripViewModel.Trip.End = TripEnd.Date.DateTime;
+            AddTripViewModel.Trip.End = TripEnd.Date.Value.DateTime;
             AddTripViewModel.CheckAreFieldValid();
         }
 

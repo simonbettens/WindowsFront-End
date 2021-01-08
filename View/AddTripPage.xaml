@@ -44,13 +44,17 @@
         <!--Date pickers-->
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <DatePicker x:Name="TripStart" 
-                    Header="Kies start datum " DateChanged="TripStart_DateChanged" Margin="5"/>
-            <DatePicker x:Name="TripEnd"
-                    Header="Kies eind datum "  DateChanged="TripEnd_DateChanged" Margin="5"/>
+            <CalendarDatePicker x:Name="TripStart" 
+                    Header="Kies start datum " DateChanged="TripStart_DateChanged" Margin="5" Language="nl"
+                    DateFormat="{}{day.integer(2)}-{month.abbreviated}-{year.full}" />
+            <CalendarDatePicker x:Name="TripEnd"
+                    Header="Kies eind datum "  DateChanged="TripEnd_DateChanged" Margin="5" Language="nl"
+                                DateFormat="{}{day.integer(2)}-{month.abbreviated}-{year.full}"
+                                />
         </StackPanel>
 
-
+        <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Black" 
+            BorderThickness="0,0,0,1" Background="{x:Null}" />
         <!--Color picker-->
 
         <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,15" >
@@ -64,7 +68,7 @@
         <!--Buttons-->
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="513,0,0,0">
             <Button  Click="Cancel_Click" Content="Annuleren" CornerRadius="5,5,5,5" Margin="25"/>
-            <Button IsEnabled="{Binding AreFieldValid, Mode=OneWay}" Click="Save_Click" Content="Opslaan" CornerRadius="5,5,5,5" Margin="25"/>
+            <Button IsEnabled="{x:Bind AddTripViewModel.AreFieldsValid, Mode=OneWay}" Click="Save_Click" Content="Opslaan" CornerRadius="5,5,5,5" Margin="25"/>
         </StackPanel>
     </Grid>
 </Page>
