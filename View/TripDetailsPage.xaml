@@ -11,7 +11,6 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="LightBlue">
-
     <Page.Resources>
         <muxc:StackLayout x:Name="HorizontalStackLayout" Orientation="Horizontal" Spacing="8"/>
         <converter:ColorConverter x:Key="ColorConverter" />
@@ -67,7 +66,7 @@
                    />
                 <muxc:ItemsRepeater
                     
-                    ItemsSource="{x:Bind Categories}"
+                    ItemsSource="{x:Bind Category}"
                     Layout="{StaticResource HorizontalStackLayout}"
                     ItemTemplate="{StaticResource VerticalBarTemplate}" />
 
@@ -100,18 +99,32 @@
     </Page.Resources>
 
     <StackPanel>
-        
         <Pivot
             Title="{Binding Trip.Name, Mode=OneWay}">
-            <PivotItem Header="To-do">
-                <StackPanel
+            <PivotItem Header="Voorbereiding">
+                <RelativePanel>
+                    <!--<StackPanel Orientation="Vertical">
+                        <muxc:InfoBar x:Name="toevoegenFail"
+                       Severity="Error"
+                       Title="Fout"
+                       Message="Het toevoegen van de item is niet gelukt! Zijn alle parameters ingevuld?"
+                       IsClosable="True" />
+                        <muxc:InfoBar x:Name="toevoegenJuist"
+                       Severity="Success"
+                       Title="Item is correct toegevoegd!"
+                       IsClosable="True" />
+                    </StackPanel>-->
+                    <StackPanel x:Name="stackToDo"
                     Orientation="Horizontal" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
-                    <controls:DataGrid 
+                        <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
+                    <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15"></TextBlock>
+                        <ScrollViewer Height="650" VerticalScrollBarVisibility="Auto">
+                        <controls:DataGrid 
                         x:Name="toDoGrid" 
                         AlternatingRowBackground="LightGray"
                         HeadersVisibility="Column"
                         ItemsSource="{Binding ToDoList}"
-                         AutoGenerateColumns="False"
+                         AutoGenerateColumns="False" Margin="10,0,0,0"
                         >
                         <controls:DataGrid.Columns>
                             <controls:DataGridCheckBoxColumn 
@@ -121,39 +134,52 @@
                                 Header="Titel" 
                                 Binding="{Binding Name}"/>
                             <controls:DataGridTextColumn 
-                                Header="categorieen" 
-                                Binding="{Binding Categories.Count}"/>
+                                Header="Categorie" 
+                                Binding="{Binding Category}"/>
                             <controls:DataGridTextColumn
                                 Header="Wie moet het nog doen?"
                                 Binding="{Binding Travelers.Count}"/>
                         </controls:DataGrid.Columns>
                     </controls:DataGrid>
-
-                    <controls:DataGrid 
+                        </ScrollViewer>
+                    </StackPanel>
+                        <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone , Converter={StaticResource bool2vis}}">
+                            <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15"></TextBlock>
+                            <ScrollViewer Height="650" VerticalScrollBarVisibility="Auto">
+                                <controls:DataGrid 
                         x:Name="toPackGrid" 
                         AlternatingRowBackground="LightGray"
                         HeadersVisibility="Column"
                         ItemsSource="{Binding ToPackList}"
-                         AutoGenerateColumns="False"
+                         AutoGenerateColumns="False" Margin="10,0,0,0"
                         >
-                        <controls:DataGrid.Columns>
-                            <controls:DataGridCheckBoxColumn 
+                                    <controls:DataGrid.Columns>
+                                        <controls:DataGridCheckBoxColumn 
                                 Header="Gedaan" 
                                 Binding="{Binding IsDone}"/>
-                            <controls:DataGridTextColumn 
+                                        <controls:DataGridTextColumn 
                                 Header="Titel" 
                                 Binding="{Binding Name}"/>
-                            <controls:DataGridTextColumn 
-                                Header="categorieen" 
-                                Binding="{Binding Categories.Count}"/>
-                            <controls:DataGridTextColumn
+                                        <controls:DataGridTextColumn 
+                                Header="Categorie" 
+                                Binding="{Binding Category}"/>
+                                        <controls:DataGridTextColumn
                                 Header="Wie moet het nog doen?"
                                 Binding="{Binding Travelers.Count}"/>
-                        </controls:DataGrid.Columns>
-                    </controls:DataGrid>
+                                    </controls:DataGrid.Columns>
+                                </controls:DataGrid>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </StackPanel>
+                    <Rectangle Fill="White" Height="200" Width="500" RelativePanel.Below="stackToDo" Margin="20,0,0,12" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"/>
+                    <TextBox x:Name="titel" PlaceholderText="Titel"     Width="300" Margin="55,41,0,0" FontSize="25" RelativePanel.Below="stackToDo" />
+                    <ComboBox x:Name="categorieën" PlaceholderText="Categorie" RelativePanel.Below="titel" Width="300" Margin="55,10,0,0"/>
+                    <CheckBox x:Name="todoTo" RelativePanel.Below="stackToDo" RelativePanel.RightOf="titel" Content="To Do" IsChecked="true" Width="100" Margin="20,41,0,0" RequestedTheme="Light"/>
+                    <CheckBox x:Name="topack" RelativePanel.Below="todoTo" RelativePanel.RightOf="titel" Content="To Pack" Width="100" Margin="20,10,0,0" RequestedTheme="Light"/>
+                    <Button x:Name="toevoegenItem" Style="{StaticResource AccentButtonStyle}" Click="toevoegenItem_Click" Content="Voeg toe" RelativePanel.Below="categorieën" Margin="236,20,0,0"/>
+                </RelativePanel>
 
-                </StackPanel>
-               
+
             </PivotItem>
             <PivotItem Header="Route">
                 <local:AddRoute></local:AddRoute>

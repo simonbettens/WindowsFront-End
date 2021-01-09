@@ -5,6 +5,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Models;
 using WindowsFront_end.Util;
 
@@ -97,6 +100,36 @@ namespace WindowsFront_end.ViewModel
             }
             IsBusy = false;
             LoadingDone = true;
+        }
+
+        public async Task<bool> AddItemAsync(ItemDTO.Create item)
+        {
+            var loginJson = JsonConvert.SerializeObject(item);
+
+            HttpClient client = new HttpClient();
+            var data = new StringContent(loginJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage response;
+            try
+            {
+                //https://localhost:5001/trip/${Trip.tripId}/item
+                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{Trip.TripId}/item"),
+                   data);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
     }
