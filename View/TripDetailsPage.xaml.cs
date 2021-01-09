@@ -1,5 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Models;
 using WindowsFront_end.ViewModel;
 
@@ -68,6 +69,44 @@ namespace WindowsFront_end.View
             trip.Items = itemLijst;
             trip.Routes.Add(route);
             ViewModel.Trip = trip;*/
+        }
+
+        private async void toevoegenItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ItemType type = ItemType.ToDo;
+            if (todoTo.IsEnabled && !topack.IsEnabled)
+            {
+                type = ItemType.ToDo;
+            }
+            if (topack.IsEnabled && !todoTo.IsEnabled)
+            {
+                type = ItemType.ToPack;
+            }
+            else
+            {
+                ContentDialog noWifiDialog = new ContentDialog()
+                {
+                    Title = "Fout",
+                    Content = "Je moet één van de twee opties aanduiden! (to do/to pack)",
+                    CloseButtonText = "Ok"
+                };
+            }
+            ItemDTO.Create item = new ItemDTO.Create
+            {
+                Category = categorieën.Text,
+                Name = titel.Text,
+                ItemType = type
+            };
+
+            bool succesful = await ViewModel.AddItemAsync(item);
+            if (succesful)
+            {
+                //toevoegenJuist.IsOpen = true;
+            }
+            else
+            {
+                //toevoegenFail.IsOpen = true;
+            }
         }
     }
 }

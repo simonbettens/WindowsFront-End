@@ -11,7 +11,7 @@ namespace WindowsBackend.Models.DTO_s
             public int ItemId { get; set; }
             public string Name { get; set; }
             public ItemType ItemType { get; set; }
-            public List<string> Categories { get; set; } = new List<string>();
+            public string Category { get; set; }
             public List<ForItemOverview> Persons { get; set; }
 
             public Overview(Item item)
@@ -19,7 +19,7 @@ namespace WindowsBackend.Models.DTO_s
                 ItemId = item.ItemId;
                 Name = item.Name;
                 ItemType = item.ItemType;
-                Categories = item.Categories;
+                Category = item.Category;
                 Persons = item.Travelers.ToList();
             }
 
@@ -57,6 +57,7 @@ namespace WindowsBackend.Models.DTO_s
         {
             public string Name { get; set; }
             public ItemType ItemType { get; set; }
+            public string Category { get; set; }
         }
 
 
