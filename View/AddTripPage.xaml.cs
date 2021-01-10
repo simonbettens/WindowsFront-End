@@ -23,9 +23,13 @@ namespace WindowsFront_end.View
             AddTripViewModel = new AddTripViewModel();
             this.AddTripViewModel.Trip.PropertyChanged += (sender, e) =>
             {
-                var stringt = sender.ToString();
                 this.AddTripViewModel.CheckAreFieldValid();
             };
+            this.AddTripViewModel.Trip.Route.PropertyChanged += (sender, e) =>
+            {
+                this.AddTripViewModel.CheckAreFieldValid();
+            };
+            TripStart.MinDate = DateTime.Now;
             this.DataContext = AddTripViewModel;
         }
 
@@ -62,16 +66,39 @@ namespace WindowsFront_end.View
 
         }
 
-        private void TripStart_DateChanged(object sender, DatePickerValueChangedEventArgs e)
+        private void TripStart_DateChanged(object sender, CalendarDatePickerDateChangedEventArgs e)
         {
-            AddTripViewModel.Trip.Start = TripStart.Date.DateTime;
-            AddTripViewModel.CheckAreFieldValid();
+            try
+            {
+                if (TripStart.Date.HasValue)
+                {
+                    AddTripViewModel.Trip.Start = TripStart.Date.Value.DateTime;
+                    TripEnd.MinDate = TripStart.Date.Value;
+                    AddTripViewModel.CheckAreFieldValid();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
 
-        private void TripEnd_DateChanged(object sender, DatePickerValueChangedEventArgs e)
+        private void TripEnd_DateChanged(object sender, CalendarDatePickerDateChangedEventArgs e)
         {
-            AddTripViewModel.Trip.End = TripEnd.Date.DateTime;
-            AddTripViewModel.CheckAreFieldValid();
+            try
+            {
+                if (TripEnd.Date.HasValue)
+                {
+                    AddTripViewModel.Trip.End = TripEnd.Date.Value.DateTime;
+                    TripStart.MaxDate = TripEnd.Date.Value;
+                    AddTripViewModel.CheckAreFieldValid();
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         /// <summary>

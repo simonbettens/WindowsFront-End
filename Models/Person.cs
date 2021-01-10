@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Windows.UI.Xaml.Controls;
+using WindowsFront_end.Models.DTO_s;
 
 namespace WindowsFront_end.Models
 {
@@ -15,42 +15,42 @@ namespace WindowsFront_end.Models
         public string FirstName
         {
             get { return _firstName; }
-            set { _firstName = value; RaisePropertyChanged("PersonFirstName"); }
+            set { _firstName = value; RaisePropertyChanged("FirstName"); }
         }
 
         private string _name;
         public string Name
         {
             get { return _name; }
-            set { _name = value; RaisePropertyChanged("PersonName"); }
+            set { _name = value; RaisePropertyChanged("Name"); }
         }
 
         private string _email;
         public string Email
         {
             get { return _email; }
-            set { _email = value; RaisePropertyChanged("PersonEmail"); }
+            set { _email = value; RaisePropertyChanged("Email"); }
         }
 
         private string _address;
         public string Address
         {
             get { return _address; }
-            set { _address = value; RaisePropertyChanged("PersonAddress"); }
+            set { _address = value; RaisePropertyChanged("Address"); }
         }
 
         private string _password;
         public string Password
         {
             get { return _password; }
-            set { _password = value; RaisePropertyChanged("PersonPassword"); }
+            set { _password = value; RaisePropertyChanged("Password"); }
         }
 
         private string _passwordConfirm;
         public string PasswordConfirm
         {
             get { return _passwordConfirm; }
-            set { _passwordConfirm = value; RaisePropertyChanged("PersonPasswordConfirm"); }
+            set { _passwordConfirm = value; RaisePropertyChanged("PasswordConfirm"); }
         }
         public List<Trip> Trips { get; set; } = new List<Trip>();
         public List<ItemPerson> Items { get; set; } = new List<ItemPerson>();
@@ -65,9 +65,14 @@ namespace WindowsFront_end.Models
             Password = password;
         }
 
-        public Person(TextBox naam, TextBox voornaam)
+        public Person(PersonDTO.OverviewWithItems dto)
         {
-
+            FirstName = dto.FirstName;
+            Name = dto.Name;
+            PasswordConfirm = "";
+            Address = dto.Address;
+            Email = dto.Email;
+            Password = "";
         }
         public Person()
         {
