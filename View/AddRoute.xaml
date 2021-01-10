@@ -31,16 +31,20 @@
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="mapOutput" Text="Geen locatie geselecteerd" FontWeight="Bold" FontSize="18">
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="mapOutput" Text="{x:Bind ViewModel.HeaderText, Mode=OneWay}" FontWeight="Bold" FontSize="18">
             </TextBlock>
 
-            <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DestinationInMaking.Description ,Mode=TwoWay}" Margin="10,10,10,15" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
+            <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind ViewModel.DestinationInMaking.Description ,Mode=TwoWay}" Margin="10,10,10,0" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
             </TextBox>
-            <Button Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"
-                    Margin="0,0,0,15" Content="Sla bestemming op" Click="Save_Click"
-                    CornerRadius="5,5,5,5"
-                    ></Button>
-            <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Black" 
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2"  MinWidth="150" Margin="0,0,0,0" MinHeight="100">
+                <TextBlock Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" FontSize="10" Margin="0,0,0,5" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Top" SelectionHighlightColor="#FFFF0318" FocusVisualPrimaryBrush="#FFFE0505" Foreground="Red" FontWeight="Bold"></TextBlock>
+                <Button 
+                     Content="Sla bestemming op" Command="{x:Bind ViewModel.SaveDestinationCommand}" IsEnabled="{x:Bind ViewModel.ValidationSucces,Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    CornerRadius="5,5,5,5">
+                </Button>
+            </StackPanel>
+
+            <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Black"  
             BorderThickness="0,0,0,1" Background="{x:Null}" />
         </Grid>
         <StackPanel  Grid.Column="0" Grid.Row="3" >

@@ -62,10 +62,9 @@ namespace WindowsFront_end.View
             }
             catch (Exception)
             {
-
+                ViewModel.ErrorMessage = "Er is een fout gebeurd bij het opvragen van deze locatie";
                 Debug.WriteLine("method end");
             }
-
             // If the query returns results, display the name of the town
             // contained in the address of the first result.
             if (result != null && result.Status == MapLocationFinderStatus.Success)
@@ -73,15 +72,17 @@ namespace WindowsFront_end.View
                 try
                 {
                     var loc = result.Locations[0];
-                    mapOutput.Text = loc.Address.FormattedAddress;
                     ViewModel.InputLocation(tappedGeoPosition.Latitude, tappedGeoPosition.Longitude, loc.Address.FormattedAddress);
-
                 }
                 catch (Exception)
                 {
-
+                    ViewModel.ErrorMessage = "Er is een fout gebeurd bij het opvragen van deze locatie";
                     Debug.WriteLine("method end");
                 }
+            }
+            else
+            {
+                ViewModel.ErrorMessage = "Deze locatie kon niet gevonden worden";
             }
         }
 
@@ -102,19 +103,15 @@ namespace WindowsFront_end.View
             if (result.Status == MapLocationFinderStatus.Success)
             {
                 var loc = result.Locations[0];
-                mapOutput.Text = loc.Address.FormattedAddress;
                 ViewModel.InputLocation(loc.Point.Position.Latitude, loc.Point.Position.Longitude, loc.Address.FormattedAddress);
-
                 DrawPoint(loc.Point.Position, "Nu geselecteerd");
+            }
+            else
+            {
+                ViewModel.ErrorMessage = "Deze locatie kon niet gevonden worden";
             }
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.SaveDestination();
-            AddLine();
-            mapOutput.Text = "Geen locatie geselecteerd";
-        }
         /// <summary>
         /// adds a point on the map
         /// </summary>
@@ -170,7 +167,6 @@ namespace WindowsFront_end.View
             }
             Geopath path = new Geopath(coords);
 
-
             MapPolyline polygon = new MapPolyline();
             polygon.StrokeColor = Colors.Blue;
             polygon.StrokeThickness = 5;
@@ -216,16 +212,13 @@ namespace WindowsFront_end.View
             {
                 var dest = destArray[i];
                 BasicGeoposition point = new BasicGeoposition() { Latitude = dest.Latitude, Longitude = dest.Longitude };
-
                 if (i == 0 || i == destArray.Length - 1)
                 {
                     path.Add(new EnhancedWaypoint(new Geopoint(point), WaypointKind.Stop));
-
                 }
                 else
                 {
                     path.Add(new EnhancedWaypoint(new Geopoint(point), WaypointKind.Via));
-
                 }
             }
 
@@ -237,16 +230,12 @@ namespace WindowsFront_end.View
                 MapRouteView viewOfRoute = new MapRouteView(routeResult.Route);
                 viewOfRoute.RouteColor = Colors.Yellow;
                 viewOfRoute.OutlineColor = Colors.Black;
-
                 // Add the new MapRouteView to the Routes collection
                 // of the MapControl.
                 Map.Routes.Add(viewOfRoute);
-
                 // Fit the MapControl to the route.
                 await Map.TrySetViewBoundsAsync(
-                      routeResult.Route.BoundingBox, null
-                      ,
-                      MapAnimationKind.None);
+                      routeResult.Route.BoundingBox, null, MapAnimationKind.None);
             }
         }
 

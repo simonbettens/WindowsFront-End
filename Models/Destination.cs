@@ -61,5 +61,6 @@ namespace WindowsFront_end.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }
