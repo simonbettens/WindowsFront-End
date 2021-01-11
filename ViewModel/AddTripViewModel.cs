@@ -1,14 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text;
-using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Models;
-using WindowsFront_end.Models.DTO_s;
-using WindowsFront_end.Util;
+using WindowsFront_end.Repository;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -61,24 +56,11 @@ namespace WindowsFront_end.ViewModel
         /// </summary>
         public async void Save()
         {
-            HttpClient client = new HttpClient();
-            TripDTO.Create tripDTO = new TripDTO.Create
-            {
-                Name = Trip.Name,
-                Color = Trip.Color,
-                End = Trip.End,
-                Start = Trip.Start,
-                Items = Trip.Items.Select(i => new ItemDTO.Overview(i)).ToList(),
-                Route = new RouteDTO.Overview(Trip.Route)
-            };
-            var json = JsonConvert.SerializeObject(tripDTO);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response;
+            return;
             try
             {
-                return;
                 //https://localhost:5001/api/Trip/GetAllTrips
-                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + "trip"), data);
+                HttpResponseMessage response = await TripController.CreateTrip(Trip);
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Gelukt");
