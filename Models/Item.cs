@@ -27,6 +27,7 @@ namespace WindowsFront_end.Models
             set { _itemType = value; RaisePropertyChanged("ItemItemType"); }
         }
         public string Category { get; set; }
+
         public List<ItemDTO.ForItemOverview> Travelers { get; set; } = new List<ItemDTO.ForItemOverview>();
 
         public Item(string name)

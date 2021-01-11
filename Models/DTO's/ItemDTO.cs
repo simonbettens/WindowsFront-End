@@ -12,7 +12,7 @@ namespace WindowsBackend.Models.DTO_s
             public string Name { get; set; }
             public ItemType ItemType { get; set; }
             public string Category { get; set; }
-            public List<ForItemOverview> Persons { get; set; }
+            public List<ForItemOverview> Travelers { get; set; }
 
             public Overview(Item item)
             {
@@ -20,7 +20,7 @@ namespace WindowsBackend.Models.DTO_s
                 Name = item.Name;
                 ItemType = item.ItemType;
                 Category = item.Category;
-                Persons = item.Travelers.ToList();
+                Travelers = item.Travelers.ToList();
             }
 
         }
@@ -56,8 +56,8 @@ namespace WindowsBackend.Models.DTO_s
         public class Create
         {
             public string Name { get; set; }
-            public ItemType ItemType { get; set; }
-            public string Category { get; set; }
+            public int ItemType { get; set; }
+            public int CategoryId { get; set; }
         }
 
 
