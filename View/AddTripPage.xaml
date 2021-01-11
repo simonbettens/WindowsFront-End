@@ -11,8 +11,36 @@
     Background="LightBlue">
 
     <Grid>
-        <Grid.RowDefinitions>
+        <VisualStateManager.VisualStateGroups>
+        <VisualStateGroup>
+            <VisualState x:Name="narrowView">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                        <Setter Target="tripColorViewBox.Width" Value="200"/>
+                        <Setter Target="tripColorViewBox.Height" Value="150"/>
+                        <Setter Target="txtcolorpicker.Margin" Value="0,0,0,50"/>
+                        <Setter Target="stkcolorpicker.Orientation" Value="Vertical"/>
+                        <Setter Target="stkpDatePicker.Orientation" Value="Vertical"/>
+                    </VisualState.Setters>
+            </VisualState>
+            <VisualState x:Name="wideView">
+                <VisualState.StateTriggers >
+                    <AdaptiveTrigger MinWindowWidth="1100"></AdaptiveTrigger>
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                        <Setter Target="tripColorViewBox.Width" Value="300"/>
+                        <Setter Target="tripColorViewBox.Height" Value="250"/>
+                        <Setter Target="txtcolorpicker.Margin" Value="0,0,25,0"/>
+                        <Setter Target="stkcolorpicker.Orientation" Value="Horizontal"/>
+                        <Setter Target="stkpDatePicker.Orientation" Value="Horizontal"/>
+                    </VisualState.Setters>
+            </VisualState>
+        </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
+        <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*" />
@@ -22,8 +50,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition  Width="3*" />
-
         </Grid.ColumnDefinitions>
+        
+        
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  TextAlignment="Center" 
                    Text="Maak een nieuwe reis aan"
                    FontWeight="Bold" FontSize="18"
@@ -43,7 +72,7 @@
 
         <!--Date pickers-->
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel x:Name="stkpDatePicker" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <CalendarDatePicker x:Name="TripStart" 
                     Header="Kies start datum " DateChanged="TripStart_DateChanged" Margin="5" Language="nl"
                     DateFormat="{}{day.integer(2)}-{month.abbreviated}-{year.full}" />
@@ -57,12 +86,14 @@
             BorderThickness="0,0,0,1" Background="{x:Null}" />
         <!--Color picker-->
 
-        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,15" >
-            <TextBlock Text="Geef deze reis een kleur: "  TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,25,0" />
-            <ColorPicker x:Name="TripColor" ColorChanged="TripColor_ColorChanged"
+        <StackPanel x:Name="stkcolorpicker" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,15" >
+            <TextBlock x:Name="txtcolorpicker" Text="Geef deze reis een kleur: "  TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,25,0" />
+            <Viewbox x:Name="tripColorViewBox"  Stretch="Fill">
+                <ColorPicker x:Name="TripColor" ColorChanged="TripColor_ColorChanged"
                      VerticalAlignment="Center" HorizontalAlignment="Right" 
                      ColorSpectrumShape="Ring" IsMoreButtonVisible="False" IsColorSliderVisible="False" IsColorChannelTextInputVisible="False" 
                      IsHexInputVisible="False" IsAlphaEnabled="False"  IsAlphaSliderVisible="True" IsAlphaTextInputVisible="True" />
+            </Viewbox>
         </StackPanel>
 
         <!--Buttons-->
