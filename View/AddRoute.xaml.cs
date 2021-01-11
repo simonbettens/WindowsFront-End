@@ -24,6 +24,8 @@ namespace WindowsFront_end.View
         public AddDestinationsViewModel ViewModel { get; set; }
         public MapElementsLayer CurrentPOI { get; set; }
         public MapElementsLayer CurrentLine { get; set; }
+        public MapElementsLayer CurrentPOIList { get; set; }
+
         public AddRoute()
         {
             this.InitializeComponent();
@@ -159,6 +161,7 @@ namespace WindowsFront_end.View
             if (size <= 1) return;
             var destArray = ViewModel.GetDestinationsAsArray();
             var coords = new List<BasicGeoposition>();
+            DrawPoints(destArray);
             for (var i = 0; i < destArray.Length; i++)
             {
                 var dest = destArray[i];
@@ -166,12 +169,14 @@ namespace WindowsFront_end.View
                 coords.Add(point);
 
             }
+
             Geopath path = new Geopath(coords);
 
             MapPolyline polygon = new MapPolyline();
             polygon.StrokeColor = Colors.Blue;
             polygon.StrokeThickness = 5;
             polygon.Path = path;
+            polygon.StrokeDashed = true;
 
             var MyLines = new List<MapElement>();
             MyLines.Add(polygon);
@@ -239,6 +244,40 @@ namespace WindowsFront_end.View
                 await Map.TrySetViewBoundsAsync(
                       routeResult.Route.BoundingBox, null, MapAnimationKind.None);
             }
+        }
+
+        // <summary>
+        /// adds a point on the map
+        /// </summary>
+        /// <param name="snPosition">the positions where the point needs to be placed</param>
+        /// <param name="text">text for context with the marker</param>
+        private void DrawPoints(Destination[] destArray)
+        {
+
+            var MyLandmarks = new List<MapElement>();
+            for (var i = 0; i < destArray.Length; i++)
+            {
+                var dest = destArray[i];
+                BasicGeoposition point = new BasicGeoposition() { Latitude = dest.Latitude, Longitude = dest.Longitude };
+                Geopoint snPoint = new Geopoint(point);
+
+                var icon = new MapIcon
+                {
+                    Location = snPoint,
+                    NormalizedAnchorPoint = new Point(0.5, 1.0),
+                    ZIndex = 0,
+                    Title = dest.Address
+                };
+                MyLandmarks.Add(icon);
+            }
+            var LandmarksLayer = new MapElementsLayer
+            {
+                ZIndex = 1,
+                MapElements = MyLandmarks
+            };
+            Map.Layers.Remove(CurrentPOIList);
+            Map.Layers.Add(LandmarksLayer);
+            CurrentPOIList = LandmarksLayer;
         }
 
         private void GoBack(object sender, RoutedEventArgs e)
