@@ -29,6 +29,13 @@ namespace WindowsFront_end.Repository
             }
             return list;
         }
+        public static async Task<Trip> GetTripAsync(int id)
+        {
+            var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"trip/{id}"));
+            var trip = JsonConvert.DeserializeObject<Trip>(json);
+
+            return trip;
+        }
         public static async Task<HttpResponseMessage> CreateTrip(Trip trip)
         {
             TripDTO.Create tripDTO = new TripDTO.Create

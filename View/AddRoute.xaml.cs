@@ -47,6 +47,7 @@ namespace WindowsFront_end.View
                 ViewModel.Trip = trip;
                 ViewModel.DestinationsList.Clear();
                 trip.Route.Destinations.ForEach((dest) => ViewModel.DestinationsList.Add(dest));
+                AddLine();
             }
         }
 
@@ -148,7 +149,7 @@ namespace WindowsFront_end.View
         /// <summary>
         /// adds a polyline on the map
         /// </summary>
-        private void AddLine()
+        private async void AddLine()
         {
             var size = ViewModel.DestinationsList.Count;
             if (CurrentLine != null)
@@ -186,7 +187,8 @@ namespace WindowsFront_end.View
             }
             Map.Layers.Add(LinesLayer);
             this.CurrentLine = LinesLayer;
-
+            await Map.TrySetViewBoundsAsync(GeoboundingBox.TryCompute(coords), null, MapAnimationKind.None);
+            //Map.ZoomLevel = bingMap.ZoomLevel * 0.85
 
         }
         /// <summary>

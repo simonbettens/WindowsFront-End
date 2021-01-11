@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using WindowsFront_end.Models;
-using WindowsFront_end.Util;
+using WindowsFront_end.Repository;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -75,23 +72,17 @@ namespace WindowsFront_end.ViewModel
 
         public async void GetTripAsync(int tripId)
         {
-            HttpClient client = new HttpClient();
-            var json = "";
             try
             {
-                json = await client.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"trip/{tripId}"));
+                Trip trip = await TripController.GetTripAsync(tripId);
+                Trip = trip;
+                ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
+                ToPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
                 GotDataNotSuccesfull = false;
             }
             catch
             {
                 GotDataNotSuccesfull = true;
-            }
-
-            if (!GotDataNotSuccesfull)
-            {
-                this.Trip = JsonConvert.DeserializeObject<Trip>(json);
-                ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
-                ToPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
             }
             IsBusy = false;
             LoadingDone = true;
