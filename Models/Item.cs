@@ -9,7 +9,7 @@ namespace WindowsFront_end.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int ItemId { get; }
+        public int ItemId { get; set;  }
 
         private string _name;
         public string Name
@@ -26,8 +26,9 @@ namespace WindowsFront_end.Models
             get { return _itemType; }
             set { _itemType = value; RaisePropertyChanged("ItemItemType"); }
         }
-        public List<string> Categories { get; set; } = new List<string>();
-        public List<ItemDTO.ForItemOverview> Travelers { get; set; } = new List<ItemDTO.ForItemOverview>();
+        public string Category { get; set; }
+
+        public List<ItemDTO.ForItemOverview> Persons { get; set; } = new List<ItemDTO.ForItemOverview>();
 
         public Item(string name)
         {
