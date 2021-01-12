@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using WindowsBackend.Models.DTO_s;
+using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
 using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Repository;
@@ -122,7 +123,7 @@ namespace WindowsFront_end.ViewModel
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
                         var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
-                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItem((ItemDTO.ForOnePersonOverview)sender);
+                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToDoList.Add(forOnePersonOverview);
                     }
                 });
@@ -134,7 +135,7 @@ namespace WindowsFront_end.ViewModel
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
                         var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
-                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItem((ItemDTO.ForOnePersonOverview)sender);
+                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToPackList.Add(forOnePersonOverview);
                     }
                 });
@@ -238,14 +239,13 @@ namespace WindowsFront_end.ViewModel
         public async Task<bool> MarkItemAsDoneOrNotDone(int itemId, string email)
         {
 
-            HttpClient client = new HttpClient();
             HttpResponseMessage response;
+            HttpClient _client = new HttpClient(new HttpInterceptorHandler());
             var data = new StringContent("", Encoding.UTF8, "application/json");
             try
             {
                 //https://localhost:5001/item/{id}
-                response = await client.PutAsync(new Uri(UrlUtil.ProjectURL + $"trip/item/{itemId}/{email}/mark-as-done"), data);
-
+                response = await _client.PutAsync(new Uri(UrlUtil.ProjectURL + $"trip/item/{itemId}/{email}/mark-as-done"), data);
                 if (response.IsSuccessStatusCode)
                 {
                     return true;
@@ -262,9 +262,9 @@ namespace WindowsFront_end.ViewModel
                 throw new Exception(e.Message);
             }
         }
-        public void UpdateItem(ItemDTO.ForOnePersonOverview sender)
+        public async Task UpdateItemAsync(ItemDTO.ForOnePersonOverview sender)
         {
-            //marke as done apicall
+            var response = await MarkItemAsDoneOrNotDone(sender.ItemId, sender.PersonEmail);
         }
     }
 }
