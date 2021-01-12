@@ -1,8 +1,6 @@
 
 using System;
 using Windows.ApplicationModel.DataTransfer;
-using System.Collections.Generic;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using WindowsBackend.Models.DTO_s;
@@ -99,6 +97,7 @@ namespace WindowsFront_end.View
         {
             DataTransferManager.ShowShareUI();
 
+        }
         private async void toevoegenItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ItemType type = ItemType.ToDo;
