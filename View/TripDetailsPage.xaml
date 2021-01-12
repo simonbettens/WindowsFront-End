@@ -99,6 +99,9 @@
     </Page.Resources>
 
     <StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0"> 
+            <Button Content="Share deze reis" Click="Button_Click"></Button>
+        </StackPanel>
         <Pivot
             Title="{Binding Trip.Name, Mode=OneWay}">
             <PivotItem Header="Voorbereiding" Margin="12,0,12,50">
@@ -237,5 +240,6 @@
                 </StackPanel>
             </PivotItem>
         </Pivot>
+        
     </StackPanel>
 </Page>
