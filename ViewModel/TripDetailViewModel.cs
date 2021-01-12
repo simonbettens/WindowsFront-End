@@ -6,12 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Models;
-using WindowsFront_end.Models.DTO_s;
-using WindowsFront_end.Util;
 using WindowsFront_end.Repository;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System;
+using WindowsFront_end.Models.DTO_s;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -117,8 +116,8 @@ namespace WindowsFront_end.ViewModel
         {
             try
             {
-                Trip trip = await TripController.GetTripAsync(tripId);
-                Trip = trip;
+                TripDTO.Detail trip = await TripController.GetTripAsync(tripId);
+                Trip = new Trip(trip);
                 this.Categories = Trip.Categories.Select(c => c.Name).ToList();
                 this.Travelers = Trip.Travelers;
                 ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();

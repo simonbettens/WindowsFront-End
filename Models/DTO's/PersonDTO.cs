@@ -52,6 +52,10 @@ namespace WindowsFront_end.Models.DTO_s
             public string FirstName { get; set; }
             public string Name { get; set; }
             public string Address { get; set; }
+            public Overview()
+            {
+                   
+            }
 
             public Overview(Person person)
             {
@@ -77,15 +81,15 @@ namespace WindowsFront_end.Models.DTO_s
 
             }
 
-            public OverviewWithItems(Person person)
+            /*public OverviewWithItems(Person person)
             {
                 Email = person.Email;
                 FirstName = person.FirstName;
                 Name = person.Name;
                 Address = person.Address;
                 Trips = person.Trips.Select(t => t.TripId).ToList();
-                Items = person.Items.Select(i => new ItemDTO.ForPersonOverview(i)).ToList();
-            }
+                Items = person.Items;
+            }*/
         }
 
         public class OverviewWithTrips

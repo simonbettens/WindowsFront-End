@@ -33,10 +33,10 @@ namespace WindowsFront_end.Repository
             return list;
         }
 
-        public static async Task<Trip> GetTripAsync(int id)
+        public static async Task<TripDTO.Detail> GetTripAsync(int id)
         {
             var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"trip/{id}"));
-            var trip = JsonConvert.DeserializeObject<Trip>(json);
+            var trip = JsonConvert.DeserializeObject<TripDTO.Detail>(json);
 
             return trip;
         }

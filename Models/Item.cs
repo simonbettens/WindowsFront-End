@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using WindowsBackend.Models.DTO_s;
 
@@ -29,6 +30,16 @@ namespace WindowsFront_end.Models
         public string Category { get; set; }
 
         public List<ItemDTO.ForItemOverview> Persons { get; set; } = new List<ItemDTO.ForItemOverview>();
+
+        public Item(ItemDTO.Overview dto)
+        {
+            ItemId = dto.ItemId;
+            Name = dto.Name;
+            ItemType = dto.ItemType;
+            Categories = dto.Categories;
+            Travelers = dto.Persons;
+
+        }
 
         public Item(string name)
         {
