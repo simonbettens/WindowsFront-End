@@ -9,6 +9,9 @@ using WindowsFront_end.Models;
 using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Util;
 using WindowsFront_end.Repository;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -87,6 +90,8 @@ namespace WindowsFront_end.ViewModel
             {
                 Trip trip = await TripController.GetTripAsync(tripId);
                 Trip = trip;
+                this.Categories = Trip.Categories.Select(c => c.Name).ToList();
+                this.Travelers = Trip.Travelers;
                 ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
                 ToPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
                 GotDataNotSuccesfull = false;
@@ -94,16 +99,6 @@ namespace WindowsFront_end.ViewModel
             catch
             {
                 GotDataNotSuccesfull = true;
-            }
-
-            if (!GotDataNotSuccesfull)
-            {
-                this.Trip = JsonConvert.DeserializeObject<Trip>(json);
-                this.Categories = Trip.Categories.Select(c => c.Name).ToList();
-                this.Travelers = Trip.Travelers;
-                ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
-                ToPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
-                
             }
             IsBusy = false;
             LoadingDone = true;
