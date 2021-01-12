@@ -100,6 +100,7 @@ namespace WindowsFront_end.ViewModel
             {
                 this.Trip = JsonConvert.DeserializeObject<Trip>(json);
                 this.Categories = Trip.Categories.Select(c => c.Name).ToList();
+                this.Travelers = Trip.Travelers;
                 ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
                 ToPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
                 
@@ -150,6 +151,60 @@ namespace WindowsFront_end.ViewModel
                 //https://localhost:5001/trip/${Trip.tripId}/category
                 response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{Trip.TripId}/category"),
                    data);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<bool> DeleteItemAsync(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response;
+            try
+            {
+                //https://localhost:5001/item/{id}
+                response = await client.DeleteAsync(new Uri(UrlUtil.ProjectURL + $"item/{id}"));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<bool> MarkItemAsDoneOrNotDone(int itemId, string email)
+        {
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response;
+            var data = new StringContent("", Encoding.UTF8, "application/json");
+            try
+            {
+                //https://localhost:5001/item/{id}
+                response = await client.PutAsync(new Uri(UrlUtil.ProjectURL + $"trip/item/{itemId}/{email}/mark-as-done"),data);
 
                 if (response.IsSuccessStatusCode)
                 {

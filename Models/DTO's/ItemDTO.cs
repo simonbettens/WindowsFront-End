@@ -20,7 +20,7 @@ namespace WindowsBackend.Models.DTO_s
                 Name = item.Name;
                 ItemType = item.ItemType;
                 Category = item.Category;
-                Travelers = item.Travelers.ToList();
+                Travelers = item.Persons.ToList();
             }
 
         }
@@ -31,12 +31,12 @@ namespace WindowsBackend.Models.DTO_s
             public string PersonEmail { get; set; }
             public bool IsDone { get; set; }
 
-            public ForItemOverview(ItemPerson itemPerson)
+            /*public ForItemOverview(ItemPerson itemPerson)
             {
                 PersonEmail = itemPerson.Person.Email;
                 PersonName = itemPerson.Person.Name;
                 IsDone = itemPerson.IsDone;
-            }
+            }*/
         }
 
         public class ForPersonOverview
