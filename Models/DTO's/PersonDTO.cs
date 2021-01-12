@@ -42,6 +42,8 @@ namespace WindowsFront_end.Models.DTO_s
                     Invited = person.Invites.Select(i => new TripDTO.Overview(i)).ToList();
                 }*/
 
+            }
+        }
 
             }
         }
