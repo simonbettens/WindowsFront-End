@@ -7,10 +7,71 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:WindowsFront_end.Converters"
     mc:Ignorable="d"
+    xmlns:model="using:WindowsFront_end.Models"
     Background="LightBlue">
     <Page.Resources>
         <converter:ColorConverter x:Key="ColorConverter" />
         <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
+        <converter:IntToVisibilityConverter x:Key="int2vis"/>
+        <converter:IntToVisibilityConverterReverse x:Key="int2visReverse"/>
+        <DataTemplate
+            x:Key="InviteList"
+            x:DataType="model:Trip"
+            >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="{x:Bind Name}">
+                </TextBlock>
+                <TextBlock
+                    Grid.Column="1"
+                    Text="{x:Bind Start}"
+                    />
+                <Button
+                    x:Name="accept"
+                    Content="Accept"
+                    Grid.Column="2"
+                    Click="AcceptInvite"
+                    Tag="{x:Bind TripId}"/>
+                <Button
+                    x:Name="decline"
+                    Content="Decline"
+                    Grid.Column="3"
+                    Click="DeclineInvite"
+                    Tag="{x:Bind TripId}"/>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate
+             x:Key="ItemList"
+            x:DataType="model:ItemPerson">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="{x:Bind Item.Name}">
+                </TextBlock>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
    
     <StackPanel Orientation="Vertical">
@@ -68,6 +129,40 @@
                 
             </StackPanel>
         </StackPanel>
+        <StackPanel>
+            <TextBlock
+                Text="Uitnodigingen"/>
+            <ListView
+                Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
+                ItemsSource="{Binding Person.Invites}"
+                ItemTemplate="{StaticResource InviteList}">
+
+            </ListView>
+            <TextBlock
+                Text="U hebt geen uitnodigingen op dit moment"
+                Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
+                />
+            <Border BorderBrush="Black" 
+            BorderThickness="0,0,0,1" Background="{x:Null}" />
+            
+        </StackPanel>
+        <StackPanel>
+            <TextBlock
+                Text="Todo items"/>
+            <ListView
+                Visibility="{Binding Person.Items.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
+                ItemsSource="{Binding Person.Items}"
+                ItemTemplate="{StaticResource ItemList}">
+
+            </ListView>
+            <TextBlock
+                Text="U hebt geen TODO's op dit moment"
+                Visibility="{Binding Person.Items.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
+                />
+            <Border BorderBrush="Black" 
+            BorderThickness="0,0,0,1" Background="{x:Null}" />
+        </StackPanel>
+       
         <ProgressRing x:Name="LoadingIndicator" IsActive="{x:Bind ViewModel.IsBusy,Mode=OneWay}"  VerticalAlignment="Center"  Margin="75" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
 
     </StackPanel>

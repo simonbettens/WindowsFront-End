@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.Storage;
 using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
 using WindowsFront_end.Models.DTO_s;
+using WindowsFront_end.Repository;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -16,6 +18,10 @@ namespace WindowsFront_end.ViewModel
             get { return _person; }
             set { _person = value; RaisePropertyChanged("Person"); }
         }
+
+        public bool HasInvites { get; set; } = false;
+        public bool HasNoInvites { get; set; } = true;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string _errorMessage;
@@ -32,6 +38,7 @@ namespace WindowsFront_end.ViewModel
             get { return _gotDataNotSuccesfull; }
             set { _gotDataNotSuccesfull = value; RaisePropertyChanged("GotDataNotSuccesfull"); }
         }
+
         private bool _loadingDone;
         public bool LoadingDone
         {
@@ -65,6 +72,20 @@ namespace WindowsFront_end.ViewModel
             try
             {
                 Person = await AccountController.GetPersonByEmail(currentuser);
+                if (Person.Invites.Count > 0)
+                {
+                    HasInvites = true;
+                    RaisePropertyChanged("HasInvites");
+                    HasNoInvites = false;
+                    RaisePropertyChanged("HasNoInvites");
+                }
+                else
+                {
+                    HasInvites = false;
+                    RaisePropertyChanged("HasInvites");
+                    HasNoInvites = true;
+                    RaisePropertyChanged("HasNoInvites");
+                }
                 GotDataNotSuccesfull = false;
                 ErrorMessage = "";
             }
@@ -102,6 +123,26 @@ namespace WindowsFront_end.ViewModel
                 GotDataNotSuccesfull = true;
             }
         }
+
+        public async Task AcceptInvite(int tripId)
+        {
+            var response = await TripController.AcceptInviteToTrip(tripId);
+            if (response.IsSuccessStatusCode)
+            {
+                GetProfile(_currentuser);
+            }
+
+        }
+
+        public async Task DeclineInvite(int tripId)
+        {
+            var response = await TripController.DeclineInviteToTrip(tripId);
+            if (response.IsSuccessStatusCode)
+            {
+                GetProfile(_currentuser);
+            }
+        }
+
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

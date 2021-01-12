@@ -56,7 +56,7 @@ namespace WindowsFront_end.Models
         }
         public List<Trip> Trips { get; set; } = new List<Trip>();
         public List<Trip> Invites { get; set; } = new List<Trip>();
-        public List<ItemDTO.ForPersonOverview> Items { get; set; } = new List<ItemDTO.ForPersonOverview>();
+        public List<ItemPerson> Items { get; set; } = new List<ItemPerson>();
 
         public Person(string email, string password, string firstName, string name, string passwordConfirm, string address)
         {
@@ -88,7 +88,7 @@ namespace WindowsFront_end.Models
             Password = "";
             Trips = dto.Trips.Select(t => new Trip(t)).ToList();
             Invites = dto.Invited.Select(i => new Trip(i)).ToList();
-            Items = dto.Items;
+            Items = dto.Items.Select(i => new ItemPerson(i)).ToList();
         }
         public Person()
         {

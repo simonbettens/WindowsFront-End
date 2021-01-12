@@ -23,7 +23,7 @@ namespace WindowsFront_end.Repository
         public static async Task<List<Trip>> GetAllAsync()
         {
             var list = new List<Trip>();
-            var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + "Trip"));
+            var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"trip/email/{ApplicationData.Current.LocalSettings.Values["current_user_email"]}"));
             var lst = JsonConvert.DeserializeObject<List<TripDTO.Overview>>(json);
             foreach (var tripdto in lst)
             {
@@ -59,12 +59,12 @@ namespace WindowsFront_end.Repository
 
         public static async Task<HttpResponseMessage> AcceptInviteToTrip(int tripId)
         {
-            return await _client.PutAsync(new Uri($"trip/{tripId}/accept"), null);
+            return await _client.PutAsync(new Uri($"{UrlUtil.ProjectURL}trip/{tripId}/accept"), null);
         }
 
         public static async Task<HttpResponseMessage> DeclineInviteToTrip(int tripId)
         {
-            return await _client.DeleteAsync(new Uri($"trip/{tripId}/invite/{ApplicationData.Current.LocalSettings.Values["current_user_email"]}"));
+            return await _client.DeleteAsync(new Uri($"{UrlUtil.ProjectURL}trip/{tripId}/invite/{ApplicationData.Current.LocalSettings.Values["current_user_email"]}"));
         }
     }
 

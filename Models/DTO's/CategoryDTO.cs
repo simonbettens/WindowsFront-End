@@ -30,6 +30,11 @@ namespace WindowsFront_end.Models.DTO_s
             public int CategoryId { get; set; }
             public string Name { get; set; }
 
+            public Basic()
+            {
+
+            }
+
             public Basic(Category category)
             {
                 CategoryId = category.CategoryId;

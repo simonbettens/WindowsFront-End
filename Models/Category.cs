@@ -32,6 +32,12 @@ namespace WindowsFront_end.Models
 
         }
 
+        public Category(CategoryDTO.Basic dto)
+        {
+            Name = dto.Name;
+            CategoryId = dto.CategoryId;
+        }
+
         public Category(CategoryDTO.Overview dto)
         {
             Name = dto.Name;

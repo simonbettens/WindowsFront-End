@@ -50,6 +50,11 @@ namespace WindowsBackend.Models.DTO_s
             public string Name { get; set; }
             public bool IsDone { get; set; }
 
+            public ForPersonOverview()
+            {
+
+            }
+
             public ForPersonOverview(ItemPerson itemPerson)
             {
                 ItemId = itemPerson.Item.ItemId;

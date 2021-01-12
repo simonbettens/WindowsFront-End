@@ -36,8 +36,8 @@ namespace WindowsFront_end.Models
             ItemId = dto.ItemId;
             Name = dto.Name;
             ItemType = dto.ItemType;
-            Categories = dto.Categories;
-            Travelers = dto.Persons;
+            Category = dto.Category;
+            Persons = dto.Travelers;
 
         }
 

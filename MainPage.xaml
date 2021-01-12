@@ -23,7 +23,6 @@
             <NavigationView.MenuItems>
             <NavigationViewItem Content="Profiel" x:Name="Profile" Icon="Contact" Tapped="Profile_Tapped" Margin="0,5,0,5"></NavigationViewItem>
             <NavigationViewItem Content="Reizen" x:Name="Trips" Icon="Directions" Tapped="Trips_Tapped" Margin="0,5,0,5"></NavigationViewItem>
-            <NavigationViewItem Content="Invites" Icon="People" x:Name="Members" Tapped="Members_Tapped"  Margin="0,5,0,5"></NavigationViewItem>
             <NavigationViewItem Content="Archief" Icon="Calendar" x:Name="Archive" Tapped="Archive_Tapped" Margin="0,5,0,5" ></NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
