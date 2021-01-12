@@ -53,6 +53,7 @@ namespace WindowsFront_end.Models
             set { _passwordConfirm = value; RaisePropertyChanged("PasswordConfirm"); }
         }
         public List<Trip> Trips { get; set; } = new List<Trip>();
+        public List<Trip> Invites { get; set; } = new List<Trip>();
         public List<ItemPerson> Items { get; set; } = new List<ItemPerson>();
 
         public Person(string email, string password, string firstName, string name, string passwordConfirm, string address)
@@ -65,7 +66,7 @@ namespace WindowsFront_end.Models
             Password = password;
         }
 
-        public Person(PersonDTO.OverviewWithItems dto)
+        public Person(PersonDTO.FullOverview dto)
         {
             FirstName = dto.FirstName;
             Name = dto.Name;

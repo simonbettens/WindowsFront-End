@@ -30,6 +30,7 @@ namespace WindowsFront_end.View
             };
         }
 
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);

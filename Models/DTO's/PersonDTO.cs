@@ -8,7 +8,43 @@ namespace WindowsFront_end.Models.DTO_s
 {
     public static class PersonDTO
     {
+        public class FullOverview
+        {
+            public string Email { get; set; }
+            public string FirstName { get; set; }
+            public string Name { get; set; }
+            public string Address { get; set; }
+            public List<TripDTO.Overview> Trips { get; set; } = new List<TripDTO.Overview>();
+            public List<ItemDTO.ForPersonOverview> Items { get; set; } = new List<ItemDTO.ForPersonOverview>();
+            public List<TripDTO.Overview> Invited { get; set; } = new List<TripDTO.Overview>();
 
+            public FullOverview()
+            {
+
+            }
+
+            public FullOverview(Person person)
+            {
+                Email = person.Email;
+                FirstName = person.FirstName;
+                Name = person.Name;
+                Address = person.Address;
+                /*if (person.Trips.Count > 0)
+                {
+                    Trips = person.Trips.Select(i => new TripDTO.Overview(i)).ToList();
+                }
+                if (person.Items.Count > 0)
+                {
+                    Items = person.Items.Select(i => new ItemDTO.ForPersonOverview(i)).ToList();
+                }
+                if (person.Invites.Count > 0)
+                {
+                    Invited = person.Invites.Select(i => new TripDTO.Overview(i)).ToList();
+                }*/
+
+
+            }
+        }
 
         public class Overview
         {

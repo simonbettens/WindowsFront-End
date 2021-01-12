@@ -60,6 +60,11 @@ namespace WindowsFront_end.ViewModel
                 {
                     var token = await response.Content.ReadAsStringAsync();
                     LocalSettings.Values["token"] = token;
+                    Person loggedInUser = await AccountController.GetPersonByEmail(login.Email);
+                    if (loggedInUser != null)
+                    {
+                        LocalSettings.Values["loggedInUser"] = loggedInUser.Name;
+                    }
                     return true;
                 }
                 else

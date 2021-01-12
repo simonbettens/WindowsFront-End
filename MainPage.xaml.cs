@@ -30,6 +30,7 @@ namespace WindowsFront_end
 
         private void Members_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
+            contentFrame.Navigate(typeof(InvitesPage));
         }
 
         private void Archive_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
