@@ -240,12 +240,10 @@ namespace WindowsFront_end.ViewModel
         {
 
             HttpResponseMessage response;
-            HttpClient _client = new HttpClient(new HttpInterceptorHandler());
-            var data = new StringContent("", Encoding.UTF8, "application/json");
             try
             {
                 //https://localhost:5001/item/{id}
-                response = await _client.PutAsync(new Uri(UrlUtil.ProjectURL + $"trip/item/{itemId}/{email}/mark-as-done"), data);
+                response = await ItemController.MarkItemAsDoneOrNotDone(itemId, email);
                 if (response.IsSuccessStatusCode)
                 {
                     return true;
