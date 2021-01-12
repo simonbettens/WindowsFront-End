@@ -157,6 +157,7 @@
     <Compile Include="Util\UrlUtil.cs" />
     <Compile Include="ViewModel\AddDestinationsViewModel.cs" />
     <Compile Include="ViewModel\AddTripViewModel.cs" />
+    <Compile Include="ViewModel\InvitesViewModel.cs" />
     <Compile Include="ViewModel\LoginRegistratieViewModel.cs" />
     <Compile Include="ViewModel\ProfileViewModel.cs" />
     <Compile Include="ViewModel\TripDetailViewModel.cs" />
@@ -166,6 +167,9 @@
     </Compile>
     <Compile Include="View\AddTripPage.xaml.cs">
       <DependentUpon>AddTripPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InvitesPage.xaml.cs">
+      <DependentUpon>InvitesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
@@ -216,6 +220,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AddTripPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InvitesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

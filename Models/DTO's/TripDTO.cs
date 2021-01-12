@@ -13,6 +13,15 @@ namespace WindowsFront_end.Models.DTO_s
             public string Color { get; set; }
             public DateTime Start { get; set; }
             public DateTime End { get; set; }
+
+            public Overview(Trip trip)
+            {
+                TripId = trip.TripId;
+                Name = trip.Name;
+                Color = trip.Color;
+                Start = trip.Start;
+                End = trip.End;
+            }
         }
 
         public class Create
