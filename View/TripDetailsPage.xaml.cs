@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using WindowsFront_end.Models;
 using WindowsFront_end.ViewModel;
@@ -14,6 +15,8 @@ namespace WindowsFront_end.View
     {
 
         public TripDetailViewModel ViewModel { get; set; }
+
+        private DataTransferManager _dataTransferManager = DataTransferManager.GetForCurrentView();
 
         public TripDetailsPage()
         {
@@ -33,11 +36,11 @@ namespace WindowsFront_end.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-
-
             Trip trip = e.Parameter as Trip;
             ViewModel.GetTripAsync(trip.TripId);
+
+            _dataTransferManager = DataTransferManager.GetForCurrentView();
+            _dataTransferManager.DataRequested += _dataTransferManager_DataRequested;
 
             // TESTING PURPOSES
             /*var itemLijst = new List<Item>();
@@ -68,6 +71,24 @@ namespace WindowsFront_end.View
             trip.Items = itemLijst;
             trip.Routes.Add(route);
             ViewModel.Trip = trip;*/
+        }
+
+        private void _dataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+        {
+            DataRequest request = args.Request;
+            request.Data.Properties.Title = "Mijn reis";
+            request.Data.SetText(ViewModel.ShareString);
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            _dataTransferManager.DataRequested -= _dataTransferManager_DataRequested;
+        }
+
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            DataTransferManager.ShowShareUI();
         }
     }
 }

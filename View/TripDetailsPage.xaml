@@ -189,5 +189,6 @@
                 </StackPanel>
             </PivotItem>
         </Pivot>
+        <Button Content="test share" Click="Button_Click"></Button>
     </StackPanel>
 </Page>

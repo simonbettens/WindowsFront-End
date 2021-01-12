@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using WindowsFront_end.Models;
 using WindowsFront_end.Repository;
 
@@ -59,10 +60,39 @@ namespace WindowsFront_end.ViewModel
             set { _toPackList = value; RaisePropertyChanged("ToPackList"); }
         }
 
+        public string ShareString { get; set; }
 
         public TripDetailViewModel()
         {
             GetTripAsync(1);
+        }
+
+        public void BuildShareString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("Hey ik ga op reis\n");
+            builder.Append($"Ik vertrek op {Trip.Start.ToString("dd-MM-yy")} en kom terug om {Trip.End.ToString("dd-MM-yy")}\n");
+            builder.Append("Ik bezoek deze plaatsen\n");
+            foreach (var destination in Trip.Route.Destinations)
+            {
+                builder.Append($" - {destination.Name} \n");
+            }
+            ShareString = builder.ToString();
+        }
+
+        public void BuildShareStringHTML()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<h1>Hey ik ga op reis</h1>");
+            builder.Append($"<h3>Ik vertrek op {Trip.Start.ToString("dd-MM-yy")} en kom terug om {Trip.End.ToString("dd-MM-yy")}</h3>");
+            builder.Append("<p>Ik bezoek deze plaatsen</p>");
+            builder.Append("<ol>");
+            foreach (var destination in Trip.Route.Destinations)
+            {
+                builder.Append($"<li>{destination.Name}</li>");
+            }
+            builder.Append("</ol>");
+            ShareString = builder.ToString();
         }
 
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
@@ -79,6 +109,7 @@ namespace WindowsFront_end.ViewModel
                 ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
                 ToPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
                 GotDataNotSuccesfull = false;
+                BuildShareString();
             }
             catch
             {
