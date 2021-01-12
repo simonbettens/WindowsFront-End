@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using WindowsBackend.Models.DTO_s;
@@ -31,7 +32,7 @@ namespace WindowsFront_end.View
         {
             base.OnNavigatedTo(e);
 
-            
+
 
             Trip trip = e.Parameter as Trip;
             tripId = trip.TripId;
@@ -100,13 +101,13 @@ namespace WindowsFront_end.View
                 ItemType = (int)type
             };
 
-            bool succesful = await ViewModel.AddItemAsync(item,tripId);
+            bool succesful = await ViewModel.AddItemAsync(item, tripId);
             if (succesful)
             {
                 ContentDialog categoryJustDialog2 = new ContentDialog()
                 {
                     Title = "Succes",
-                    Content = "Item werd succesvol toegevoegd aan de Trip!",
+                    Content = $"{item.Name} werd succesvol toegevoegd aan de Trip!",
                     CloseButtonText = "Ok"
                 };
 
@@ -124,12 +125,13 @@ namespace WindowsFront_end.View
                 };
 
                 await itemfoutDialog3.ShowAsync();
+
             }
         }
 
         private async void toevoegenCategory_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if(categoryName.Text.Length == 0)
+            if (categoryName.Text.Length == 0)
             {
                 ContentDialog categoryfoutDialog = new ContentDialog()
                 {
@@ -153,7 +155,7 @@ namespace WindowsFront_end.View
                     ContentDialog categoryJustDialog = new ContentDialog()
                     {
                         Title = "Succes",
-                        Content = "Categorie werd succesvol toegevoegd aan de Trip!",
+                        Content = $"Categorie {category.Name} werd succesvol toegevoegd aan de Trip!",
                         CloseButtonText = "Ok"
                     };
 
@@ -174,6 +176,40 @@ namespace WindowsFront_end.View
 
                     await categoryfoutDialog2.ShowAsync();
                 }
+            }
+        }
+
+        private async void DeleteItemToPack_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Item item = ViewModel.Trip.Items.Find(c => c.Name == ((Button)sender).Tag.ToString());
+            int id = item.ItemId;
+
+            bool succesful = await ViewModel.DeleteItemAsync(id);
+            if (succesful)
+            {
+                ContentDialog categoryJustDialog3 = new ContentDialog()
+                {
+                    Title = "Succes",
+                    Content = $" {((Button)sender).Tag} werd succesvol verwijderd aan de Trip!",
+                    CloseButtonText = "Ok"
+                };
+
+                await categoryJustDialog3.ShowAsync();
+                ViewModel.GetTripAsync(tripId);
+
+                titel.Text = "";
+
+            }
+            else
+            {
+                ContentDialog categoryfoutDialog3 = new ContentDialog()
+                {
+                    Title = "Fout",
+                    Content = "Er is iets misgelopen!",
+                    CloseButtonText = "Ok"
+                };
+
+                await categoryfoutDialog3.ShowAsync();
             }
         }
     }
