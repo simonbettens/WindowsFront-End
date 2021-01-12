@@ -1,6 +1,11 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using System.Collections.Generic;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Models;
+using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -14,6 +19,7 @@ namespace WindowsFront_end.View
     {
 
         public TripDetailViewModel ViewModel { get; set; }
+        public int tripId { get; set; }
 
         public TripDetailsPage()
         {
@@ -37,6 +43,7 @@ namespace WindowsFront_end.View
 
 
             Trip trip = e.Parameter as Trip;
+            tripId = trip.TripId;
             ViewModel.GetTripAsync(trip.TripId);
 
             // TESTING PURPOSES
@@ -68,6 +75,151 @@ namespace WindowsFront_end.View
             trip.Items = itemLijst;
             trip.Routes.Add(route);
             ViewModel.Trip = trip;*/
+        }
+
+        private async void toevoegenItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ItemType type = ItemType.ToDo;
+            if ((bool)todoTo.IsChecked && !(bool)topack.IsChecked)
+            {
+                type = ItemType.ToDo;
+            }
+            else if ((bool)topack.IsChecked && !(bool)todoTo.IsChecked)
+            {
+                type = ItemType.ToPack;
+            }
+            else
+            {
+                ContentDialog itemfoutDialog = new ContentDialog()
+                {
+                    Title = "Fout",
+                    Content = "Je moet één van de twee opties aanduiden! (to do/to pack)",
+                    CloseButtonText = "Ok"
+                };
+
+                await itemfoutDialog.ShowAsync();
+                return;
+            }
+
+            string categ = (string)categorieënBox.SelectedItem;
+            Category catbasic = ViewModel.Trip.Categories.Find(c => c.Name == categ);
+            ItemDTO.Create item = new ItemDTO.Create
+            {
+                CategoryId = catbasic.CategoryId,
+                Name = titel.Text,
+                ItemType = (int)type
+            };
+
+            bool succesful = await ViewModel.AddItemAsync(item, tripId);
+            if (succesful)
+            {
+                ContentDialog categoryJustDialog2 = new ContentDialog()
+                {
+                    Title = "Succes",
+                    Content = $"{item.Name} werd succesvol toegevoegd aan de Trip!",
+                    CloseButtonText = "Ok"
+                };
+
+                await categoryJustDialog2.ShowAsync();
+                ViewModel.GetTripAsync(tripId);
+                categoryName.Text = "";
+            }
+            else
+            {
+                ContentDialog itemfoutDialog3 = new ContentDialog()
+                {
+                    Title = "Fout",
+                    Content = "Er liep iets mis!",
+                    CloseButtonText = "Ok"
+                };
+
+                await itemfoutDialog3.ShowAsync();
+
+            }
+        }
+
+        private async void toevoegenCategory_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (categoryName.Text.Length == 0)
+            {
+                ContentDialog categoryfoutDialog = new ContentDialog()
+                {
+                    Title = "Fout",
+                    Content = "Categorie naam moet ingevuld zijn",
+                    CloseButtonText = "Ok"
+                };
+
+                await categoryfoutDialog.ShowAsync();
+            }
+            else
+            {
+                CategoryDTO.Create category = new CategoryDTO.Create
+                {
+                    Name = categoryName.Text
+                };
+
+                bool succesful = await ViewModel.AddCategoryAsync(category);
+                if (succesful)
+                {
+                    ContentDialog categoryJustDialog = new ContentDialog()
+                    {
+                        Title = "Succes",
+                        Content = $"Categorie {category.Name} werd succesvol toegevoegd aan de Trip!",
+                        CloseButtonText = "Ok"
+                    };
+
+                    await categoryJustDialog.ShowAsync();
+                    ViewModel.GetTripAsync(tripId);
+
+                    titel.Text = "";
+
+                }
+                else
+                {
+                    ContentDialog categoryfoutDialog2 = new ContentDialog()
+                    {
+                        Title = "Fout",
+                        Content = "Er is iets misgelopen!",
+                        CloseButtonText = "Ok"
+                    };
+
+                    await categoryfoutDialog2.ShowAsync();
+                }
+            }
+        }
+
+        private async void DeleteItemToPack_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Item item = ViewModel.Trip.Items.Find(c => c.Name == ((Button)sender).Tag.ToString());
+            int id = item.ItemId;
+
+            bool succesful = await ViewModel.DeleteItemAsync(id);
+            if (succesful)
+            {
+                ContentDialog categoryJustDialog3 = new ContentDialog()
+                {
+                    Title = "Succes",
+                    Content = $" {((Button)sender).Tag} werd succesvol verwijderd aan de Trip!",
+                    CloseButtonText = "Ok"
+                };
+
+                await categoryJustDialog3.ShowAsync();
+                ViewModel.GetTripAsync(tripId);
+
+                titel.Text = "";
+
+            }
+            else
+            {
+                ContentDialog categoryfoutDialog3 = new ContentDialog()
+                {
+                    Title = "Fout",
+                    Content = "Er is iets misgelopen!",
+                    CloseButtonText = "Ok"
+                };
+
+                await categoryfoutDialog3.ShowAsync();
+            }
         }
     }
 }

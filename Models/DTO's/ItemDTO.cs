@@ -11,16 +11,16 @@ namespace WindowsBackend.Models.DTO_s
             public int ItemId { get; set; }
             public string Name { get; set; }
             public ItemType ItemType { get; set; }
-            public List<string> Categories { get; set; } = new List<string>();
-            public List<ForItemOverview> Persons { get; set; }
+            public string Category { get; set; }
+            public List<ForItemOverview> Travelers { get; set; }
 
             public Overview(Item item)
             {
                 ItemId = item.ItemId;
                 Name = item.Name;
                 ItemType = item.ItemType;
-                Categories = item.Categories;
-                Persons = item.Travelers.ToList();
+                Category = item.Category;
+                Travelers = item.Persons.ToList();
             }
 
         }
@@ -31,12 +31,12 @@ namespace WindowsBackend.Models.DTO_s
             public string PersonEmail { get; set; }
             public bool IsDone { get; set; }
 
-            public ForItemOverview(ItemPerson itemPerson)
+            /*public ForItemOverview(ItemPerson itemPerson)
             {
                 PersonEmail = itemPerson.Person.Email;
                 PersonName = itemPerson.Person.Name;
                 IsDone = itemPerson.IsDone;
-            }
+            }*/
         }
 
         public class ForPersonOverview
@@ -56,7 +56,8 @@ namespace WindowsBackend.Models.DTO_s
         public class Create
         {
             public string Name { get; set; }
-            public ItemType ItemType { get; set; }
+            public int ItemType { get; set; }
+            public int CategoryId { get; set; }
         }
 
 

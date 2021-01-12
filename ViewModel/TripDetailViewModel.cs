@@ -2,8 +2,16 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Models;
+using WindowsFront_end.Models.DTO_s;
+using WindowsFront_end.Util;
 using WindowsFront_end.Repository;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -59,6 +67,12 @@ namespace WindowsFront_end.ViewModel
             set { _toPackList = value; RaisePropertyChanged("ToPackList"); }
         }
 
+        private List<string> _categories;
+        public List<string> Categories
+            {
+                get { return _categories; }
+                set { _categories = value; RaisePropertyChanged("Categories"); }
+            }
 
         public TripDetailViewModel()
         {
@@ -76,6 +90,8 @@ namespace WindowsFront_end.ViewModel
             {
                 Trip trip = await TripController.GetTripAsync(tripId);
                 Trip = trip;
+                this.Categories = Trip.Categories.Select(c => c.Name).ToList();
+                this.Travelers = Trip.Travelers;
                 ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
                 ToPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
                 GotDataNotSuccesfull = false;
@@ -88,5 +104,118 @@ namespace WindowsFront_end.ViewModel
             LoadingDone = true;
         }
 
+        public async Task<bool> AddItemAsync(ItemDTO.Create item,int tripId)
+        {
+            var loginJson = JsonConvert.SerializeObject(item);
+
+            HttpClient client = new HttpClient();
+            var data = new StringContent(loginJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage response;
+            try
+            {
+                //https://localhost:5001/trip/${tripId}/item
+                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{tripId}/item"),
+                   data);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<bool> AddCategoryAsync(CategoryDTO.Create item)
+        {
+            var loginJson = JsonConvert.SerializeObject(item);
+
+            HttpClient client = new HttpClient();
+            var data = new StringContent(loginJson, Encoding.UTF8, "application/json");
+            HttpResponseMessage response;
+            try
+            {
+                //https://localhost:5001/trip/${Trip.tripId}/category
+                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{Trip.TripId}/category"),
+                   data);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<bool> DeleteItemAsync(int id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response;
+            try
+            {
+                //https://localhost:5001/item/{id}
+                response = await client.DeleteAsync(new Uri(UrlUtil.ProjectURL + $"item/{id}"));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<bool> MarkItemAsDoneOrNotDone(int itemId, string email)
+        {
+
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response;
+            var data = new StringContent("", Encoding.UTF8, "application/json");
+            try
+            {
+                //https://localhost:5001/item/{id}
+                response = await client.PutAsync(new Uri(UrlUtil.ProjectURL + $"trip/item/{itemId}/{email}/mark-as-done"),data);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

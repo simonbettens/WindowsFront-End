@@ -55,7 +55,7 @@ namespace WindowsFront_end.Models
 
         public List<Item> Items { get; set; } = new List<Item>();
         public List<Person> Travelers { get; set; } = new List<Person>();
-        public List<string> Categories { get; set; } = new List<string>();
+        public List<Category> Categories { get; set; } = new List<Category>();
 
         public Trip(int tripId, string name, string color, DateTime start, DateTime end)
         {
