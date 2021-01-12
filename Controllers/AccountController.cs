@@ -12,6 +12,7 @@ namespace WindowsFront_end.Controllers
     public static class AccountController
     {
         private static readonly HttpClient _client = new HttpClient();
+        private static readonly HttpClient _clientWithInterceptor = new HttpClient(new HttpInterceptorHandler());
         private static readonly string _appJson = "application/json";
 
         public static async Task<HttpResponseMessage> Login(LoginDTO login)
@@ -34,7 +35,7 @@ namespace WindowsFront_end.Controllers
 
         public static async Task<Person> GetPersonByEmail(string email)
         {
-            var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"person/GetPersonByEmail?email={email}"));
+            var json = await _clientWithInterceptor.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"person/GetPersonByEmail?email={email}"));
             var account = JsonConvert.DeserializeObject<PersonDTO.OverviewWithItems>(json);
             Person p = new Person(account);
             await Task.Delay(3000);
@@ -45,7 +46,7 @@ namespace WindowsFront_end.Controllers
         {
             var json = JsonConvert.SerializeObject(dto);
             var data = new StringContent(json, Encoding.UTF8, _appJson);
-            var response = await _client.PutAsync(new Uri(UrlUtil.ProjectURL + $"person?email={email}"), data);
+            var response = await _clientWithInterceptor.PutAsync(new Uri(UrlUtil.ProjectURL + $"person?email={email}"), data);
             return response;
         }
 

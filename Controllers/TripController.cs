@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Windows.Storage;
 using WindowsBackend.Models.DTO_s;
+using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
 using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Util;
@@ -54,22 +53,6 @@ namespace WindowsFront_end.Repository
             var json = JsonConvert.SerializeObject(tripDTO);
             var data = new StringContent(json, Encoding.UTF8, _appJson);
             return await _client.PostAsync(new Uri(UrlUtil.ProjectURL + "trip"), data);
-        }
-
-        public class HttpInterceptorHandler : DelegatingHandler
-        {
-            public HttpInterceptorHandler()
-            {
-                InnerHandler = new HttpClientHandler();
-            }
-
-            protected override async Task<HttpResponseMessage> SendAsync(
-                HttpRequestMessage request,
-                CancellationToken cancellationToken)
-            {
-                request.Headers.Add("Authorization", $"Bearer {ApplicationData.Current.LocalSettings.Values["token"]}");
-                return await base.SendAsync(request, cancellationToken);
-            }
         }
     }
 
