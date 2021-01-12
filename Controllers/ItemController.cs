@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsBackend.Models.DTO_s;
+using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Util;
 
 namespace WindowsFront_end.Controllers
@@ -13,8 +16,57 @@ namespace WindowsFront_end.Controllers
 
         public static async Task<HttpResponseMessage> MarkItemAsDoneOrNotDone(int itemId, string email)
         {
-            var data = new StringContent("", Encoding.UTF8, "application/json");
-            return await _client.PutAsync(new Uri(UrlUtil.ProjectURL + $"trip/item/{itemId}/{email}/mark-as-done"), data);
+            var data = new StringContent("", Encoding.UTF8, _appJson);
+            try
+            {
+                return await _client.PutAsync(new Uri(UrlUtil.ProjectURL + $"trip/item/{itemId}/{email}/mark-as-done"), data);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public static async Task<HttpResponseMessage> AddItemAsync(ItemDTO.Create item, int tripId)
+        {
+            var Json = JsonConvert.SerializeObject(item);
+
+            var data = new StringContent(Json, Encoding.UTF8, _appJson);
+            try
+            {
+                return await _client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{tripId}/item"),data);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public static async Task<HttpResponseMessage> AddCategoryAsync(CategoryDTO.Create item,int tripId)
+        {
+            var Json = JsonConvert.SerializeObject(item);
+
+            var data = new StringContent(Json, Encoding.UTF8, _appJson);
+            try
+            {
+                return await _client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{tripId}/category"),data);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public static async Task<HttpResponseMessage> DeleteItemAsync(int id)
+        {
+            try
+            {
+                return await _client.DeleteAsync(new Uri(UrlUtil.ProjectURL + $"item/{id}"));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

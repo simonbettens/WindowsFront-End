@@ -79,6 +79,7 @@ namespace WindowsFront_end.ViewModel
         }
         public string ShareString { get; set; }
 
+
         public TripDetailViewModel()
         {
             ToDoList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
@@ -152,16 +153,10 @@ namespace WindowsFront_end.ViewModel
 
         public async Task<bool> AddItemAsync(ItemDTO.Create item, int tripId)
         {
-            var loginJson = JsonConvert.SerializeObject(item);
+                HttpResponseMessage response;
 
-            HttpClient client = new HttpClient();
-            var data = new StringContent(loginJson, Encoding.UTF8, "application/json");
-            HttpResponseMessage response;
-            try
-            {
                 //https://localhost:5001/trip/${tripId}/item
-                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{tripId}/item"),
-                   data);
+                response = await ItemController.AddItemAsync(item, tripId);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -171,27 +166,15 @@ namespace WindowsFront_end.ViewModel
                 {
                     return false;
                 }
-
-
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
         }
 
         public async Task<bool> AddCategoryAsync(CategoryDTO.Create item)
         {
-            var loginJson = JsonConvert.SerializeObject(item);
 
-            HttpClient client = new HttpClient();
-            var data = new StringContent(loginJson, Encoding.UTF8, "application/json");
-            HttpResponseMessage response;
-            try
-            {
+                HttpResponseMessage response;
+
                 //https://localhost:5001/trip/${Trip.tripId}/category
-                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{Trip.TripId}/category"),
-                   data);
+                response = await ItemController.AddCategoryAsync(item, Trip.TripId);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -201,23 +184,14 @@ namespace WindowsFront_end.ViewModel
                 {
                     return false;
                 }
-
-
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
         }
 
         public async Task<bool> DeleteItemAsync(int id)
         {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response;
-            try
-            {
-                //https://localhost:5001/item/{id}
-                response = await client.DeleteAsync(new Uri(UrlUtil.ProjectURL + $"item/{id}"));
+                HttpResponseMessage response;
+
+            //https://localhost:5001/item/{id}
+            response = await ItemController.DeleteItemAsync(id);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -227,21 +201,12 @@ namespace WindowsFront_end.ViewModel
                 {
                     return false;
                 }
-
-
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
         }
 
         public async Task<bool> MarkItemAsDoneOrNotDone(int itemId, string email)
         {
 
             HttpResponseMessage response;
-            try
-            {
                 //https://localhost:5001/item/{id}
                 response = await ItemController.MarkItemAsDoneOrNotDone(itemId, email);
                 if (response.IsSuccessStatusCode)
@@ -253,16 +218,11 @@ namespace WindowsFront_end.ViewModel
                     return false;
                 }
 
-
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
         }
         public async Task UpdateItemAsync(ItemDTO.ForOnePersonOverview sender)
         {
             var response = await MarkItemAsDoneOrNotDone(sender.ItemId, sender.PersonEmail);
+            GetTripAsync(Trip.TripId);
         }
     }
 }
