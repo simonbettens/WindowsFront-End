@@ -124,7 +124,7 @@ namespace WindowsFront_end.ViewModel
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
                         var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
-                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
+                        forOnePersonOverview.PropertyChanged += async (sender, e) => await UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToDoList.Add(forOnePersonOverview);
                     }
                 });
@@ -136,7 +136,7 @@ namespace WindowsFront_end.ViewModel
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
                         var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
-                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
+                        forOnePersonOverview.PropertyChanged += async (sender, e) => await UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToPackList.Add(forOnePersonOverview);
                     }
                 });
@@ -223,6 +223,21 @@ namespace WindowsFront_end.ViewModel
         {
             var response = await MarkItemAsDoneOrNotDone(sender.ItemId, sender.PersonEmail);
             GetTripAsync(Trip.TripId);
+        }
+
+        internal async Task<bool> ModifyItem(ItemDTO.Overview item)
+        {
+            HttpResponseMessage response;
+            //https://localhost:5001/item
+            response = await ItemController.ModifyItem(item);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

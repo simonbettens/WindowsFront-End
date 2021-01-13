@@ -17,6 +17,7 @@ namespace WindowsFront_end
         {
             LocalSettings = ApplicationData.Current.LocalSettings;
             this.InitializeComponent();
+            contentFrame.Navigate(typeof(TripoverzichtPage));
 
         }
         private void Profile_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
