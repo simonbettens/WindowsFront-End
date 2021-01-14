@@ -38,7 +38,7 @@ namespace WindowsFront_end.Controllers
             var json = await _clientWithInterceptor.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"person/GetPersonByEmail?email={email}"));
             var account = JsonConvert.DeserializeObject<PersonDTO.OverviewWithItems>(json);
             Person p = new Person(account);
-            await Task.Delay(3000);
+            //await Task.Delay(3000);
             return p;
         }
 

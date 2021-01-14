@@ -1,8 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Windows.Storage;
+using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
+using WindowsFront_end.Repository;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -39,9 +45,17 @@ namespace WindowsFront_end.ViewModel
             get { return _headerText; }
             set { _headerText = value; RaisePropertyChanged("HeaderText"); }
         }
+        private bool _sendSuccesfull;
+
+        public bool SendSuccesfull
+        {
+            get { return _sendSuccesfull; }
+            set { _sendSuccesfull = value; RaisePropertyChanged("SendSuccesfull"); }
+        }
 
         public RelayCommand RemoveDestinationCommand { get; set; }
         public RelayCommand SaveDestinationCommand { get; set; }
+        public RelayCommand SaveTripCommand { get; set; }
         public Trip Trip { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -50,6 +64,7 @@ namespace WindowsFront_end.ViewModel
         {
             RemoveDestinationCommand = new RelayCommand((param) => RemoveDesination(param.ToString()));
             SaveDestinationCommand = new RelayCommand((param) => SaveDestination());
+            SaveTripCommand = new RelayCommand((param) => SaveTripAsync());
             DestinationInMaking = new Destination();
             DestinationsList = new ObservableCollection<Destination>();
             ValidationSucces = false;
@@ -102,6 +117,36 @@ namespace WindowsFront_end.ViewModel
             Trip.Route.Destinations.Remove(dest);
             DestinationsList.Remove(dest);
         }
+
+        public async Task SaveTripAsync()
+        {
+            try
+            {
+                string currentuser = (string)ApplicationData.Current.LocalSettings.Values["current_user_email"];
+
+                var person = await AccountController.GetPersonByEmail(currentuser);
+                Trip.Travelers.Add(person);
+
+                HttpResponseMessage respone = await TripController.CreateTrip(Trip);
+
+                if (respone.IsSuccessStatusCode)
+                {
+                    SendSuccesfull = true;
+                    var list = await TripController.GetAllSimpleAsync();
+                    var insertedTrip = list.FirstOrDefault(i => i.Start.Equals(Trip.Start) && i.End.Equals(Trip.End));
+                }
+                else
+                {
+                    SendSuccesfull = false;
+                }
+            }
+            catch (Exception e)
+            {
+                var test = e.Message;
+                SendSuccesfull = false;
+            }
+        }
+
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -30,6 +30,13 @@ namespace WindowsFront_end.Repository
             }
             return list;
         }
+        public static async Task<List<TripDTO.Overview>> GetAllSimpleAsync()
+        {
+            var list = new List<Trip>();
+            var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + "Trip"));
+            var lst = JsonConvert.DeserializeObject<List<TripDTO.Overview>>(json);
+            return lst;
+        }
 
         public static async Task<Trip> GetTripAsync(int id)
         {
@@ -48,7 +55,8 @@ namespace WindowsFront_end.Repository
                 End = trip.End,
                 Start = trip.Start,
                 Items = trip.Items.Select(i => new ItemDTO.Overview(i)).ToList(),
-                Route = new RouteDTO.Overview(trip.Route)
+                Route = new RouteDTO.Overview(trip.Route),
+                Travelers = trip.Travelers.Select(i => new PersonDTO.Overview(i)).ToList()
             };
             var json = JsonConvert.SerializeObject(tripDTO);
             var data = new StringContent(json, Encoding.UTF8, _appJson);
