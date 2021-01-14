@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using WindowsFront_end.Models.DTO_s;
 
@@ -75,6 +76,20 @@ namespace WindowsFront_end.Models
             Start = dto.Start;
             End = dto.End;
 
+        }
+
+        public Trip(TripDTO.Detail dto)
+        {
+
+            TripId = dto.TripId;
+            Name = dto.Name;
+            Color = dto.Color;
+            Start = dto.Start;
+            End = dto.End;
+            Travelers = dto.Travelers.Select(t => new Person(t)).ToList();
+            Route = new Route(dto.Route);
+            Items = dto.Items.Select(i => new Item(i)).ToList();
+            Categories = dto.Categories.Select(c => new Category(c)).ToList();
         }
 
         public Trip()

@@ -16,6 +16,11 @@ namespace WindowsFront_end.Models.DTO_s
             public string Description { get; set; }
             public List<DestinationDTO.Overview> Destinations { get; set; } = new List<DestinationDTO.Overview>();
 
+            public Overview()
+            {
+
+            }
+
             public Overview(Route route)
             {
                 RouteId = route.RouteId;

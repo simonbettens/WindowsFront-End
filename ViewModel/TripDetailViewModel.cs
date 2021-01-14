@@ -12,8 +12,11 @@ using Windows.Storage;
 using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
-using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Repository;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System;
+using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
@@ -109,9 +112,9 @@ namespace WindowsFront_end.ViewModel
         {
             try
             {
-                var email = (string)ApplicationData.Current.LocalSettings.Values["current_user_email"];
-                Trip trip = await TripController.GetTripAsync(tripId);
-                Trip = trip;
+var email = (string)ApplicationData.Current.LocalSettings.Values["current_user_email"];
+                TripDTO.Detail trip = await TripController.GetTripAsync(tripId);
+                Trip = new Trip(trip);
                 this.Categories = Trip.Categories.Select(c => c.Name).ToList();
                 this.Travelers = Trip.Travelers;
                 ToDoList.Clear();
