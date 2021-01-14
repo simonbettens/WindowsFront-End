@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -39,6 +40,21 @@ namespace WindowsFront_end.ViewModel
             set { _errorMessage = value; RaisePropertyChanged("ErrorMessage"); }
         }
 
+        private bool _isOpen;
+        public bool IsOpen
+        {
+            get { return _isOpen; }
+            set { _isOpen = value; RaisePropertyChanged("IsOpen"); }
+        }
+
+        private InfoBarSeverity _infoBarSeverity;
+        public InfoBarSeverity InfoBarSeverity
+        {
+            get { return _infoBarSeverity; }
+            set { _infoBarSeverity = value; RaisePropertyChanged("InfoBarSeverity"); }
+        }
+
+
         private string _headerText;
         public string HeaderText
         {
@@ -70,6 +86,7 @@ namespace WindowsFront_end.ViewModel
             ValidationSucces = false;
             ErrorMessage = "";
             HeaderText = _defaultText;
+            InfoBarSeverity = InfoBarSeverity.Informational;
             AddValidation();
         }
 
@@ -81,6 +98,7 @@ namespace WindowsFront_end.ViewModel
             DestinationInMaking = new Destination();
             HeaderText = _defaultText;
             ValidationSucces = false;
+            IsOpen = false;
             ErrorMessage = "";
             AddValidation();
         }
@@ -100,9 +118,10 @@ namespace WindowsFront_end.ViewModel
 
         public void ValidateDestination()
         {
-            if (DestinationInMaking.Name == null || DestinationInMaking.Name == "") { ValidationSucces = false; ErrorMessage = "Zoek op een address of klik op de kaart"; return; }
-            if (DestinationInMaking.Description == null || DestinationInMaking.Description == "") { ValidationSucces = false; ErrorMessage = "Geef een beschrijving mee voor deze locatie"; return; }
+            if (DestinationInMaking.Name == null || DestinationInMaking.Name == "") { ValidationSucces = false; IsOpen = true; ErrorMessage = "Zoek op een address of klik op de kaart"; return; }
+            if (DestinationInMaking.Description == null || DestinationInMaking.Description == "") { ValidationSucces = false; IsOpen = true; ErrorMessage = "Geef een beschrijving mee voor deze locatie"; return; }
             ValidationSucces = true;
+            IsOpen = false;
             ErrorMessage = "";
         }
 
@@ -138,12 +157,17 @@ namespace WindowsFront_end.ViewModel
                 }
                 else
                 {
+                    InfoBarSeverity = InfoBarSeverity.Warning;
+                    IsOpen = true;
+                    ErrorMessage = "Er is iets fout gelopen bij het opslaan van de trip";
                     SendSuccesfull = false;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                var test = e.Message;
+                InfoBarSeverity = InfoBarSeverity.Warning;
+                IsOpen = true;
+                ErrorMessage = "Er is iets fout gelopen bij het opslaan van de trip";
                 SendSuccesfull = false;
             }
         }

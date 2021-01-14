@@ -39,10 +39,6 @@ namespace WindowsFront_end.View
                     {
                         Navigate();
                     }
-                    else
-                    {
-                        //pop-up
-                    }
                 }
             };
 

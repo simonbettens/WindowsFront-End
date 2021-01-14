@@ -7,6 +7,7 @@
     xmlns:converter="using:WindowsFront_end.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="LightBlue">
     <Page.Resources>
@@ -17,7 +18,12 @@
     <ScrollViewer>
             <StackPanel Orientation="Vertical">
             <Grid Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
-                <TextBlock x:Name="txtError" Visibility="{Binding GotDataNotSuccesfull, Converter={StaticResource bool2vis} }" Text="Er is iets fout gelopen bij het opvragen van de trips" HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Top" SelectionHighlightColor="#FFFF0318" FocusVisualPrimaryBrush="#FFFE0505" Foreground="Red" FontWeight="Bold"/>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <muxc:InfoBar IsOpen="{x:Bind ViewModel.GotDataNotSuccesfull,Mode=OneWay}"
+                    Severity="Error" IsClosable="False"
+                    Message="Er is iets fout gelopen bij het opvragen van de trips">
+                    </muxc:InfoBar>
+                </StackPanel>
                 <GridView IsItemClickEnabled="True" x:Name="TripsGrid" ItemClick="Trip_Click"  ItemsSource="{Binding TripList}" HorizontalAlignment="Center">
                     <GridView.ItemTemplate>
                         <DataTemplate>

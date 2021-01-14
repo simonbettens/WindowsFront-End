@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:WindowsFront_end.Converters"
     mc:Ignorable="d"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:model="using:WindowsFront_end.Models" xmlns:viewmodel="using:WindowsFront_end.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ProfileViewModel}"
     Background="LightBlue">
     <Page.Resources>
@@ -110,10 +111,13 @@
         </VisualStateManager.VisualStateGroups>
         <TextBlock Margin="10" Text="Profiel overzicht" HorizontalAlignment="Center"  TextWrapping="Wrap" 
                    VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"></TextBlock>
-
-        <TextBlock x:Name="txtError" Visibility="{Binding GotDataNotSuccesfull, Converter={StaticResource bool2vis} }" 
-                   Text="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}" HorizontalAlignment="Center"  TextWrapping="Wrap" 
-                   VerticalAlignment="Top" SelectionHighlightColor="#FFFF0318" FocusVisualPrimaryBrush="#FFFE0505" Foreground="Red" FontWeight="Bold"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <muxc:InfoBar IsOpen="{x:Bind ViewModel.GotDataNotSuccesfull,Mode=OneWay}"
+                    Severity="Warning"
+                    Message="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}">
+            </muxc:InfoBar>
+        </StackPanel>
+        
 
         <StackPanel Visibility="{x:Bind ViewModel.LoadingDone,Mode=OneWay, Converter={StaticResource bool2vis} }">
 
