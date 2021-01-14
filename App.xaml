@@ -5,16 +5,21 @@
     xmlns:local="using:WindowsFront_end"
     xmlns:muxm="using:Microsoft.UI.Xaml.Media">
     <Application.Resources>
-        <Style TargetType="TextBlock" x:Key="Title" >
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Margin" Value="5"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Name="Textboxstyle" TargetType="TextBlock" x:Key="Title" >
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+            <Style x:Name="TextBlockMargin" TargetType="TextBlock">
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

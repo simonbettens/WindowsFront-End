@@ -6,7 +6,7 @@
     xmlns:viewmodel="using:WindowsFront_end.ViewModel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Windows.UI.Xaml.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="LightBlue">
 
@@ -51,13 +51,20 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition  Width="3*" />
         </Grid.ColumnDefinitions>
-        
-        
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  TextAlignment="Center" 
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <muxc:InfoBar IsOpen="True"
+                    Severity="Error"
+                    Title="Title"
+                    Message="Essential app message for your users to be informed of, acknowledge, or take action on.">
+            </muxc:InfoBar>
+
+            <TextBlock  TextAlignment="Center" 
                    Text="Maak een nieuwe reis aan"
                    FontWeight="Bold" FontSize="18"
                    VerticalAlignment="Center">
-        </TextBlock>
+            </TextBlock>
+        </StackPanel>
+        
         <!--Name trip-->
         <StackPanel Grid.Column="0"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" >
             <TextBox Text="{x:Bind AddTripViewModel.Trip.Name ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="TripName"  Header="Geef de naam van de reis in:"
