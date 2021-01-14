@@ -50,6 +50,13 @@ namespace WindowsFront_end.ViewModel
             get { return _travelers; }
             set { _travelers = value; RaisePropertyChanged("Travelers"); }
         }
+
+        private string _inviteEmail;
+        public string InviteEmail 
+        {
+            get { return _inviteEmail; }
+            set { _inviteEmail = value; RaisePropertyChanged("InviteEmail"); }
+        }
         /*
         private List<Item> _toDoList;
         public List<Item> ToDoList
@@ -219,6 +226,16 @@ namespace WindowsFront_end.ViewModel
         {
             var response = await MarkItemAsDoneOrNotDone(sender.ItemId, sender.PersonEmail);
             GetTripAsync(Trip.TripId);
+        }
+
+        public async Task InvitePersonToTrip()
+        {
+            var response = await TripController.InvitePersonToTrip(Trip.TripId, InviteEmail);
+            if(response.IsSuccessStatusCode)
+            {
+                InviteEmail = "";
+                GetTripAsync(Trip.TripId);
+            }
         }
     }
 }

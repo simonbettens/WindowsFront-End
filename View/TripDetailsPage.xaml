@@ -244,6 +244,23 @@
                         ItemsSource="{Binding Trip.Travelers}">
 
                     </ListView>
+                    <TextBlock
+                        Text="Mensen uitnodigen"
+                        Style="{StaticResource Title}"
+                        />
+                    <TextBox
+                        Text="{Binding InviteEmail, Mode=TwoWay}"/>
+                    <Button
+                        Content="uitnodigen"
+                        Click="Invite_Click"
+                        />
+                    <ListView
+                        x:Name="Invited"
+                        ItemTemplate="{StaticResource TravelersTemplate}"
+                        HorizontalAlignment="left"
+                        ItemsSource="{Binding Trip.Invited}">
+
+                    </ListView>
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Share">

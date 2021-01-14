@@ -55,7 +55,19 @@ namespace WindowsFront_end.Models
 
 
         public List<Item> Items { get; set; } = new List<Item>();
-        public List<Person> Travelers { get; set; } = new List<Person>();
+
+        private List<Person> _travelers = new List<Person>();
+        public List<Person> Travelers
+        {
+            get { return _travelers; }
+            set { _travelers = value; RaisePropertyChanged("Travelers"); }
+        }
+        private List<Person> _invited = new List<Person>();
+        public List<Person> Invited
+        {
+            get { return _invited; }
+            set { _invited = value; RaisePropertyChanged("Invited"); }
+        }
         public List<Category> Categories { get; set; } = new List<Category>();
 
         public Trip(int tripId, string name, string color, DateTime start, DateTime end)
@@ -87,6 +99,7 @@ namespace WindowsFront_end.Models
             Start = dto.Start;
             End = dto.End;
             Travelers = dto.Travelers.Select(t => new Person(t)).ToList();
+            Invited = dto.Invited.Select(t => new Person(t)).ToList();
             Route = new Route(dto.Route);
             Items = dto.Items.Select(i => new Item(i)).ToList();
             Categories = dto.Categories.Select(c => new Category(c)).ToList();

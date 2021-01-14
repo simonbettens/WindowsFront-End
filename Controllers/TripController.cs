@@ -73,6 +73,11 @@ namespace WindowsFront_end.Repository
         {
             return await _client.DeleteAsync(new Uri($"{UrlUtil.ProjectURL}trip/{tripId}/invite/{ApplicationData.Current.LocalSettings.Values["current_user_email"]}"));
         }
+
+        public static async Task<HttpResponseMessage> InvitePersonToTrip(int tripId, string email)
+        {
+            return await _client.PostAsync(new Uri($"{UrlUtil.ProjectURL}trip/{tripId}/invite/{email}"), null);
+        }
     }
 
 

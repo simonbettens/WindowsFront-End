@@ -171,6 +171,11 @@ namespace WindowsFront_end.View
             }
         }
 
+        private async void Invite_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            await ViewModel.InvitePersonToTrip();
+        }
+
         private async void toevoegenCategory_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             if (categoryName.Text.Length == 0)
