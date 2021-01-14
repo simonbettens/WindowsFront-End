@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -12,12 +10,8 @@ using Windows.Storage;
 using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
-using WindowsFront_end.Repository;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System;
 using WindowsFront_end.Models.DTO_s;
-using WindowsFront_end.Util;
+using WindowsFront_end.Repository;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -87,7 +81,6 @@ namespace WindowsFront_end.ViewModel
         {
             ToDoList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
             ToPackList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
-            GetTripAsync(1);
         }
 
         public void BuildShareString()
@@ -112,7 +105,7 @@ namespace WindowsFront_end.ViewModel
         {
             try
             {
-var email = (string)ApplicationData.Current.LocalSettings.Values["current_user_email"];
+                var email = (string)ApplicationData.Current.LocalSettings.Values["current_user_email"];
                 TripDTO.Detail trip = await TripController.GetTripAsync(tripId);
                 Trip = new Trip(trip);
                 this.Categories = Trip.Categories.Select(c => c.Name).ToList();
@@ -156,70 +149,70 @@ var email = (string)ApplicationData.Current.LocalSettings.Values["current_user_e
 
         public async Task<bool> AddItemAsync(ItemDTO.Create item, int tripId)
         {
-                HttpResponseMessage response;
+            HttpResponseMessage response;
 
-                //https://localhost:5001/trip/${tripId}/item
-                response = await ItemController.AddItemAsync(item, tripId);
+            //https://localhost:5001/trip/${tripId}/item
+            response = await ItemController.AddItemAsync(item, tripId);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<bool> AddCategoryAsync(CategoryDTO.Create item)
         {
 
-                HttpResponseMessage response;
+            HttpResponseMessage response;
 
-                //https://localhost:5001/trip/${Trip.tripId}/category
-                response = await ItemController.AddCategoryAsync(item, Trip.TripId);
+            //https://localhost:5001/trip/${Trip.tripId}/category
+            response = await ItemController.AddCategoryAsync(item, Trip.TripId);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<bool> DeleteItemAsync(int id)
         {
-                HttpResponseMessage response;
+            HttpResponseMessage response;
 
             //https://localhost:5001/item/{id}
             response = await ItemController.DeleteItemAsync(id);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<bool> MarkItemAsDoneOrNotDone(int itemId, string email)
         {
 
             HttpResponseMessage response;
-                //https://localhost:5001/item/{id}
-                response = await ItemController.MarkItemAsDoneOrNotDone(itemId, email);
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            //https://localhost:5001/item/{id}
+            response = await ItemController.MarkItemAsDoneOrNotDone(itemId, email);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
         public async Task UpdateItemAsync(ItemDTO.ForOnePersonOverview sender)

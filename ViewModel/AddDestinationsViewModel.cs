@@ -131,9 +131,10 @@ namespace WindowsFront_end.ViewModel
 
                 if (respone.IsSuccessStatusCode)
                 {
-                    SendSuccesfull = true;
                     var list = await TripController.GetAllSimpleAsync();
-                    var insertedTrip = list.FirstOrDefault(i => i.Start.Equals(Trip.Start) && i.End.Equals(Trip.End));
+                    var insertedTrip = list.FirstOrDefault(i => i.Start.Equals(Trip.Start) && i.End.Equals(Trip.End) && i.Name.Equals(Trip.Name) || i.Color.Equals(Trip.Color));
+                    Trip.TripId = insertedTrip.TripId;
+                    SendSuccesfull = true;
                 }
                 else
                 {

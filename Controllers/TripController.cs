@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using WindowsBackend.Models.DTO_s;
@@ -56,7 +55,7 @@ namespace WindowsFront_end.Repository
                 Color = trip.Color,
                 End = trip.End,
                 Start = trip.Start,
-                Items = trip.Items.Select(i => new ItemDTO.Overview(i)).ToList(),
+                Items = new List<ItemDTO.Overview>(),
                 Route = new RouteDTO.Overview(trip.Route),
                 Travelers = trip.Travelers.Select(i => new PersonDTO.Overview(i)).ToList()
             };

@@ -13,7 +13,7 @@ namespace WindowsFront_end.Models.DTO_s
             public string Color { get; set; }
             public DateTime Start { get; set; }
             public DateTime End { get; set; }
-           
+
         }
 
         public class Create

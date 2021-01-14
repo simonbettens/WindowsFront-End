@@ -37,7 +37,7 @@ namespace WindowsFront_end.Models
             Name = dto.Name;
             ItemType = dto.ItemType;
             Category = dto.Category;
-            Persons = dto.Travelers;
+            Persons = dto.Persons;
 
         }
 
