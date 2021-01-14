@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using WindowsFront_end.Models.DTO_s;
 
 namespace WindowsFront_end.Models
 {
@@ -22,6 +24,13 @@ namespace WindowsFront_end.Models
         public Route(string description)
         {
             Description = description;
+        }
+
+        public Route(RouteDTO.Overview dto)
+        {
+            Description = dto.Description;
+            RouteId = dto.RouteId;
+            Destinations = dto.Destinations.Select(d => new Destination(d)).ToList();
         }
 
         public Route()

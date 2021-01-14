@@ -7,10 +7,78 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:WindowsFront_end.Converters"
     mc:Ignorable="d"
+    xmlns:model="using:WindowsFront_end.Models" xmlns:viewmodel="using:WindowsFront_end.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ProfileViewModel}"
     Background="LightBlue">
     <Page.Resources>
         <converter:ColorConverter x:Key="ColorConverter" />
         <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
+        <converter:IntToVisibilityConverter x:Key="int2vis"/>
+        <converter:IntToVisibilityConverterReverse x:Key="int2visReverse"/>
+        <DataTemplate
+            x:Key="InviteList"
+            x:DataType="model:Trip"
+            >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="auto"/>
+                    <ColumnDefinition
+                        Width="auto"/>
+                    <ColumnDefinition
+                        Width="auto"/>
+                    <ColumnDefinition
+                        Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="{x:Bind Name}">
+                </TextBlock>
+                <TextBlock
+                    Grid.Column="1"
+                    Text="{x:Bind Start}"
+                    />
+                <Button
+                    x:Name="accept"
+                    Content="Accept"
+                    Grid.Column="2"
+                    Click="AcceptInvite"
+                    Tag="{x:Bind TripId}"/>
+                <Button
+                    x:Name="decline"
+                    Content="Decline"
+                    Grid.Column="3"
+                    Click="DeclineInvite"
+                    Tag="{x:Bind TripId}"/>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate
+             x:Key="ItemList"
+            x:DataType="model:ItemPerson">
+            <Grid
+                MinWidth="500">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="1*"/>
+                    <ColumnDefinition
+                        Width="1*"/>
+                    <ColumnDefinition
+                        Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="{x:Bind Item.Name}"
+                    MaxWidth="166"/>
+                <TextBlock
+                    Grid.Column="1"
+                    Text="{x:Bind Item.Category}"
+                    MaxWidth="166"/>
+                <TextBlock
+                    Grid.Column="2"
+                    Text="{x:Bind Item.ItemType}"
+                    MaxWidth="166"/>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
    
     <StackPanel Orientation="Vertical">
@@ -68,6 +136,48 @@
                 
             </StackPanel>
         </StackPanel>
+        <StackPanel>
+            <TextBlock
+                Style="{StaticResource Title}"
+                Text="Uitnodigingen"/>
+            <ListView
+                Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
+                ItemsSource="{Binding Person.Invites}"
+                ItemTemplate="{StaticResource InviteList}"
+                BorderThickness="1"
+        BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                HorizontalAlignment="Stretch"
+                Margin="50, 0, 50, 0"
+>
+
+            </ListView>
+            <TextBlock
+                Text="U hebt geen uitnodigingen op dit moment"
+                Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
+                />
+        </StackPanel>
+        <StackPanel>
+            <TextBlock
+                Style="{StaticResource Title}"
+                Text="Te doen"/>
+            <ListView
+                Visibility="{Binding Items.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
+                ItemsSource="{Binding Items}"
+                ItemTemplate="{StaticResource ItemList}"
+                HorizontalAlignment="Stretch"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                Margin="50, 0, 50, 0"
+
+>
+
+            </ListView>
+            <TextBlock
+                Text="U hebt geen TODO's op dit moment"
+                Visibility="{Binding Person.Items.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
+                />
+        </StackPanel>
+       
         <ProgressRing x:Name="LoadingIndicator" IsActive="{x:Bind ViewModel.IsBusy,Mode=OneWay}"  VerticalAlignment="Center"  Margin="75" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
 
     </StackPanel>

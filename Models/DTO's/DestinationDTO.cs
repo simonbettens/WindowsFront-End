@@ -17,6 +17,11 @@ namespace WindowsFront_end.Models.DTO_s
             public double Latitude { get; set; }
             public double Longitude { get; set; }
 
+            public Overview()
+            {
+
+            }
+
             public Overview(Destination destination)
             {
                 DestinationId = destination.DestinationId;

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
 using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
@@ -21,7 +23,7 @@ namespace WindowsFront_end.Repository
         public static async Task<List<Trip>> GetAllAsync()
         {
             var list = new List<Trip>();
-            var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + "Trip"));
+            var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"trip/email/{ApplicationData.Current.LocalSettings.Values["current_user_email"]}"));
             var lst = JsonConvert.DeserializeObject<List<TripDTO.Overview>>(json);
             foreach (var tripdto in lst)
             {
@@ -38,10 +40,10 @@ namespace WindowsFront_end.Repository
             return lst;
         }
 
-        public static async Task<Trip> GetTripAsync(int id)
+        public static async Task<TripDTO.Detail> GetTripAsync(int id)
         {
             var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"trip/{id}"));
-            var trip = JsonConvert.DeserializeObject<Trip>(json);
+            var trip = JsonConvert.DeserializeObject<TripDTO.Detail>(json);
 
             return trip;
         }
@@ -62,6 +64,17 @@ namespace WindowsFront_end.Repository
             var data = new StringContent(json, Encoding.UTF8, _appJson);
             return await _client.PostAsync(new Uri(UrlUtil.ProjectURL + "trip"), data);
         }
+
+        public static async Task<HttpResponseMessage> AcceptInviteToTrip(int tripId)
+        {
+            return await _client.PutAsync(new Uri($"{UrlUtil.ProjectURL}trip/{tripId}/accept"), null);
+        }
+
+        public static async Task<HttpResponseMessage> DeclineInviteToTrip(int tripId)
+        {
+            return await _client.DeleteAsync(new Uri($"{UrlUtil.ProjectURL}trip/{tripId}/invite/{ApplicationData.Current.LocalSettings.Values["current_user_email"]}"));
+        }
     }
+
 
 }
