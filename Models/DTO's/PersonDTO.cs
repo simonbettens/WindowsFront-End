@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using WindowsBackend.Models.DTO_s;
 
 namespace WindowsFront_end.Models.DTO_s
@@ -45,8 +44,8 @@ namespace WindowsFront_end.Models.DTO_s
             }
         }
 
-            }
-        }
+
+
 
         public class Overview
         {
@@ -56,7 +55,7 @@ namespace WindowsFront_end.Models.DTO_s
             public string Address { get; set; }
             public Overview()
             {
-                   
+
             }
 
             public Overview(Person person)
@@ -134,4 +133,6 @@ namespace WindowsFront_end.Models.DTO_s
         }
 
     }
+
+
 }

@@ -19,9 +19,6 @@ namespace WindowsFront_end.ViewModel
             set { _person = value; RaisePropertyChanged("Person"); }
         }
 
-        public bool HasInvites { get; set; } = false;
-        public bool HasNoInvites { get; set; } = true;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string _errorMessage;
@@ -72,20 +69,6 @@ namespace WindowsFront_end.ViewModel
             try
             {
                 Person = await AccountController.GetPersonByEmail(currentuser);
-                if (Person.Invites.Count > 0)
-                {
-                    HasInvites = true;
-                    RaisePropertyChanged("HasInvites");
-                    HasNoInvites = false;
-                    RaisePropertyChanged("HasNoInvites");
-                }
-                else
-                {
-                    HasInvites = false;
-                    RaisePropertyChanged("HasInvites");
-                    HasNoInvites = true;
-                    RaisePropertyChanged("HasNoInvites");
-                }
                 GotDataNotSuccesfull = false;
                 ErrorMessage = "";
             }

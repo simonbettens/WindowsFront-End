@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converter="using:WindowsFront_end.Converters"
     mc:Ignorable="d"
-    xmlns:model="using:WindowsFront_end.Models"
+    xmlns:model="using:WindowsFront_end.Models" xmlns:viewmodel="using:WindowsFront_end.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ProfileViewModel}"
     Background="LightBlue">
     <Page.Resources>
         <converter:ColorConverter x:Key="ColorConverter" />
