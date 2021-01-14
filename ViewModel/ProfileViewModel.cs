@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
+using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
 using WindowsFront_end.Models.DTO_s;
@@ -17,6 +20,13 @@ namespace WindowsFront_end.ViewModel
         {
             get { return _person; }
             set { _person = value; RaisePropertyChanged("Person"); }
+        }
+
+        private List<ItemPerson> _items;
+        public List<ItemPerson> Items
+        {
+            get { return _items; }
+            set { _items = value; RaisePropertyChanged("Items"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -69,6 +79,7 @@ namespace WindowsFront_end.ViewModel
             try
             {
                 Person = await AccountController.GetPersonByEmail(currentuser);
+                Items = Person.Items.Where(i => !i.IsDone).ToList();
                 GotDataNotSuccesfull = false;
                 ErrorMessage = "";
             }

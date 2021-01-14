@@ -21,13 +21,13 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
-                        Width="*"/>
+                        Width="auto"/>
                     <ColumnDefinition
-                        Width="*"/>
+                        Width="auto"/>
                     <ColumnDefinition
-                        Width="*"/>
+                        Width="auto"/>
                     <ColumnDefinition
-                        Width="*"/>
+                        Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
@@ -55,21 +55,28 @@
         <DataTemplate
              x:Key="ItemList"
             x:DataType="model:ItemPerson">
-            <Grid>
+            <Grid
+                MinWidth="500">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
-                        Width="*"/>
+                        Width="1*"/>
                     <ColumnDefinition
-                        Width="*"/>
+                        Width="1*"/>
                     <ColumnDefinition
-                        Width="*"/>
-                    <ColumnDefinition
-                        Width="*"/>
+                        Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
-                    Text="{x:Bind Item.Name}">
-                </TextBlock>
+                    Text="{x:Bind Item.Name}"
+                    MaxWidth="166"/>
+                <TextBlock
+                    Grid.Column="1"
+                    Text="{x:Bind Item.Category}"
+                    MaxWidth="166"/>
+                <TextBlock
+                    Grid.Column="2"
+                    Text="{x:Bind Item.ItemType}"
+                    MaxWidth="166"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -131,36 +138,44 @@
         </StackPanel>
         <StackPanel>
             <TextBlock
+                Style="{StaticResource Title}"
                 Text="Uitnodigingen"/>
             <ListView
                 Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
                 ItemsSource="{Binding Person.Invites}"
-                ItemTemplate="{StaticResource InviteList}">
+                ItemTemplate="{StaticResource InviteList}"
+                BorderThickness="1"
+        BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                HorizontalAlignment="Stretch"
+                Margin="50, 0, 50, 0"
+>
 
             </ListView>
             <TextBlock
                 Text="U hebt geen uitnodigingen op dit moment"
                 Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
                 />
-            <Border BorderBrush="Black" 
-            BorderThickness="0,0,0,1" Background="{x:Null}" />
-            
         </StackPanel>
         <StackPanel>
             <TextBlock
-                Text="Todo items"/>
+                Style="{StaticResource Title}"
+                Text="Te doen"/>
             <ListView
-                Visibility="{Binding Person.Items.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
-                ItemsSource="{Binding Person.Items}"
-                ItemTemplate="{StaticResource ItemList}">
+                Visibility="{Binding Items.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
+                ItemsSource="{Binding Items}"
+                ItemTemplate="{StaticResource ItemList}"
+                HorizontalAlignment="Stretch"
+                BorderThickness="1"
+                BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                Margin="50, 0, 50, 0"
+
+>
 
             </ListView>
             <TextBlock
                 Text="U hebt geen TODO's op dit moment"
                 Visibility="{Binding Person.Items.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
                 />
-            <Border BorderBrush="Black" 
-            BorderThickness="0,0,0,1" Background="{x:Null}" />
         </StackPanel>
        
         <ProgressRing x:Name="LoadingIndicator" IsActive="{x:Bind ViewModel.IsBusy,Mode=OneWay}"  VerticalAlignment="Center"  Margin="75" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
