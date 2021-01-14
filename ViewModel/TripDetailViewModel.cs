@@ -79,9 +79,12 @@ namespace WindowsFront_end.ViewModel
         }
         public string ShareString { get; set; }
 
+        public RelayCommand ModifyItemCommand { get; set; }
+
 
         public TripDetailViewModel()
         {
+            ModifyItemCommand = new RelayCommand(async (param) => await ModifyItem((ItemDTO.ForOnePersonOverview)param));
             ToDoList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
             ToPackList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
             GetTripAsync(1);
@@ -225,11 +228,14 @@ namespace WindowsFront_end.ViewModel
             GetTripAsync(Trip.TripId);
         }
 
-        internal async Task<bool> ModifyItem(ItemDTO.Overview item)
+        internal async Task<bool> ModifyItem(ItemDTO.ForOnePersonOverview item)
         {
+            Item itemNor = Trip.Items.Find(c => c.ItemId == item.ItemId);
+            ItemDTO.Overview itemOver = new ItemDTO.Overview(itemNor);
+
             HttpResponseMessage response;
             //https://localhost:5001/item
-            response = await ItemController.ModifyItem(item);
+            response = await ItemController.ModifyItem(itemOver);
             if (response.IsSuccessStatusCode)
             {
                 return true;

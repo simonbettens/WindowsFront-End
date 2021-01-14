@@ -1,6 +1,7 @@
 
 using System;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using WindowsBackend.Models.DTO_s;
@@ -257,7 +258,8 @@ namespace WindowsFront_end.View
             Item item = ViewModel.Trip.Items.Find(c => c.ItemId == (int)((Button)sender).Tag);
             ItemDTO.Overview itemoverview = new ItemDTO.Overview(item);
 
-            bool succesful = await ViewModel.ModifyItem(itemoverview);
+            //bool succesful = await ViewModel.ModifyItem(itemoverview);
+            bool succesful = true;
             if (succesful)
             {
                 ContentDialog categoryJustDialog4 = new ContentDialog()

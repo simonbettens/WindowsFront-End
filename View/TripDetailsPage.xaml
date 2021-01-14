@@ -98,39 +98,49 @@
     </Page.Resources>
 
     <StackPanel>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="narrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="stackToDo.Orientation" Value="Vertical"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers >
+                        <AdaptiveTrigger MinWindowWidth="800"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="stackToDo.Orientation" Value="Horizontal"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ScrollViewer>
         <Pivot
-            Title="{Binding Trip.Name, Mode=OneWay}">
+            Title="{Binding Trip.Name, Mode=OneWay}" RequestedTheme="Light">
             <PivotItem Header="Voorbereiding" Margin="12,0,12,50">
                 <RelativePanel>
-                    <!--<StackPanel Orientation="Vertical">
-                        <muxc:InfoBar x:Name="toevoegenFail"
-                       Severity="Error"
-                       Title="Fout"
-                       Message="Het toevoegen van de item is niet gelukt! Zijn alle parameters ingevuld?"
-                       IsClosable="True" />
-                        <muxc:InfoBar x:Name="toevoegenJuist"
-                       Severity="Success"
-                       Title="Item is correct toegevoegd!"
-                       IsClosable="True" />
-                    </StackPanel>-->
                     <StackPanel x:Name="stackToDo"
                     Orientation="Horizontal" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                         <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
-                            <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15"></TextBlock>
+                            <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
                             <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                 <controls:DataGrid 
                                     x:Name="toDoGrid" 
                                     AlternatingRowBackground="LightGray"
                                     HeadersVisibility="Column"
                                     ItemsSource="{x:Bind ViewModel.ToDoList}"
-                                    AutoGenerateColumns="False" Margin="10,0,0,0">
+                                    AutoGenerateColumns="False" Margin="10,0,0,0" RequestedTheme="Light">
                                     <controls:DataGrid.Columns>
                                         <controls:DataGridTextColumn 
                                             Header="Nr" 
                                             Binding="{Binding ItemId}"
                                             IsReadOnly="True" 
-                                            Visibility="Collapsed"/>
-                                        <controls:DataGridTemplateColumn Header="Gedaan" >
+                                            Visibility="Collapsed" CanUserResize="False"/>
+                                        <controls:DataGridTemplateColumn Header="Gedaan" CanUserResize="False" >
                                             <controls:DataGridTemplateColumn.CellTemplate >
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -139,15 +149,10 @@
                                                 </DataTemplate>
                                             </controls:DataGridTemplateColumn.CellTemplate>
                                         </controls:DataGridTemplateColumn>
-                                        <controls:DataGridTemplateColumn Header="Titel" IsReadOnly="False" >
-                                        <controls:DataGridTemplateColumn.CellTemplate >
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <TextBox  Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="2,0,2,0"/>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </controls:DataGridTemplateColumn.CellTemplate>
-                                        </controls:DataGridTemplateColumn>
+                                        <controls:DataGridTextColumn 
+                                            Header="Titel" 
+                                            Binding="{Binding Name}" IsReadOnly="False"
+                                            CanUserSort="True" CanUserResize="False"/>
                                         <controls:DataGridTextColumn 
                                             Header="Categorie" 
                                             Binding="{Binding Category}"
@@ -160,8 +165,9 @@
                                             IsReadOnly="True" CanUserResize="False"/>
                                         <controls:DataGridTemplateColumn IsReadOnly="True" CanUserResize="False">
                                             <controls:DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Button x:Name="modifyItemToDoBtn" Style="{StaticResource AccentButtonStyle}" Tag="{Binding ItemId}" Content="Pas aan" Click="ModifyItemToDoBtn_Click"></Button>
+                                                <DataTemplate x:DataType="local:TripDetailsPage">
+                                                    <Button x:Name="modifyItemToDoBtn" Style="{StaticResource AccentButtonStyle}" 
+                                                            Command="{x:Bind ViewModel.ModifyItemCommand}" CommandParameter="{Binding}" Content="Pas aan" ></Button>
                                                 </DataTemplate>
                                             </controls:DataGridTemplateColumn.CellTemplate>
                                         </controls:DataGridTemplateColumn>
@@ -177,14 +183,14 @@
                             </ScrollViewer>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone , Converter={StaticResource bool2vis}}">
-                            <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15"></TextBlock>
+                            <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
                             <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                 <controls:DataGrid 
                                     x:Name="toPackGrid" 
                                     AlternatingRowBackground="LightGray"
                                     HeadersVisibility="Column"
                                     ItemsSource="{x:Bind ViewModel.ToPackList}"
-                                    AutoGenerateColumns="False" Margin="10,0,0,0">
+                                    AutoGenerateColumns="False" Margin="10,0,0,0" RequestedTheme="Light">
                                     <controls:DataGrid.Columns>
                                         <controls:DataGridTextColumn 
                                             Header="Nr" 
@@ -202,7 +208,6 @@
                                         </controls:DataGridTemplateColumn>
                                         <controls:DataGridTextColumn 
                                             Header="Titel" 
-                                            x:Name="nameItem"
                                             Binding="{Binding Name}" IsReadOnly="False"
                                             CanUserSort="True" CanUserResize="False"/>
                                         <controls:DataGridTextColumn 
@@ -232,7 +237,7 @@
                             </ScrollViewer>
                         </StackPanel>
                     </StackPanel>
-                    <Rectangle Fill="DarkBlue" Height="250" Width="500" RelativePanel.Below="stackToDo" Margin="20,-50,0,0" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"/>
+                    <Rectangle x:Name="blueItem" Fill="DarkBlue" Height="250" Width="500" RelativePanel.Below="stackToDo" Margin="20,-50,0,0" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"/>
                     <TextBox x:Name="titel"  Header="Titel" PlaceholderText="Titel"     Width="300" Margin="55,-25,0,0" FontSize="25" RelativePanel.Below="stackToDo" />
                     <ComboBox x:Name="categorieënBox" Header="Categorie" PlaceholderText="Categorie" ItemsSource="{Binding Categories}" RelativePanel.Below="titel" Width="300" Margin="55,10,0,0"/>
 
@@ -240,7 +245,7 @@
                     <CheckBox x:Name="topack" RelativePanel.Below="todoTo" RelativePanel.RightOf="titel" Content="To Pack" Width="100" Margin="20,10,0,0" RequestedTheme="Dark"/>
                     <Button x:Name="toevoegenItem" Style="{StaticResource AccentButtonStyle}" Click="AddItem_Click" Content="Voeg toe" RelativePanel.Below="categorieënBox" Margin="236,10,0,0"/>
 
-                    <Rectangle Fill="DarkBlue" Height="150" Width="400" RelativePanel.Below="stackToDo" RelativePanel.RightOf="todoTo" Margin="150,-25,0,12" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"/>
+                    <Rectangle x:Name="blueCat" Fill="DarkBlue" Height="150" Width="400" RelativePanel.Below="stackToDo" RelativePanel.RightOf="todoTo" Margin="150,-25,0,12" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"/>
                     <TextBox x:Name="categoryName" Header="naam categorie" PlaceholderText="naam Categorie"     Width="300" Margin="201,-15,0,0" FontSize="25" RelativePanel.RightOf="todoTo" RelativePanel.Below="stackToDo" />
                     <Button x:Name="toevoegenCategory" Style="{StaticResource AccentButtonStyle}" Click="AddCategory_Click" Content="Voeg toe" RelativePanel.RightOf="todoTo" RelativePanel.Below="categoryName" Margin="310,11,0,0"/>
                 </RelativePanel>
@@ -287,6 +292,6 @@
                 </StackPanel>
             </PivotItem>
         </Pivot>
-
+        </ScrollViewer>
     </StackPanel>
 </Page>
