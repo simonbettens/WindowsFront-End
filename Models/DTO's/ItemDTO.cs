@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using WindowsFront_end.Models;
 
 namespace WindowsBackend.Models.DTO_s
@@ -30,18 +32,34 @@ namespace WindowsBackend.Models.DTO_s
 
         }
 
-        public class ForItemOverview
+        public class ForItemOverview : INotifyPropertyChanged
         {
             public string PersonName { get; set; }
             public string PersonEmail { get; set; }
-            public bool IsDone { get; set; }
+            private bool _isDone;
+            public bool IsDone
+            {
+                get { return _isDone; }
+                set { _isDone = value; RaisePropertyChanged("IsDone"); }
+            }
+            public ForItemOverview()
+            {
 
-            /*public ForItemOverview(ItemPerson itemPerson)
+            }
+
+            public ForItemOverview(ItemPerson itemPerson)
             {
                 PersonEmail = itemPerson.Person.Email;
                 PersonName = itemPerson.Person.Name;
                 IsDone = itemPerson.IsDone;
-            }*/
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         public class ForPersonOverview
@@ -70,7 +88,43 @@ namespace WindowsBackend.Models.DTO_s
             public int CategoryId { get; set; }
         }
 
+        public class ForOnePersonOverview : INotifyPropertyChanged
+        {
+            public int ItemId { get; set; }
+            public string Name { get; set; }
+            public ItemType ItemType { get; set; }
+            public string Category { get; set; }
+            public string PersonName { get; set; }
+            public string PersonEmail { get; set; }
+            private bool _isDone;
+            public bool IsDone
+            {
+                get { return _isDone; }
+                set { _isDone = value; RaisePropertyChanged("IsDone"); }
+            }
+            public int AmountOfPeople { get; set; }
+            public ForOnePersonOverview()
+            {
 
+            }
 
+            public ForOnePersonOverview(int id, string name, ItemType type, string cat, int amount, ItemDTO.ForItemOverview p)
+            {
+                this.ItemId = id;
+                this.Name = name;
+                this.ItemType = type;
+                this.Category = cat;
+                this.AmountOfPeople = amount;
+                PersonEmail = p.PersonEmail;
+                PersonName = p.PersonName;
+                IsDone = p.IsDone;
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }

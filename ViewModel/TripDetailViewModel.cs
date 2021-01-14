@@ -1,10 +1,16 @@
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 using WindowsBackend.Models.DTO_s;
+using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
 using WindowsFront_end.Repository;
 using Newtonsoft.Json;
@@ -50,33 +56,37 @@ namespace WindowsFront_end.ViewModel
             get { return _travelers; }
             set { _travelers = value; RaisePropertyChanged("Travelers"); }
         }
-
+        /*
         private List<Item> _toDoList;
         public List<Item> ToDoList
         {
             get { return _toDoList; }
             set { _toDoList = value; RaisePropertyChanged("ToDoList"); }
-        }
-
+        }*/
+        public ObservableCollection<ItemDTO.ForOnePersonOverview> ToDoList { get; set; }
+        public ObservableCollection<ItemDTO.ForOnePersonOverview> ToPackList { get; set; }
         //return Trip != null? Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList(): null;
-
+        /*
         private List<Item> _toPackList;
         public List<Item> ToPackList
         {
             get { return _toPackList; }
             set { _toPackList = value; RaisePropertyChanged("ToPackList"); }
-        }
+        }*/
 
         private List<string> _categories;
         public List<string> Categories
-            {
-                get { return _categories; }
-                set { _categories = value; RaisePropertyChanged("Categories"); }
-            }
+        {
+            get { return _categories; }
+            set { _categories = value; RaisePropertyChanged("Categories"); }
+        }
         public string ShareString { get; set; }
+
 
         public TripDetailViewModel()
         {
+            ToDoList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
+            ToPackList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
             GetTripAsync(1);
         }
 
@@ -93,21 +103,6 @@ namespace WindowsFront_end.ViewModel
             ShareString = builder.ToString();
         }
 
-        public void BuildShareStringHTML()
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("<h1>Hey ik ga op reis</h1>");
-            builder.Append($"<h3>Ik vertrek op {Trip.Start.ToString("dd-MM-yy")} en kom terug om {Trip.End.ToString("dd-MM-yy")}</h3>");
-            builder.Append("<p>Ik bezoek deze plaatsen</p>");
-            builder.Append("<ol>");
-            foreach (var destination in Trip.Route.Destinations)
-            {
-                builder.Append($"<li>{destination.Name}</li>");
-            }
-            builder.Append("</ol>");
-            ShareString = builder.ToString();
-        }
-
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -117,12 +112,37 @@ namespace WindowsFront_end.ViewModel
         {
             try
             {
+var email = (string)ApplicationData.Current.LocalSettings.Values["current_user_email"];
                 TripDTO.Detail trip = await TripController.GetTripAsync(tripId);
                 Trip = new Trip(trip);
                 this.Categories = Trip.Categories.Select(c => c.Name).ToList();
                 this.Travelers = Trip.Travelers;
-                ToDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
-                ToPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
+                ToDoList.Clear();
+                ToPackList.Clear();
+                var toDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
+                toDoList.ForEach(i =>
+                {
+                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail == email);
+                    if (person != null)
+                    {
+                        var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
+                        var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
+                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
+                        ToDoList.Add(forOnePersonOverview);
+                    }
+                });
+                var toPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
+                toPackList.ForEach(i =>
+                {
+                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail == email);
+                    if (person != null)
+                    {
+                        var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
+                        var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
+                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
+                        ToPackList.Add(forOnePersonOverview);
+                    }
+                });
                 GotDataNotSuccesfull = false;
                 BuildShareString();
             }
@@ -134,18 +154,12 @@ namespace WindowsFront_end.ViewModel
             LoadingDone = true;
         }
 
-        public async Task<bool> AddItemAsync(ItemDTO.Create item,int tripId)
+        public async Task<bool> AddItemAsync(ItemDTO.Create item, int tripId)
         {
-            var loginJson = JsonConvert.SerializeObject(item);
+                HttpResponseMessage response;
 
-            HttpClient client = new HttpClient();
-            var data = new StringContent(loginJson, Encoding.UTF8, "application/json");
-            HttpResponseMessage response;
-            try
-            {
                 //https://localhost:5001/trip/${tripId}/item
-                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{tripId}/item"),
-                   data);
+                response = await ItemController.AddItemAsync(item, tripId);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -155,27 +169,15 @@ namespace WindowsFront_end.ViewModel
                 {
                     return false;
                 }
-
-
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
         }
 
         public async Task<bool> AddCategoryAsync(CategoryDTO.Create item)
         {
-            var loginJson = JsonConvert.SerializeObject(item);
 
-            HttpClient client = new HttpClient();
-            var data = new StringContent(loginJson, Encoding.UTF8, "application/json");
-            HttpResponseMessage response;
-            try
-            {
+                HttpResponseMessage response;
+
                 //https://localhost:5001/trip/${Trip.tripId}/category
-                response = await client.PostAsync(new Uri(UrlUtil.ProjectURL + $"trip/{Trip.TripId}/category"),
-                   data);
+                response = await ItemController.AddCategoryAsync(item, Trip.TripId);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -185,23 +187,14 @@ namespace WindowsFront_end.ViewModel
                 {
                     return false;
                 }
-
-
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
         }
 
         public async Task<bool> DeleteItemAsync(int id)
         {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response;
-            try
-            {
-                //https://localhost:5001/item/{id}
-                response = await client.DeleteAsync(new Uri(UrlUtil.ProjectURL + $"item/{id}"));
+                HttpResponseMessage response;
+
+            //https://localhost:5001/item/{id}
+            response = await ItemController.DeleteItemAsync(id);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -211,26 +204,14 @@ namespace WindowsFront_end.ViewModel
                 {
                     return false;
                 }
-
-
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
         }
 
         public async Task<bool> MarkItemAsDoneOrNotDone(int itemId, string email)
         {
 
-            HttpClient client = new HttpClient();
             HttpResponseMessage response;
-            var data = new StringContent("", Encoding.UTF8, "application/json");
-            try
-            {
                 //https://localhost:5001/item/{id}
-                response = await client.PutAsync(new Uri(UrlUtil.ProjectURL + $"trip/item/{itemId}/{email}/mark-as-done"),data);
-
+                response = await ItemController.MarkItemAsDoneOrNotDone(itemId, email);
                 if (response.IsSuccessStatusCode)
                 {
                     return true;
@@ -240,12 +221,11 @@ namespace WindowsFront_end.ViewModel
                     return false;
                 }
 
-
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+        }
+        public async Task UpdateItemAsync(ItemDTO.ForOnePersonOverview sender)
+        {
+            var response = await MarkItemAsDoneOrNotDone(sender.ItemId, sender.PersonEmail);
+            GetTripAsync(Trip.TripId);
         }
     }
 }

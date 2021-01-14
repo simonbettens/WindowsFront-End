@@ -99,6 +99,7 @@ namespace WindowsFront_end.View
             DataTransferManager.ShowShareUI();
 
         }
+
         private async void toevoegenItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             ItemType type = ItemType.ToDo;
@@ -125,14 +126,24 @@ namespace WindowsFront_end.View
 
             string categ = (string)categorieënBox.SelectedItem;
             Category catbasic = ViewModel.Trip.Categories.Find(c => c.Name == categ);
-            ItemDTO.Create item = new ItemDTO.Create
+            bool succesful = false;
+            ItemDTO.Create item = null;
+            try
             {
-                CategoryId = catbasic.CategoryId,
-                Name = titel.Text,
-                ItemType = (int)type
-            };
+                item = new ItemDTO.Create
+                {
+                    CategoryId = catbasic.CategoryId,
+                    Name = titel.Text,
+                    ItemType = (int)type
+                };
+                succesful = await ViewModel.AddItemAsync(item, tripId);
 
-            bool succesful = await ViewModel.AddItemAsync(item, tripId);
+
+            }
+            catch
+            {
+                succesful = false;
+            }
             if (succesful)
             {
                 ContentDialog categoryJustDialog2 = new ContentDialog()

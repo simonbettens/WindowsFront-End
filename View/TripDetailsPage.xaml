@@ -14,8 +14,7 @@
     <Page.Resources>
         <muxc:StackLayout x:Name="HorizontalStackLayout" Orientation="Horizontal" Spacing="8"></muxc:StackLayout>
         <converter:ColorConverter x:Key="ColorConverter" />
-        <converter:BooleanToVisibilityConverter 
-            x:Key="bool2vis"/>
+        <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
         <DataTemplate
             x:Key="TravelersTemplate"
             x:DataType="model:Person">
@@ -47,7 +46,7 @@
                 x:Phase="1" 
                 Margin="5"
                 >
-                
+
             </TextBlock>
         </DataTemplate>
 
@@ -79,7 +78,7 @@
             x:DataType="model:Destination">
             <StackPanel
                 Orientation="Horizontal">
-                
+
                 <TextBlock
                     Text="{x:Bind Name}" 
                     x:Phase="1" 
@@ -118,28 +117,35 @@
                     Orientation="Horizontal" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                         <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                             <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15"></TextBlock>
-                            <ScrollViewer Height="650" VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                 <controls:DataGrid 
-                        x:Name="toDoGrid" 
-                        AlternatingRowBackground="LightGray"
-                        HeadersVisibility="Column"
-                        ItemsSource="{Binding ToDoList}"
-                         AutoGenerateColumns="False" Margin="10,0,0,0"
-                        >
+                                    x:Name="toDoGrid" 
+                                    AlternatingRowBackground="LightGray"
+                                    HeadersVisibility="Column"
+                                    ItemsSource="{x:Bind ViewModel.ToDoList}"
+                                    AutoGenerateColumns="False" Margin="10,0,0,0">
                                     <controls:DataGrid.Columns>
-                                        <controls:DataGridCheckBoxColumn 
-                                Header="Gedaan" 
-                                Binding="{Binding Persons.IsDone, Mode=TwoWay}"
-                                IsReadOnly="false"/>
+                                        <controls:DataGridTemplateColumn Header="Gedaan" >
+                                            <controls:DataGridTemplateColumn.CellTemplate >
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <CheckBox Margin="10,0,0,0" IsChecked="{Binding IsDone,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </controls:DataGridTemplateColumn.CellTemplate>
+                                        </controls:DataGridTemplateColumn>
                                         <controls:DataGridTextColumn 
-                                Header="Titel" 
-                                Binding="{Binding Name}"/>
+                                            Header="Titel" 
+                                            Binding="{Binding Name}"
+                                            IsReadOnly="True"/>
                                         <controls:DataGridTextColumn 
-                                Header="Categorie" 
-                                Binding="{Binding Category}"/>
+                                            Header="Categorie" 
+                                            Binding="{Binding Category}"
+                                            IsReadOnly="True"/>
                                         <controls:DataGridTextColumn
-                                Header="Wie moet het nog doen?"
-                                Binding="{Binding Persons.Count}"/>
+                                            Header="Wie moet het nog doen?"
+                                            Binding="{Binding AmountOfPeople}"
+                                            IsReadOnly="True"/>
                                         <controls:DataGridTemplateColumn>
                                             <controls:DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
@@ -153,29 +159,33 @@
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone , Converter={StaticResource bool2vis}}">
                             <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15"></TextBlock>
-                            <ScrollViewer Height="650" VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                 <controls:DataGrid 
-                        x:Name="toPackGrid" 
-                        AlternatingRowBackground="LightGray"
-                        HeadersVisibility="Column"
-                        ItemsSource="{Binding ToPackList}"
-                         AutoGenerateColumns="False" Margin="10,0,0,0"
-                        >
+                                    x:Name="toPackGrid" 
+                                    AlternatingRowBackground="LightGray"
+                                    HeadersVisibility="Column"
+                                    ItemsSource="{x:Bind ViewModel.ToPackList}"
+                                    AutoGenerateColumns="False" Margin="10,0,0,0">
                                     <controls:DataGrid.Columns>
-                                        <controls:DataGridCheckBoxColumn 
-                                Header="Gedaan" 
-                                Binding="{Binding Persons.IsDone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                IsReadOnly="false"/>
+                                        <controls:DataGridTemplateColumn Header="Gedaan" >
+                                            <controls:DataGridTemplateColumn.CellTemplate >
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <CheckBox Margin="10,0,0,0" IsChecked="{Binding IsDone,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </controls:DataGridTemplateColumn.CellTemplate>
+                                        </controls:DataGridTemplateColumn>
                                         <controls:DataGridTextColumn 
-                                Header="Titel" 
-                                x:Name="nameItem"
-                                Binding="{Binding Name}"/>
+                                            Header="Titel" 
+                                            x:Name="nameItem"
+                                            Binding="{Binding Name}" IsReadOnly="True"/>
                                         <controls:DataGridTextColumn 
-                                Header="Categorie" 
-                                Binding="{Binding Category}"/>
+                                            Header="Categorie" 
+                                            Binding="{Binding Category}" IsReadOnly="True"/>
                                         <controls:DataGridTextColumn
-                                Header="Wie moet het nog doen?"
-                                Binding="{Binding Persons.Count}"/>
+                                            Header="Wie moet het nog doen?"
+                                            Binding="{Binding AmountOfPeople}" IsReadOnly="True"/>
                                         <controls:DataGridTemplateColumn>
                                             <controls:DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
@@ -243,6 +253,6 @@
                 </StackPanel>
             </PivotItem>
         </Pivot>
-        
+
     </StackPanel>
 </Page>
