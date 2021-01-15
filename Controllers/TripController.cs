@@ -78,6 +78,11 @@ namespace WindowsFront_end.Repository
         {
             return await _client.PostAsync(new Uri($"{UrlUtil.ProjectURL}trip/{tripId}/invite/{email}"), null);
         }
+
+        public static async Task<HttpResponseMessage> CancelInvite(int tripId, string email)
+        {
+            return await _client.DeleteAsync(new Uri($"{UrlUtil.ProjectURL}trip/{tripId}/invite/{email}"));
+        }
     }
 
 

@@ -259,5 +259,11 @@ namespace WindowsFront_end.View
                 await categoryfoutDialog3.ShowAsync();
             }
         }
+
+        private async void cancel_invite(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            string email = ((Button)sender).Tag as string;
+            await ViewModel.CancelInvite(email);
+        }
     }
 }

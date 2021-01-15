@@ -157,6 +157,7 @@
             </ListView>
             <TextBlock
                 Text="U hebt geen uitnodigingen op dit moment"
+                Style="{ThemeResource SubTitle}"
                 Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
                 />
         </StackPanel>
@@ -178,6 +179,7 @@
             </ListView>
             <TextBlock
                 Text="U hebt geen TODO's op dit moment"
+                Style="{ThemeResource SubTitle}"
                 Visibility="{Binding Person.Items.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
                 />
         </StackPanel>

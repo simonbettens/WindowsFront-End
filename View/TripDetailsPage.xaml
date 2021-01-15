@@ -18,7 +18,9 @@
         <DataTemplate
             x:Key="TravelersTemplate"
             x:DataType="model:Person">
-            <Grid>
+            <Grid
+                Margin="20 0 0 0"
+                Background="Red">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition 
                         Width="Auto"/>
@@ -29,7 +31,8 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition 
-                        Height="*"/>
+                        Height="*"
+                        />
                     <RowDefinition 
                         Height="*"/>
                 </Grid.RowDefinitions>
@@ -98,8 +101,10 @@
                     Grid.RowSpan="2"
                     Grid.Column="3"
                     Content="uitnodiging verwijderen"
-                    Margin="10 0 10 0"
-                    HorizontalAlignment="Right"/>
+                    Margin="20 0 20 0"
+                    HorizontalAlignment="Right"
+                    Tag="{x:Bind Email}"
+                    Click="cancel_invite"/>
             </Grid>
         </DataTemplate>
         <DataTemplate 
@@ -162,8 +167,10 @@
 
     <StackPanel>
         <Pivot
-            Title="{Binding Trip.Name, Mode=OneWay}">
-            <PivotItem Header="Voorbereiding" Margin="12,0,12,50">
+            Title="{Binding Trip.Name, Mode=OneWay}"
+            Margin="0">
+
+            <PivotItem Header="Voorbereiding" Margin="0,0,12,50">
                 <RelativePanel>
                     <!--<StackPanel Orientation="Vertical">
                         <muxc:InfoBar x:Name="toevoegenFail"
@@ -298,11 +305,19 @@
                 </StackPanel> -->
             </PivotItem>
             <PivotItem Header="Info">
-                <StackPanel>
+                <StackPanel
+                    Background="Orange"
+                    >
+                    <TextBlock 
+                        
+                        Text="Algemeen"
+                        Style="{StaticResource Title}"/>
                     <TextBlock 
                         Text="Deelnemers"
                         Style="{StaticResource Title}"/>
                     <ListView
+                        Background="Green"
+                        Margin="0"
                         x:Name="Travelers"
                         ItemTemplate="{StaticResource TravelersTemplate}"
                         HorizontalAlignment="left"
@@ -321,18 +336,27 @@
                         HorizontalAlignment="left"
                         ItemsSource="{Binding Trip.Invited}"
                         IsItemClickEnabled="False"
-                         SelectionMode="None">
+                         SelectionMode="None"
+                        Margin="20 0 0 0">
 
                     </ListView>
                     <TextBox
                         Text="{Binding InviteEmail, Mode=TwoWay}"
-                        Margin="10 30 10 0"/>
+                        Margin="20 30 10 0"
+                        />
 
                     <Button
                         Content="uitnodigen"
                         Click="Invite_Click"
-                        Margin="10"
+                        Margin="20 10 20 10"
                         />
+                    <TextBlock 
+                        Text="Delen"
+                        Style="{StaticResource Title}"/>
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0">
+                        <TextBlock Text="Deel uw reis met uw vrienden: "></TextBlock>
+                        <Button HorizontalAlignment="Left" Content="Share deze reis" Click="Button_Click" Margin="0,10,0,0"></Button>
+                    </StackPanel>
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Share">
