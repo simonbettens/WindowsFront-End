@@ -236,6 +236,10 @@ namespace WindowsFront_end.ViewModel
                 InviteEmail = "";
                 GetTripAsync(Trip.TripId);
             }
+            else
+            {
+                GotDataNotSuccesfull = true;
+            }
         }
     }
 }

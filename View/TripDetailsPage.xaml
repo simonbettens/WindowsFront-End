@@ -18,25 +18,89 @@
         <DataTemplate
             x:Key="TravelersTemplate"
             x:DataType="model:Person">
-            <StackPanel
-                Orientation="Horizontal">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition 
+                        Width="Auto"/>
+                    <ColumnDefinition 
+                        Width="Auto"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition 
+                        Height="*"/>
+                    <RowDefinition 
+                        Height="*"/>
+                </Grid.RowDefinitions>
                 <TextBlock 
-                    Text="{x:Bind Name}">
-
-                </TextBlock>
+                    Text="{x:Bind Name}"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
                 <TextBlock 
-                    Text="{x:Bind FirstName}">
-
-                </TextBlock>
+                    Text="{x:Bind FirstName}"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5 0 0 0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
                 <TextBlock 
-                    Text="{x:Bind Address}">
-
-                </TextBlock>
+                    Text="{x:Bind Address}"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    FontSize="12"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    
+                   />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate
+            x:Key="InvitedTemplate"
+            x:DataType="model:Person">
+            <Grid
+                HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition 
+                        Width="Auto"/>
+                    <ColumnDefinition 
+                        Width="Auto"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition 
+                        Height="*"/>
+                    <RowDefinition 
+                        Height="*"/>
+                </Grid.RowDefinitions>
                 <TextBlock 
-                    Text="{x:Bind Items.Count}">
-
-                </TextBlock>
-            </StackPanel>
+                    Text="{x:Bind Name}"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock 
+                    Text="{x:Bind FirstName}"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5 0 0 0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock 
+                    Text="{x:Bind Address}"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    FontSize="12"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    
+                   />
+                <Button
+                    Grid.RowSpan="2"
+                    Grid.Column="3"
+                    Content="uitnodiging verwijderen"
+                    Margin="10 0 10 0"
+                    HorizontalAlignment="Right"/>
+            </Grid>
         </DataTemplate>
         <DataTemplate 
             x:Key="VerticalBarTemplate" 
@@ -46,7 +110,6 @@
                 x:Phase="1" 
                 Margin="5"
                 >
-
             </TextBlock>
         </DataTemplate>
 
@@ -236,31 +299,40 @@
             </PivotItem>
             <PivotItem Header="Info">
                 <StackPanel>
-                    <TextBlock Text="Deelnemers"></TextBlock>
+                    <TextBlock 
+                        Text="Deelnemers"
+                        Style="{StaticResource Title}"/>
                     <ListView
                         x:Name="Travelers"
                         ItemTemplate="{StaticResource TravelersTemplate}"
                         HorizontalAlignment="left"
-                        ItemsSource="{Binding Trip.Travelers}">
+                        ItemsSource="{Binding Trip.Travelers}"
+                        IsItemClickEnabled="False"
+                        SelectionMode="None">
 
                     </ListView>
+
                     <TextBlock
-                        Text="Mensen uitnodigen"
-                        Style="{StaticResource Title}"
-                        />
+                        Text="Uitgenodigd"
+                        Style="{StaticResource Title}"/>
+                    <ListView
+                        x:Name="Invited"
+                        ItemTemplate="{StaticResource InvitedTemplate}"
+                        HorizontalAlignment="left"
+                        ItemsSource="{Binding Trip.Invited}"
+                        IsItemClickEnabled="False"
+                         SelectionMode="None">
+
+                    </ListView>
                     <TextBox
-                        Text="{Binding InviteEmail, Mode=TwoWay}"/>
+                        Text="{Binding InviteEmail, Mode=TwoWay}"
+                        Margin="10 30 10 0"/>
+
                     <Button
                         Content="uitnodigen"
                         Click="Invite_Click"
+                        Margin="10"
                         />
-                    <ListView
-                        x:Name="Invited"
-                        ItemTemplate="{StaticResource TravelersTemplate}"
-                        HorizontalAlignment="left"
-                        ItemsSource="{Binding Trip.Invited}">
-
-                    </ListView>
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Share">

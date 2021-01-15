@@ -9,12 +9,15 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Name="BigTitle" TargetType="TextBlock" x:Key="BigTitle">
+                <Setter Property="FontSize" Value="30"/>
+            </Style>
             <Style x:Name="Textboxstyle" TargetType="TextBlock" x:Key="Title" >
-                <Setter Property="Margin" Value="10"/>
-                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="10 10 10 0"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
                 <Setter Property="TextWrapping" Value="Wrap"/>
                 <Setter Property="VerticalAlignment" Value="Top"/>
-                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontSize" Value="22"/>
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
             <Style x:Name="TextBlockMargin" TargetType="TextBlock">
