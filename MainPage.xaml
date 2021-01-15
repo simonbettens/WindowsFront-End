@@ -23,8 +23,7 @@
             <NavigationView.MenuItems>
             <NavigationViewItem Content="Profiel" x:Name="Profile" Icon="Contact" Tapped="Profile_Tapped" Margin="0,5,0,5"></NavigationViewItem>
             <NavigationViewItem Content="Reizen" x:Name="Trips" Icon="Directions" Tapped="Trips_Tapped" Margin="0,5,0,5"></NavigationViewItem>
-            <NavigationViewItem Content="Archief" Icon="Calendar" x:Name="Archive" Tapped="Archive_Tapped" Margin="0,5,0,5" ></NavigationViewItem>
-            </NavigationView.MenuItems>
+        </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <NavigationViewItem Content="Uitloggen" Icon="Cancel" Tapped="Logout_Tapped" Margin="0,5,0,5"></NavigationViewItem>
             </NavigationView.PaneFooter>

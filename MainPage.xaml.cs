@@ -27,11 +27,6 @@ namespace WindowsFront_end
         {
             contentFrame.Navigate(typeof(TripoverzichtPage));
         }
-
-        private void Archive_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-
-        }
         private void Logout_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             LocalSettings.Values["token"] = null;

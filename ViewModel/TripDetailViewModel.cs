@@ -50,6 +50,13 @@ namespace WindowsFront_end.ViewModel
             get { return _travelers; }
             set { _travelers = value; RaisePropertyChanged("Travelers"); }
         }
+
+        private string _inviteEmail;
+        public string InviteEmail 
+        {
+            get { return _inviteEmail; }
+            set { _inviteEmail = value; RaisePropertyChanged("InviteEmail"); }
+        }
         /*
         private List<Item> _toDoList;
         public List<Item> ToDoList
@@ -115,24 +122,24 @@ namespace WindowsFront_end.ViewModel
                 var toDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
                 toDoList.ForEach(i =>
                 {
-                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail == email);
+                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail.ToLower() == email.ToLower());
                     if (person != null)
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
                         var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
-                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
+                        forOnePersonOverview.PropertyChanged += async (sender, e) => await UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToDoList.Add(forOnePersonOverview);
                     }
                 });
                 var toPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
                 toPackList.ForEach(i =>
                 {
-                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail == email);
+                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail.ToLower() == email.ToLower());
                     if (person != null)
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
                         var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
-                        forOnePersonOverview.PropertyChanged += (sender, e) => UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
+                        forOnePersonOverview.PropertyChanged += async (sender, e) => await UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToPackList.Add(forOnePersonOverview);
                     }
                 });
@@ -219,6 +226,29 @@ namespace WindowsFront_end.ViewModel
         {
             var response = await MarkItemAsDoneOrNotDone(sender.ItemId, sender.PersonEmail);
             GetTripAsync(Trip.TripId);
+        }
+
+        public async Task InvitePersonToTrip()
+        {
+            var response = await TripController.InvitePersonToTrip(Trip.TripId, InviteEmail);
+            if(response.IsSuccessStatusCode)
+            {
+                InviteEmail = "";
+                GetTripAsync(Trip.TripId);
+            }
+            else
+            {
+                GotDataNotSuccesfull = true;
+            }
+        }
+
+        public async Task CancelInvite(string email)
+        {
+            var response = await TripController.CancelInvite(Trip.TripId, email);
+            if (response.IsSuccessStatusCode)
+            {
+                GetTripAsync(Trip.TripId);
+            }
         }
     }
 }
