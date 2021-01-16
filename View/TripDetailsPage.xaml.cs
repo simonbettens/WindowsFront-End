@@ -1,7 +1,6 @@
 
 using System;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using WindowsBackend.Models.DTO_s;
@@ -294,7 +293,7 @@ namespace WindowsFront_end.View
 
                 await categoryfoutDialog4.ShowAsync();
             }
-
+        }
         private async void cancel_invite(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             string email = ((Button)sender).Tag as string;

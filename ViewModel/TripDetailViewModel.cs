@@ -52,7 +52,7 @@ namespace WindowsFront_end.ViewModel
         }
 
         private string _inviteEmail;
-        public string InviteEmail 
+        public string InviteEmail
         {
             get { return _inviteEmail; }
             set { _inviteEmail = value; RaisePropertyChanged("InviteEmail"); }
@@ -232,7 +232,7 @@ namespace WindowsFront_end.ViewModel
         }
 
 
-        internal async Task<bool> ModifyItem(ItemDTO.Overview item)
+        public async Task<bool> ModifyItem(ItemDTO.Overview item)
         {
             Item itemNor = Trip.Items.Find(c => c.ItemId == item.ItemId);
             ItemDTO.Overview itemOver = new ItemDTO.Overview(itemNor);
@@ -247,11 +247,12 @@ namespace WindowsFront_end.ViewModel
             else
             {
                 return false;
-
+            }
+        }
         public async Task InvitePersonToTrip()
         {
             var response = await TripController.InvitePersonToTrip(Trip.TripId, InviteEmail);
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 InviteEmail = "";
                 GetTripAsync(Trip.TripId);
