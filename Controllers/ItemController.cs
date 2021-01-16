@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsBackend.Models.DTO_s;
+using WindowsFront_end.Models;
 using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Util;
 
@@ -82,6 +83,21 @@ namespace WindowsFront_end.Controllers
             try
             {
                 return await _client.DeleteAsync(new Uri(UrlUtil.ProjectURL + $"item/{id}"));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        internal static async Task<HttpResponseMessage> ModifyItem(ItemDTO.Overview item)
+        {
+            var Json = JsonConvert.SerializeObject(item);
+
+            var data = new StringContent(Json, Encoding.UTF8, _appJson);
+            try
+            {
+                return await _client.PutAsync(new Uri(UrlUtil.ProjectURL + "item"), data);
             }
             catch (Exception e)
             {

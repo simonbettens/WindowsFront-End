@@ -166,7 +166,35 @@
     </Page.Resources>
 
     <StackPanel>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="narrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="stackToDo.Orientation" Value="Vertical"></Setter>
+                        <!--<Setter Target="blueCat.RelativePanel.Below" Value="stackToDo"></Setter>-->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers >
+                        <AdaptiveTrigger MinWindowWidth="1750"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="stackToDo.Orientation" Value="Horizontal"></Setter>
+                       <!-- <Setter Target="blueCat.RelativePanel.Below" Value="toevoegenItem"></Setter>-->
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Pivot
+            Title="{Binding Trip.Name, Mode=OneWay}" RequestedTheme="Light">
+            <PivotItem Header="Voorbereiding" Margin="12,0,12,50">
+                <ScrollViewer>
+                    <RelativePanel>
+                        <StackPanel x:Name="stackToDo"
             Title="{Binding Trip.Name, Mode=OneWay}"
             Margin="0">
 
@@ -185,101 +213,127 @@
                     </StackPanel>-->
                     <StackPanel x:Name="stackToDo"
                     Orientation="Horizontal" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
-                        <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
-                            <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15"></TextBlock>
-                            <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
-                                <controls:DataGrid 
+                            <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
+                                <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
+                                <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
+                                    <controls:DataGrid 
                                     x:Name="toDoGrid" 
                                     AlternatingRowBackground="LightGray"
                                     HeadersVisibility="Column"
                                     ItemsSource="{x:Bind ViewModel.ToDoList}"
-                                    AutoGenerateColumns="False" Margin="10,0,0,0">
-                                    <controls:DataGrid.Columns>
-                                        <controls:DataGridTemplateColumn Header="Gedaan" >
-                                            <controls:DataGridTemplateColumn.CellTemplate >
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    AutoGenerateColumns="False" Margin="10,0,0,0" RequestedTheme="Light">
+                                        <controls:DataGrid.Columns>
+                                            <controls:DataGridTextColumn 
+                                            Header="Nr" 
+                                            Binding="{Binding ItemId}"
+                                            IsReadOnly="True" 
+                                            Visibility="Collapsed" CanUserResize="False"/>
+                                            <controls:DataGridTemplateColumn Header="Gedaan" CanUserResize="False">
+                                                <controls:DataGridTemplateColumn.CellTemplate >
+                                                    <DataTemplate>
                                                         <CheckBox Margin="10,0,0,0" IsChecked="{Binding IsDone,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </controls:DataGridTemplateColumn.CellTemplate>
-                                        </controls:DataGridTemplateColumn>
-                                        <controls:DataGridTextColumn 
+                                                    </DataTemplate>
+                                                </controls:DataGridTemplateColumn.CellTemplate>
+                                            </controls:DataGridTemplateColumn>
+                                            <controls:DataGridTextColumn 
                                             Header="Titel" 
-                                            Binding="{Binding Name}"
-                                            IsReadOnly="True"/>
-                                        <controls:DataGridTextColumn 
+                                            Binding="{Binding Name}" IsReadOnly="False"
+                                            CanUserSort="True" CanUserResize="False"/>
+                                            <controls:DataGridTextColumn 
                                             Header="Categorie" 
                                             Binding="{Binding Category}"
-                                            IsReadOnly="True"/>
-                                        <controls:DataGridTextColumn
+                                            CanUserSort="True"
+                                            IsReadOnly="True" CanUserResize="False"/>
+                                            <controls:DataGridTextColumn
                                             Header="Wie moet het nog doen?"
                                             Binding="{Binding AmountOfPeople}"
-                                            IsReadOnly="True"/>
-                                        <controls:DataGridTemplateColumn>
-                                            <controls:DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Button x:Name="deleteItemToDoBtn" Style="{StaticResource AccentButtonStyle}" Tag="{Binding Name}"  Content="Verwijder" Click="DeleteItemToPack_Click"></Button>
-                                                </DataTemplate>
-                                            </controls:DataGridTemplateColumn.CellTemplate>
-                                        </controls:DataGridTemplateColumn>
-                                    </controls:DataGrid.Columns>
-                                </controls:DataGrid>
-                            </ScrollViewer>
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone , Converter={StaticResource bool2vis}}">
-                            <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15"></TextBlock>
-                            <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
-                                <controls:DataGrid 
+                                            CanUserSort="True"
+                                            IsReadOnly="True" CanUserResize="False"/>
+                                            <controls:DataGridTemplateColumn IsReadOnly="True" CanUserResize="False">
+                                                <controls:DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button x:Name="modifyItemToDoBtn" Style="{StaticResource AccentButtonStyle}" 
+                                                            Click="ModifyItemToDoBtn_Click" Tag="{Binding}"  Content="Pas aan" ></Button>
+                                                    </DataTemplate>
+                                                </controls:DataGridTemplateColumn.CellTemplate>
+                                            </controls:DataGridTemplateColumn>
+                                            <controls:DataGridTemplateColumn CanUserResize="False" IsReadOnly="True">
+                                                <controls:DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button x:Name="deleteItemToDoBtn" Style="{StaticResource AccentButtonStyle}" Tag="{Binding ItemId}"  Content="Verwijder" Click="DeleteItemToPack_Click"></Button>
+                                                    </DataTemplate>
+                                                </controls:DataGridTemplateColumn.CellTemplate>
+                                            </controls:DataGridTemplateColumn>
+                                        </controls:DataGrid.Columns>
+                                    </controls:DataGrid>
+                                </ScrollViewer>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone , Converter={StaticResource bool2vis}}">
+                                <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
+                                <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
+                                    <controls:DataGrid 
                                     x:Name="toPackGrid" 
                                     AlternatingRowBackground="LightGray"
                                     HeadersVisibility="Column"
                                     ItemsSource="{x:Bind ViewModel.ToPackList}"
-                                    AutoGenerateColumns="False" Margin="10,0,0,0">
-                                    <controls:DataGrid.Columns>
-                                        <controls:DataGridTemplateColumn Header="Gedaan" >
-                                            <controls:DataGridTemplateColumn.CellTemplate >
-                                                <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    AutoGenerateColumns="False" Margin="10,0,0,0" RequestedTheme="Light">
+                                        <controls:DataGrid.Columns>
+                                            <controls:DataGridTextColumn 
+                                            Header="Nr" 
+                                            Binding="{Binding ItemId}"
+                                            IsReadOnly="True" 
+                                            Visibility="Collapsed" CanUserResize="False"/>
+                                            <controls:DataGridTemplateColumn Header="Gedaan" CanUserResize="False" IsReadOnly="True" >
+                                                <controls:DataGridTemplateColumn.CellTemplate >
+                                                    <DataTemplate>
                                                         <CheckBox Margin="10,0,0,0" IsChecked="{Binding IsDone,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </controls:DataGridTemplateColumn.CellTemplate>
-                                        </controls:DataGridTemplateColumn>
-                                        <controls:DataGridTextColumn 
+                                                    </DataTemplate>
+                                                </controls:DataGridTemplateColumn.CellTemplate>
+                                            </controls:DataGridTemplateColumn>
+                                            <controls:DataGridTextColumn 
                                             Header="Titel" 
-                                            x:Name="nameItem"
-                                            Binding="{Binding Name}" IsReadOnly="True"/>
-                                        <controls:DataGridTextColumn 
+                                            Binding="{Binding Name}" IsReadOnly="False"
+                                            CanUserSort="True" CanUserResize="False"/>
+                                            <controls:DataGridTextColumn 
                                             Header="Categorie" 
-                                            Binding="{Binding Category}" IsReadOnly="True"/>
-                                        <controls:DataGridTextColumn
+                                            Binding="{Binding Category}" IsReadOnly="True"
+                                            CanUserSort="True" CanUserResize="False"/>
+                                            <controls:DataGridTextColumn
                                             Header="Wie moet het nog doen?"
-                                            Binding="{Binding AmountOfPeople}" IsReadOnly="True"/>
-                                        <controls:DataGridTemplateColumn>
-                                            <controls:DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Button x:Name="deleteItemToPackBtn" Style="{StaticResource AccentButtonStyle}" Tag="{Binding Name}"  Content="Verwijder" Click="DeleteItemToPack_Click"></Button>
-                                                </DataTemplate>
-                                            </controls:DataGridTemplateColumn.CellTemplate>
-                                        </controls:DataGridTemplateColumn>
-                                    </controls:DataGrid.Columns>
-                                </controls:DataGrid>
-                            </ScrollViewer>
-                        </StackPanel>
-                    </StackPanel>
-                    <Rectangle Fill="DarkBlue" Height="250" Width="500" RelativePanel.Below="stackToDo" Margin="20,-50,0,0" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"/>
-                    <TextBox x:Name="titel"  Header="Titel" PlaceholderText="Titel"     Width="300" Margin="55,-25,0,0" FontSize="25" RelativePanel.Below="stackToDo" />
-                    <ComboBox x:Name="categorieënBox" Header="Categorie" PlaceholderText="Categorie" ItemsSource="{Binding Categories}" RelativePanel.Below="titel" Width="300" Margin="55,10,0,0"/>
+                                            Binding="{Binding AmountOfPeople}" IsReadOnly="True"
+                                            CanUserSort="True" CanUserResize="False"/>
+                                            <controls:DataGridTemplateColumn IsReadOnly="True" CanUserResize="False">
+                                                <controls:DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button x:Name="modifyItemToPackBtn" Style="{StaticResource AccentButtonStyle}" Tag="{Binding ItemId}" Content="Pas aan" Click="ModifyItemToDoBtn_Click"></Button>
+                                                    </DataTemplate>
+                                                </controls:DataGridTemplateColumn.CellTemplate>
+                                            </controls:DataGridTemplateColumn>
+                                            <controls:DataGridTemplateColumn CanUserResize="False">
+                                                <controls:DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button x:Name="deleteItemToPackBtn" Style="{StaticResource AccentButtonStyle}" Tag="{Binding ItemId}"  Content="Verwijder" Click="DeleteItemToPack_Click"></Button>
+                                                    </DataTemplate>
+                                                </controls:DataGridTemplateColumn.CellTemplate>
+                                            </controls:DataGridTemplateColumn>
+                                        </controls:DataGrid.Columns>
+                                    </controls:DataGrid>
+                                </ScrollViewer>
+                                </StackPanel>
+                            </StackPanel>
+                        <Rectangle x:Name="blueItem" Fill="DarkBlue" Height="250" Width="500" RelativePanel.Below="stackToDo" Margin="20,-50,0,0" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"/>
+                        <TextBox x:Name="titel"  Header="Titel" PlaceholderText="Titel"     Width="300" Margin="55,-25,0,0" FontSize="25" RelativePanel.Below="stackToDo" />
+                        <ComboBox x:Name="categorieënBox" Header="Categorie" PlaceholderText="Categorie" ItemsSource="{Binding Categories}" RelativePanel.Below="titel" Width="300" Margin="55,10,0,0"/>
 
-                    <CheckBox x:Name="todoTo" RelativePanel.Below="stackToDo" RelativePanel.RightOf="titel" Content="To Do" IsChecked="true" Width="100" Margin="20,41,0,0" RequestedTheme="Dark"/>
-                    <CheckBox x:Name="topack" RelativePanel.Below="todoTo" RelativePanel.RightOf="titel" Content="To Pack" Width="100" Margin="20,10,0,0" RequestedTheme="Dark"/>
-                    <Button x:Name="toevoegenItem" Style="{StaticResource AccentButtonStyle}" Click="toevoegenItem_Click" Content="Voeg toe" RelativePanel.Below="categorieënBox" Margin="236,10,0,0"/>
+                        <CheckBox x:Name="todoTo" RelativePanel.Below="stackToDo" RelativePanel.RightOf="titel" Content="To Do" IsChecked="true" Width="100" Margin="20,41,0,0" RequestedTheme="Dark"/>
+                        <CheckBox x:Name="topack" RelativePanel.Below="todoTo" RelativePanel.RightOf="titel" Content="To Pack" Width="100" Margin="20,10,0,0" RequestedTheme="Dark"/>
+                        <Button x:Name="toevoegenItem" Style="{StaticResource AccentButtonStyle}" Click="AddItem_Click" Content="Voeg toe" RelativePanel.Below="categorieënBox" Margin="236,10,0,0"/>
 
-                    <Rectangle Fill="DarkBlue" Height="150" Width="400" RelativePanel.Below="stackToDo" RelativePanel.RightOf="todoTo" Margin="150,-25,0,12" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"/>
-                    <TextBox x:Name="categoryName" Header="naam categorie" PlaceholderText="naam Categorie"     Width="300" Margin="201,-15,0,0" FontSize="25" RelativePanel.RightOf="todoTo" RelativePanel.Below="stackToDo" />
-                    <Button x:Name="toevoegenCategory" Style="{StaticResource AccentButtonStyle}" Click="toevoegenCategory_Click" Content="Voeg toe" RelativePanel.RightOf="todoTo" RelativePanel.Below="categoryName" Margin="310,11,0,0"/>
-                </RelativePanel>
+                        <Rectangle x:Name="blueCat" Fill="DarkBlue" Height="150" Width="400" RelativePanel.Below="stackToDo" RelativePanel.RightOf="todoTo" Margin="150,-25,0,12" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"/>
+                        <TextBox x:Name="categoryName" Header="naam categorie" PlaceholderText="naam Categorie"     Width="300" Margin="201,-15,0,0" FontSize="25" RelativePanel.RightOf="todoTo" RelativePanel.Below="stackToDo" />
+                        <Button x:Name="toevoegenCategory" Style="{StaticResource AccentButtonStyle}" Click="AddCategory_Click" Content="Voeg toe" RelativePanel.RightOf="todoTo" RelativePanel.Below="categoryName" Margin="310,11,0,0"/>
+                    </RelativePanel>
+                </ScrollViewer>
 
 
             </PivotItem>
@@ -373,6 +427,5 @@
                 </StackPanel>
             </PivotItem>
         </Pivot>
-
     </StackPanel>
 </Page>
