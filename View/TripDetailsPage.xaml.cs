@@ -1,5 +1,6 @@
 
 using System;
+using System.Threading;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -29,6 +30,7 @@ namespace WindowsFront_end.View
             ViewModel = new TripDetailViewModel();
             DataContext = ViewModel;
 
+
             ViewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName.Equals("Trip") && ViewModel.Trip != null)
@@ -36,6 +38,7 @@ namespace WindowsFront_end.View
                     AddRouteChildView.SetTrip(ViewModel.Trip);
                 }
             };
+
         }
 
 
@@ -49,6 +52,7 @@ namespace WindowsFront_end.View
             _dataTransferManager = DataTransferManager.GetForCurrentView();
             _dataTransferManager.DataRequested += _dataTransferManager_DataRequested;
 
+            MakeVisible();
             // TESTING PURPOSES
             /*var itemLijst = new List<Item>();
             itemLijst.Add(new Item("item 1"));
@@ -80,6 +84,18 @@ namespace WindowsFront_end.View
             ViewModel.Trip = trip;*/
         }
 
+        public void MakeVisible()
+        {
+            blueItem.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            titel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            categorieënBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            topack.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            toevoegenItem.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            blueCat.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            categoryName.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            toevoegenCategory.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            todoTo.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
 
         private void _dataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
@@ -91,7 +107,7 @@ namespace WindowsFront_end.View
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            _dataTransferManager.DataRequested -= _dataTransferManager_DataRequested;
+            _dataTransferManager.DataRequested -= _dataTransferManager_DataRequested;          
         }
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
