@@ -255,11 +255,13 @@ namespace WindowsFront_end.View
 
         private async void ModifyItemToDoBtn_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Item item = ViewModel.Trip.Items.Find(c => c.ItemId == (int)((Button)sender).Tag);
+            ItemDTO.ForOnePersonOverview s = (ItemDTO.ForOnePersonOverview)((Button)sender).Tag;
+
+            Item item = ViewModel.Trip.Items.Find(c => c.ItemId == s.ItemId);
+            item.Name = s.Name;
             ItemDTO.Overview itemoverview = new ItemDTO.Overview(item);
 
-            //bool succesful = await ViewModel.ModifyItem(itemoverview);
-            bool succesful = true;
+            bool succesful = await ViewModel.ModifyItem(itemoverview);
             if (succesful)
             {
                 ContentDialog categoryJustDialog4 = new ContentDialog()
