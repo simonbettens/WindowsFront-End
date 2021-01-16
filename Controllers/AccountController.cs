@@ -11,10 +11,17 @@ namespace WindowsFront_end.Controllers
 {
     public static class AccountController
     {
+        //a normale HttpClient
         private static readonly HttpClient _client = new HttpClient();
+        //a HttpClient with a HttpInterceptorHandler (Authorization : adding the bearer jwt-token)
         private static readonly HttpClient _clientWithInterceptor = new HttpClient(new HttpInterceptorHandler());
         private static readonly string _appJson = "application/json";
 
+        /// <summary>
+        /// Sends the LoginDTO to the api
+        /// </summary>
+        /// <param name="login">a dto with all properties that are needed to perform the login</param>
+        /// <returns>the response message (including the statuscode and if it has been succesfull the jwt-token)</returns>
         public static async Task<HttpResponseMessage> Login(LoginDTO login)
         {
             var loginJson = JsonConvert.SerializeObject(login);
@@ -23,7 +30,11 @@ namespace WindowsFront_end.Controllers
                                 data);
             return response;
         }
-        //https://localhost:5001/person/register
+        /// <summary>
+        /// Sends the RegisterDTO to the api
+        /// </summary>
+        /// <param name="register">a dto with all properties that are needed to perform the registration</param>
+        /// <returns>the response message (including the statuscode and if it has been succesfull the jwt-token)</returns>
         public static async Task<HttpResponseMessage> Register(RegisterDTO register)
         {
             var registerJson = JsonConvert.SerializeObject(register);
@@ -32,7 +43,11 @@ namespace WindowsFront_end.Controllers
                 data);
             return response;
         }
-
+        /// <summary>
+        /// gets the person that correlates with the email from the api
+        /// </summary>
+        /// <param name="email">a email</param>
+        /// <returns> a valid person-object or throw an exception (should be handeled)</returns>
         public static async Task<Person> GetPersonByEmail(string email)
         {
             var json = await _client.GetStringAsync(new Uri(UrlUtil.ProjectURL + $"person/GetPersonByEmail?email={email}"));
@@ -41,7 +56,12 @@ namespace WindowsFront_end.Controllers
             //await Task.Delay(3000);
             return p;
         }
-
+        /// <summary>
+        /// update the person with the given email in the database
+        /// </summary>
+        /// <param name="email">the email of the to update person</param>
+        /// <param name="dto">the dto with the updated properties</param>
+        /// <returns>the response message (including the statuscode)</returns>
         public static async Task<HttpResponseMessage> UpdatePersonByEmail(string email, PersonDTO.Overview dto)
         {
             var json = JsonConvert.SerializeObject(dto);
