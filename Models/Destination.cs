@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using WindowsFront_end.Models.DTO_s;
 
 namespace WindowsFront_end.Models
 {
@@ -49,6 +50,15 @@ namespace WindowsFront_end.Models
             Address = address;
             Latitude = latitude;
             Longitude = longitude;
+        }
+        
+        public Destination(DestinationDTO.Overview dto)
+        {
+            Name = dto.Name;
+            Description = dto.Description;
+            Address = dto.Address;
+            Latitude = dto.Latitude;
+            Longitude = dto.Longitude;
         }
 
         public Destination()

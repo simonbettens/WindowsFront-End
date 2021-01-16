@@ -1,5 +1,4 @@
-﻿using System;
-using Windows.Storage;
+﻿using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -24,6 +23,13 @@ namespace WindowsFront_end
             this.InitializeComponent();
             LocalSettings = ApplicationData.Current.LocalSettings;
             ViewModel = new LoginRegistratieViewModel(LocalSettings);
+            ViewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName.Equals("GotDataNotSuccesfull") && !ViewModel.GotDataNotSuccesfull)
+                {
+                    Navigate();
+                }
+            };
             this.DataContext = ViewModel;
         }
         private void CheckIfLoggedIn()
@@ -41,40 +47,6 @@ namespace WindowsFront_end
             this.Frame.Navigate(typeof(LogIn), null, new SuppressNavigationTransitionInfo());
         }
 
-        private async void Registreer_Click(object sender, RoutedEventArgs e)
-        {
-
-            RegisterDTO person = new RegisterDTO
-            {
-                Email = email.Text,
-                Password = ww.Password,
-                Name = achternaam.Text,
-                FirstName = voornaam.Text,
-                PasswordConfirmation = wwConfirm.Password,
-                Address = adres.Text
-            };
-            LocalSettings.Values["current_user_email"] = email.Text;
-            bool GotDataNotSuccesfull = await ViewModel.RegistrationPerson(person);
-
-            if (GotDataNotSuccesfull)
-            {
-                ContentDialog noWifiDialog = new ContentDialog()
-                {
-                    Title = "Fout",
-                    Content = "Er liep iets mis bij het registreren. Zijn alle parameters juist ingevuld?",
-                    CloseButtonText = "Ok"
-                };
-
-                await noWifiDialog.ShowAsync();
-            }
-            else
-            {
-                Navigate();
-                //this.Frame.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
-            }
-
-
-        }
         private void Navigate()
         {
             this.Frame.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());

@@ -39,6 +39,7 @@ namespace WindowsFront_end.View
             };
         }
 
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -171,7 +172,13 @@ namespace WindowsFront_end.View
             }
         }
 
+        private async void Invite_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            await ViewModel.InvitePersonToTrip();
+        }
+
         private async void AddCategory_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+
         {
             if (categoryName.Text.Length == 0)
             {
@@ -287,6 +294,12 @@ namespace WindowsFront_end.View
 
                 await categoryfoutDialog4.ShowAsync();
             }
+
+        private async void cancel_invite(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            string email = ((Button)sender).Tag as string;
+            await ViewModel.CancelInvite(email);
+
         }
     }
 }

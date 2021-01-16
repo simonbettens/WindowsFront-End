@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,7 +12,6 @@ using WindowsFront_end.Controllers;
 using WindowsFront_end.Models;
 using WindowsFront_end.Models.DTO_s;
 using WindowsFront_end.Repository;
-using WindowsFront_end.Util;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -53,6 +50,13 @@ namespace WindowsFront_end.ViewModel
             get { return _travelers; }
             set { _travelers = value; RaisePropertyChanged("Travelers"); }
         }
+
+        private string _inviteEmail;
+        public string InviteEmail 
+        {
+            get { return _inviteEmail; }
+            set { _inviteEmail = value; RaisePropertyChanged("InviteEmail"); }
+        }
         /*
         private List<Item> _toDoList;
         public List<Item> ToDoList
@@ -87,7 +91,6 @@ namespace WindowsFront_end.ViewModel
             //ModifyItemCommand = new RelayCommand(async (param) => await ModifyItem((ItemDTO.ForOnePersonOverview)param));
             ToDoList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
             ToPackList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
-            GetTripAsync(1);
         }
 
         public void BuildShareString()
@@ -113,8 +116,8 @@ namespace WindowsFront_end.ViewModel
             try
             {
                 var email = (string)ApplicationData.Current.LocalSettings.Values["current_user_email"];
-                Trip trip = await TripController.GetTripAsync(tripId);
-                Trip = trip;
+                TripDTO.Detail trip = await TripController.GetTripAsync(tripId);
+                Trip = new Trip(trip);
                 this.Categories = Trip.Categories.Select(c => c.Name).ToList();
                 this.Travelers = Trip.Travelers;
                 ToDoList.Clear();
@@ -122,7 +125,7 @@ namespace WindowsFront_end.ViewModel
                 var toDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
                 toDoList.ForEach(i =>
                 {
-                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail == email);
+                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail.ToLower() == email.ToLower());
                     if (person != null)
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
@@ -134,7 +137,7 @@ namespace WindowsFront_end.ViewModel
                 var toPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
                 toPackList.ForEach(i =>
                 {
-                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail == email);
+                    var person = i.Persons.FirstOrDefault(p => p.PersonEmail.ToLower() == email.ToLower());
                     if (person != null)
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
@@ -156,70 +159,70 @@ namespace WindowsFront_end.ViewModel
 
         public async Task<bool> AddItemAsync(ItemDTO.Create item, int tripId)
         {
-                HttpResponseMessage response;
+            HttpResponseMessage response;
 
-                //https://localhost:5001/trip/${tripId}/item
-                response = await ItemController.AddItemAsync(item, tripId);
+            //https://localhost:5001/trip/${tripId}/item
+            response = await ItemController.AddItemAsync(item, tripId);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<bool> AddCategoryAsync(CategoryDTO.Create item)
         {
 
-                HttpResponseMessage response;
+            HttpResponseMessage response;
 
-                //https://localhost:5001/trip/${Trip.tripId}/category
-                response = await ItemController.AddCategoryAsync(item, Trip.TripId);
+            //https://localhost:5001/trip/${Trip.tripId}/category
+            response = await ItemController.AddCategoryAsync(item, Trip.TripId);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<bool> DeleteItemAsync(int id)
         {
-                HttpResponseMessage response;
+            HttpResponseMessage response;
 
             //https://localhost:5001/item/{id}
             response = await ItemController.DeleteItemAsync(id);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<bool> MarkItemAsDoneOrNotDone(int itemId, string email)
         {
 
             HttpResponseMessage response;
-                //https://localhost:5001/item/{id}
-                response = await ItemController.MarkItemAsDoneOrNotDone(itemId, email);
-                if (response.IsSuccessStatusCode)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+            //https://localhost:5001/item/{id}
+            response = await ItemController.MarkItemAsDoneOrNotDone(itemId, email);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
         public async Task UpdateItemAsync(ItemDTO.ForOnePersonOverview sender)
@@ -227,6 +230,7 @@ namespace WindowsFront_end.ViewModel
             var response = await MarkItemAsDoneOrNotDone(sender.ItemId, sender.PersonEmail);
             GetTripAsync(Trip.TripId);
         }
+
 
         internal async Task<bool> ModifyItem(ItemDTO.Overview item)
         {
@@ -243,6 +247,27 @@ namespace WindowsFront_end.ViewModel
             else
             {
                 return false;
+
+        public async Task InvitePersonToTrip()
+        {
+            var response = await TripController.InvitePersonToTrip(Trip.TripId, InviteEmail);
+            if(response.IsSuccessStatusCode)
+            {
+                InviteEmail = "";
+                GetTripAsync(Trip.TripId);
+            }
+            else
+            {
+                GotDataNotSuccesfull = true;
+            }
+        }
+
+        public async Task CancelInvite(string email)
+        {
+            var response = await TripController.CancelInvite(Trip.TripId, email);
+            if (response.IsSuccessStatusCode)
+            {
+                GetTripAsync(Trip.TripId);
             }
         }
     }

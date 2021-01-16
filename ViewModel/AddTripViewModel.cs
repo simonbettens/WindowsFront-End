@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using WindowsFront_end.Models;
-using WindowsFront_end.Repository;
 
 namespace WindowsFront_end.ViewModel
 {
@@ -25,6 +23,12 @@ namespace WindowsFront_end.ViewModel
             set { _erroMessage = value; RaisePropertyChanged("ErrorMessage"); }
         }
 
+        private bool _isOpen;
+        public bool IsOpen
+        {
+            get { return _isOpen; }
+            set { _isOpen = value; RaisePropertyChanged("IsOpen"); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -41,41 +45,17 @@ namespace WindowsFront_end.ViewModel
         /// <returns> true if correct, false if not</returns>
         public void CheckAreFieldValid()
         {
-            if (Trip.Name == null || Trip.Name.Equals("")) { AreFieldsValid = false; ErrorMessage = "Naam van de trip is niet ingevuld"; return; }
-            if (Trip.Start == null || Trip.Start == DateTime.MinValue) { AreFieldsValid = false; ErrorMessage = "Er moet een startdatum zijn"; return; }
-            if (Trip.End == null || Trip.End == DateTime.MinValue) { AreFieldsValid = false; ErrorMessage = "Er moet een einddatum zijn"; return; }
-            if (Trip.Route.Description == null || Trip.Route.Description.Equals("")) { AreFieldsValid = false; ErrorMessage = "Er is nog geen beschrijving voor deze trip"; return; }
-            if (Trip.Color == null || Trip.Color.Equals("")) { AreFieldsValid = false; ErrorMessage = "Er is nog geen kleur voor deze trip"; return; }
+            if (Trip.Name == null || Trip.Name.Equals("")) { AreFieldsValid = false; IsOpen = true; ErrorMessage = "Naam van de trip is niet ingevuld"; return; }
+            if (Trip.Start == null || Trip.Start == DateTime.MinValue) { AreFieldsValid = false; IsOpen = true; ErrorMessage = "Er moet een startdatum zijn"; return; }
+            if (Trip.End == null || Trip.End == DateTime.MinValue) { AreFieldsValid = false; IsOpen = true; ErrorMessage = "Er moet een einddatum zijn"; return; }
+            if (Trip.Route.Description == null || Trip.Route.Description.Equals("")) { AreFieldsValid = false; IsOpen = true; ErrorMessage = "Er is nog geen beschrijving voor deze trip"; return; }
+            if (Trip.Color == null || Trip.Color.Equals("")) { AreFieldsValid = false; IsOpen = true; ErrorMessage = "Er is nog geen kleur voor deze trip"; return; }
             AreFieldsValid = true;
+            IsOpen = false; ;
             ErrorMessage = "";
 
         }
-        /// <summary>
-        /// (Test method) (should happen later)
-        /// Save and sends Trip to backend 
-        /// </summary>
-        public async void Save()
-        {
-            return;
-            try
-            {
-                //https://localhost:5001/api/Trip/GetAllTrips
-                HttpResponseMessage response = await TripController.CreateTrip(Trip);
-                if (response.IsSuccessStatusCode)
-                {
-                    Console.WriteLine("Gelukt");
-                }
-                else
-                {
-                    Console.WriteLine("Failed");
-                }
 
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -15,28 +15,97 @@
         <muxc:StackLayout x:Name="HorizontalStackLayout" Orientation="Horizontal" Spacing="8"></muxc:StackLayout>
         <converter:ColorConverter x:Key="ColorConverter" />
         <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
+        <converter:DateFormatter x:Key="dateForm"/>
         <DataTemplate
             x:Key="TravelersTemplate"
             x:DataType="model:Person">
-            <StackPanel
-                Orientation="Horizontal">
+            <Grid
+                Margin="20 0 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition 
+                        Width="Auto"/>
+                    <ColumnDefinition 
+                        Width="Auto"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition 
+                        Height="*"
+                        />
+                    <RowDefinition 
+                        Height="*"/>
+                </Grid.RowDefinitions>
                 <TextBlock 
-                    Text="{x:Bind Name}">
-
-                </TextBlock>
+                    Text="{x:Bind Name}"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
                 <TextBlock 
-                    Text="{x:Bind FirstName}">
-
-                </TextBlock>
+                    Text="{x:Bind FirstName}"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5 0 0 0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
                 <TextBlock 
-                    Text="{x:Bind Address}">
-
-                </TextBlock>
+                    Text="{x:Bind Address}"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    FontSize="12"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    
+                   />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate
+            x:Key="InvitedTemplate"
+            x:DataType="model:Person">
+            <Grid
+                HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition 
+                        Width="Auto"/>
+                    <ColumnDefinition 
+                        Width="Auto"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition 
+                        Height="*"/>
+                    <RowDefinition 
+                        Height="*"/>
+                </Grid.RowDefinitions>
                 <TextBlock 
-                    Text="{x:Bind Items.Count}">
-
-                </TextBlock>
-            </StackPanel>
+                    Text="{x:Bind Name}"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock 
+                    Text="{x:Bind FirstName}"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="5 0 0 0"
+                    Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBlock 
+                    Text="{x:Bind Address}"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    FontSize="12"
+                    Style="{ThemeResource BodyTextBlockStyle}"
+                    
+                   />
+                <Button
+                    Grid.RowSpan="2"
+                    Grid.Column="3"
+                    Content="uitnodiging verwijderen"
+                    Margin="20 0 20 0"
+                    HorizontalAlignment="Right"
+                    Tag="{x:Bind Email}"
+                    Click="cancel_invite"/>
+            </Grid>
         </DataTemplate>
         <DataTemplate 
             x:Key="VerticalBarTemplate" 
@@ -46,7 +115,6 @@
                 x:Phase="1" 
                 Margin="5"
                 >
-
             </TextBlock>
         </DataTemplate>
 
@@ -127,6 +195,23 @@
                 <ScrollViewer>
                     <RelativePanel>
                         <StackPanel x:Name="stackToDo"
+            Title="{Binding Trip.Name, Mode=OneWay}"
+            Margin="0">
+
+            <PivotItem Header="Voorbereiding" Margin="0,0,12,50">
+                <RelativePanel>
+                    <!--<StackPanel Orientation="Vertical">
+                        <muxc:InfoBar x:Name="toevoegenFail"
+                       Severity="Error"
+                       Title="Fout"
+                       Message="Het toevoegen van de item is niet gelukt! Zijn alle parameters ingevuld?"
+                       IsClosable="True" />
+                        <muxc:InfoBar x:Name="toevoegenJuist"
+                       Severity="Success"
+                       Title="Item is correct toegevoegd!"
+                       IsClosable="True" />
+                    </StackPanel>-->
+                    <StackPanel x:Name="stackToDo"
                     Orientation="Horizontal" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                             <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                                 <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
@@ -275,14 +360,64 @@
             </PivotItem>
             <PivotItem Header="Info">
                 <StackPanel>
-                    <TextBlock Text="Deelnemers"></TextBlock>
+                    <TextBlock 
+                        
+                        Text="Algemeen"
+                        Style="{StaticResource Title}"/>
+                    <StackPanel Orientation="Vertical"  Margin="20,10,0,0">
+                        <TextBlock Text="Tijdspanne" FontWeight="Bold" Margin="0,5,0,5"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Trip.Start,Converter={StaticResource dateForm}}"/>
+                            <TextBlock Text="-" Margin="5,0,5,0"/>
+                            <TextBlock Text="{Binding Trip.End,Converter={StaticResource dateForm}}"/>
+                        </StackPanel>
+                        <TextBlock Text="Korte beschrijving" FontWeight="Bold" Margin="0,5,0,5"/>
+                        <TextBlock Text="{Binding Trip.Route.Description}"/>
+                    </StackPanel>
+                    <TextBlock 
+                        Text="Deelnemers"
+                        Style="{StaticResource Title}"/>
                     <ListView
+                        Margin="0"
                         x:Name="Travelers"
                         ItemTemplate="{StaticResource TravelersTemplate}"
                         HorizontalAlignment="left"
-                        ItemsSource="{Binding Trip.Travelers}">
+                        ItemsSource="{Binding Trip.Travelers}"
+                        IsItemClickEnabled="False"
+                        SelectionMode="None">
 
                     </ListView>
+
+                    <TextBlock
+                        Text="Uitgenodigd"
+                        Style="{StaticResource Title}"/>
+                    <ListView
+                        x:Name="Invited"
+                        ItemTemplate="{StaticResource InvitedTemplate}"
+                        HorizontalAlignment="left"
+                        ItemsSource="{Binding Trip.Invited}"
+                        IsItemClickEnabled="False"
+                         SelectionMode="None"
+                        Margin="20 0 0 0">
+
+                    </ListView>
+                    <TextBox
+                        Text="{Binding InviteEmail, Mode=TwoWay}"
+                        Margin="20 30 10 0"
+                        />
+
+                    <Button
+                        Content="uitnodigen"
+                        Click="Invite_Click"
+                        Margin="20 10 20 10"
+                        />
+                    <TextBlock 
+                        Text="Delen"
+                        Style="{StaticResource Title}"/>
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,10,0,0">
+                        <TextBlock Text="Deel uw reis met uw vrienden: "></TextBlock>
+                        <Button HorizontalAlignment="Left" Content="Share deze reis" Click="Button_Click" Margin="0,10,0,0"></Button>
+                    </StackPanel>
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Share">

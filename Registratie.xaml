@@ -5,6 +5,7 @@
     xmlns:local="using:WindowsFront_end"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
@@ -20,6 +21,7 @@
                         <Setter Target="rectangle.Height" Value="500"/>
                         <Setter Target="rectangle.Margin" Value="0,70,0,0"/>
                         <Setter Target="registr.Margin" Value="0,0,0,60"/>
+                        <Setter Target="infoBar.Margin" Value="80"/>
                         <Setter Target="welkom.FontSize" Value="20"/>
                         <Setter Target="life.FontSize" Value="15"/>
                         <Setter Target="life.Margin" Value="20,5,0,0"/>
@@ -38,6 +40,7 @@
                         <Setter Target="rectangle.Margin" Value="0,70,0,0"/>
                         <Setter Target="registr.Margin" Value="0,0,0,90"/>
                         <Setter Target="welkom.FontSize" Value="40"/>
+                        <Setter Target="infoBar.Margin" Value="110"/>
                         <Setter Target="life.FontSize" Value="25"/>
                         <Setter Target="life.Margin" Value="20,5,0,0"/>
                         <Setter Target="welkom.Margin" Value="20,10,0,5"/>
@@ -54,6 +57,7 @@
                         <Setter Target="rectangle.Margin" Value="0,70,0,0"/>
                         <Setter Target="registr.Margin" Value="0,0,0,90"/>
                         <Setter Target="welkom.FontSize" Value="50"/>
+                        <Setter Target="infoBar.Margin" Value="0"/>
                         <Setter Target="life.FontSize" Value="35"/>
                         <Setter Target="life.Margin" Value="30,5,0,0"/>
                         <Setter Target="welkom.Margin" Value="30,30,0,5"/>
@@ -63,17 +67,21 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <RelativePanel>
+            <muxc:InfoBar x:Name="infoBar" IsOpen="{x:Bind ViewModel.GotDataNotSuccesfull,Mode=OneWay}" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="welkom"
+                    Severity="Warning"
+                    Message="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}">
+            </muxc:InfoBar>
             <Rectangle x:Name="rectangle" Fill="White" MinWidth="300" MinHeight="150" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" StrokeThickness="0" RadiusX="70" RadiusY="70" Opacity="0.802"  />
             <TextBlock x:Name="welkom" Text="Welkom bij jouw Journey" TextWrapping="Wrap" Grid.Row="0"   FontSize="50" Margin="30,30,0,5" FontWeight="Bold"/>
             <TextBlock x:Name="life" Text="Your journey, your life" TextWrapping="Wrap" Grid.Row="1" Grid.Column="0"  Margin="30,5,0,0" RelativePanel.Below="welkom" FontSize="35" FontWeight="Bold"/>
             <TextBlock x:Name="registr" Text="Registreren"   Margin="0,0,0,90" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.Above="voornaam" FontSize="35" FontWeight="Bold" Foreground="Black"/>
-            <TextBox x:Name="achternaam"  PlaceholderText="Naam" RelativePanel.Above="voornaam"   RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,0,0,15" Width="300" FontSize="25" />
-            <TextBox x:Name="voornaam" PlaceholderText="Voornaam"  RelativePanel.Above="adres"   RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300"  FontSize="25" />
-            <TextBox x:Name="adres" PlaceholderText="Adres"    RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,15,0,0" FontSize="25" />
-            <TextBox x:Name="email" PlaceholderText="Email"  RelativePanel.Below="adres"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,15,0,0" FontSize="25" />
-            <PasswordBox x:Name="ww" PlaceholderText="Wachtwoord"    RelativePanel.Below="email" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Width="300" Margin="0,15,0,0" FontSize="25"/>
-            <PasswordBox x:Name="wwConfirm" PlaceholderText="Wachtwoord bevestigen"    RelativePanel.Below="ww" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Width="300" Margin="0,15,0,0" FontSize="25"/>
-            <Button x:Name="btn" Style="{StaticResource AccentButtonStyle}" Content="Registreer" Click="Registreer_Click" HorizontalAlignment="Center"  RelativePanel.Below="wwConfirm"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,14,0,0" FontSize="25" Background="#FF060606"/>
+            <TextBox x:Name="achternaam"  PlaceholderText="Naam" Text="{x:Bind ViewModel.LastName,Mode=TwoWay}" RelativePanel.Above="voornaam"   RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,0,0,15" Width="300" FontSize="25" />
+            <TextBox x:Name="voornaam" PlaceholderText="Voornaam" Text="{x:Bind ViewModel.FirstName,Mode=TwoWay}" RelativePanel.Above="adres"   RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300"  FontSize="25" />
+            <TextBox x:Name="adres" PlaceholderText="Adres" Text="{x:Bind ViewModel.Address,Mode=TwoWay}" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,15,0,0" FontSize="25" />
+            <TextBox x:Name="email" PlaceholderText="Email" Text="{x:Bind ViewModel.Email,Mode=TwoWay}" RelativePanel.Below="adres"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true"  Width="300" Margin="0,15,0,0" FontSize="25" />
+            <PasswordBox x:Name="ww" PlaceholderText="Wachtwoord" Password="{x:Bind ViewModel.Passwoord,Mode=TwoWay}" RelativePanel.Below="email" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Width="300" Margin="0,15,0,0" FontSize="25"/>
+            <PasswordBox x:Name="wwConfirm" PlaceholderText="Wachtwoord bevestigen"  Password="{x:Bind ViewModel.PasswoordConfirmation,Mode=TwoWay}"   RelativePanel.Below="ww" RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Width="300" Margin="0,15,0,0" FontSize="25"/>
+            <Button x:Name="btn" Style="{StaticResource AccentButtonStyle}" Content="Registreer" Command="{x:Bind ViewModel.RegisterCommand}" HorizontalAlignment="Center"  RelativePanel.Below="wwConfirm"  RelativePanel.AlignHorizontalCenterWithPanel="true" RelativePanel.AlignVerticalCenterWithPanel="true" Margin="0,14,0,0" FontSize="25" Background="#FF060606"/>
             <HyperlinkButton Content="Log in" RelativePanel.RightOf="btn" Click="LogIn_Click" RelativePanel.Below="wwConfirm" Margin="10,30,0,0" FontSize="20"/>
             <RelativePanel.Background>
                 <ImageBrush ImageSource="/Assets/Journey-background.jpeg" ></ImageBrush>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using WindowsFront_end.Models;
 using WindowsFront_end.Repository;
@@ -48,9 +47,9 @@ namespace WindowsFront_end.ViewModel
 
         private void GetData()
         {
-            var polen = new Trip(1,"Polen", "#008a02", DateTime.Now, DateTime.Now.AddDays(5));
+            var polen = new Trip(1, "Polen", "#008a02", DateTime.Now, DateTime.Now.AddDays(5));
             TripList.Add(polen);
-            var frankrijk = new Trip(2,"Frankrijk", "#d8e305", DateTime.Now, DateTime.Now.AddDays(6));
+            var frankrijk = new Trip(2, "Frankrijk", "#d8e305", DateTime.Now, DateTime.Now.AddDays(6));
             TripList.Add(frankrijk);
             var wallonie = new Trip(3, "Wallonie", "#e30505", DateTime.Now, DateTime.Now.AddDays(7));
             TripList.Add(wallonie);
@@ -62,7 +61,6 @@ namespace WindowsFront_end.ViewModel
         }
         private async void GetDataAsync()
         {
-            HttpClient client = new HttpClient();
             try
             {
                 //test

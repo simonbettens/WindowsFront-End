@@ -31,6 +31,17 @@ namespace WindowsFront_end.View
             this.InitializeComponent();
             this.ViewModel = new AddDestinationsViewModel();
             this.ViewModel.DestinationsList.CollectionChanged += (sender, e) => AddLine();
+            this.ViewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName.Equals("SendSuccesfull"))
+                {
+                    if (ViewModel.SendSuccesfull)
+                    {
+                        Navigate();
+                    }
+                }
+            };
+
             this.DataContext = ViewModel;
             MapService.ServiceToken = "JgmWRYIYzmYgbMh4hvWR~OhL3ZDrSPoQeI - PDC3owow~ArOjM7tKkf3GS9Xr45_idgO58fGVP1IXePZHMNlNtDMIbe5xvEzbE9eUbY1VPr31";
         }
@@ -287,7 +298,12 @@ namespace WindowsFront_end.View
 
         private void GoOn(object sender, RoutedEventArgs e)
         {
-            //Frame.Navigate(typeof(AddTripPage), ViewModel.Trip);
+            Navigate();
+        }
+
+        private void Navigate()
+        {
+            Frame.Navigate(typeof(TripDetailsPage), ViewModel.Trip);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using WindowsBackend.Models.DTO_s;
 using WindowsFront_end.Models.DTO_s;
 
 namespace WindowsFront_end.Models
@@ -53,6 +55,7 @@ namespace WindowsFront_end.Models
             set { _passwordConfirm = value; RaisePropertyChanged("PasswordConfirm"); }
         }
         public List<Trip> Trips { get; set; } = new List<Trip>();
+        public List<Trip> Invites { get; set; } = new List<Trip>();
         public List<ItemPerson> Items { get; set; } = new List<ItemPerson>();
 
         public Person(string email, string password, string firstName, string name, string passwordConfirm, string address)
@@ -65,7 +68,7 @@ namespace WindowsFront_end.Models
             Password = password;
         }
 
-        public Person(PersonDTO.OverviewWithItems dto)
+        public Person(PersonDTO.Overview dto)
         {
             FirstName = dto.FirstName;
             Name = dto.Name;
@@ -73,6 +76,19 @@ namespace WindowsFront_end.Models
             Address = dto.Address;
             Email = dto.Email;
             Password = "";
+        }
+
+        public Person(PersonDTO.FullOverview dto)
+        {
+            FirstName = dto.FirstName;
+            Name = dto.Name;
+            PasswordConfirm = "";
+            Address = dto.Address;
+            Email = dto.Email;
+            Password = "";
+            Trips = dto.Trips.Select(t => new Trip(t)).ToList();
+            Invites = dto.Invited.Select(i => new Trip(i)).ToList();
+            Items = dto.Items.Select(i => new ItemPerson(i)).ToList();
         }
         public Person()
         {

@@ -16,6 +16,11 @@ namespace WindowsBackend.Models.DTO_s
             public string Category { get; set; }
             public List<ForItemOverview> Persons { get; set; }
 
+            public Overview()
+            {
+
+            }
+
             public Overview(Item item)
             {
                 ItemId = item.ItemId;
@@ -62,6 +67,11 @@ namespace WindowsBackend.Models.DTO_s
             public int ItemId { get; set; }
             public string Name { get; set; }
             public bool IsDone { get; set; }
+
+            public ForPersonOverview()
+            {
+
+            }
 
             public ForPersonOverview(ItemPerson itemPerson)
             {

@@ -13,6 +13,7 @@ namespace WindowsFront_end.Models.DTO_s
             public string Color { get; set; }
             public DateTime Start { get; set; }
             public DateTime End { get; set; }
+
         }
 
         public class Create
@@ -36,6 +37,9 @@ namespace WindowsFront_end.Models.DTO_s
             public RouteDTO.Overview Route { get; set; }
             public List<ItemDTO.Overview> Items { get; set; } = new List<ItemDTO.Overview>();
             public List<PersonDTO.Overview> Travelers { get; set; } = new List<PersonDTO.Overview>();
+            public List<PersonDTO.Overview> Invited { get; set; } = new List<PersonDTO.Overview>();
+            public List<CategoryDTO.Basic> Categories { get; set; }
+
         }
     }
 

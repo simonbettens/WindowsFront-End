@@ -11,7 +11,7 @@ namespace WindowsFront_end.Controllers
         {
             InnerHandler = new HttpClientHandler();
         }
-
+        //adds the bearer to the header
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
             CancellationToken cancellationToken)

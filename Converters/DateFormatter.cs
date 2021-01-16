@@ -1,9 +1,9 @@
 ﻿using System;
 using Windows.UI.Xaml.Data;
 
-namespace WindowsFront_end
+namespace WindowsFront_end.Converters
 {
-    class DateFormatter : IValueConverter
+    public class DateFormatter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
