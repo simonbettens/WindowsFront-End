@@ -15,12 +15,12 @@
         <muxc:StackLayout x:Name="HorizontalStackLayout" Orientation="Horizontal" Spacing="8"></muxc:StackLayout>
         <converter:ColorConverter x:Key="ColorConverter" />
         <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
+        <converter:DateFormatter x:Key="dateForm"/>
         <DataTemplate
             x:Key="TravelersTemplate"
             x:DataType="model:Person">
             <Grid
-                Margin="20 0 0 0"
-                Background="Red">
+                Margin="20 0 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition 
                         Width="Auto"/>
@@ -305,18 +305,25 @@
                 </StackPanel> -->
             </PivotItem>
             <PivotItem Header="Info">
-                <StackPanel
-                    Background="Orange"
-                    >
+                <StackPanel>
                     <TextBlock 
                         
                         Text="Algemeen"
                         Style="{StaticResource Title}"/>
+                    <StackPanel Orientation="Vertical"  Margin="20,10,0,0">
+                        <TextBlock Text="Tijdspanne" FontWeight="Bold" Margin="0,5,0,5"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Trip.Start,Converter={StaticResource dateForm}}"/>
+                            <TextBlock Text="-" Margin="5,0,5,0"/>
+                            <TextBlock Text="{Binding Trip.End,Converter={StaticResource dateForm}}"/>
+                        </StackPanel>
+                        <TextBlock Text="Korte beschrijving" FontWeight="Bold" Margin="0,5,0,5"/>
+                        <TextBlock Text="{Binding Trip.Route.Description}"/>
+                    </StackPanel>
                     <TextBlock 
                         Text="Deelnemers"
                         Style="{StaticResource Title}"/>
                     <ListView
-                        Background="Green"
                         Margin="0"
                         x:Name="Travelers"
                         ItemTemplate="{StaticResource TravelersTemplate}"
