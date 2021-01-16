@@ -18,8 +18,8 @@
         <SolidColorBrush x:Key="NavigationViewItemForegroundSelectedPressed" Color="White"/>
     </Page.Resources>
 
-    
-        <NavigationView x:Name="nvSample" PaneTitle="Journey" Background="White" Foreground="White" >
+
+    <NavigationView x:Name="nvSample" PaneTitle="Journey" Background="White" Foreground="White" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" IsBackEnabled="False" >
             <NavigationView.MenuItems>
             <NavigationViewItem Content="Profiel" x:Name="Profile" Icon="Contact" Tapped="Profile_Tapped" Margin="0,5,0,5"></NavigationViewItem>
             <NavigationViewItem Content="Reizen" x:Name="Trips" Icon="Directions" Tapped="Trips_Tapped" Margin="0,5,0,5"></NavigationViewItem>
