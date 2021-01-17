@@ -288,8 +288,8 @@
                                     <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
 
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
-                                      <TextBlock Text="{x:Bind ViewModel.ToPackProgressFormat,Mode=OneWay}" Margin="5,0,5,0"/>
-                                      <ProgressBar MinWidth="130" Width="300" Value="{x:Bind ViewModel.ToPackProgress,Mode=OneWay}"/>
+                                      <TextBlock Text="{x:Bind ViewModel.ToPackProgressFormat,Mode=OneWay}" Margin="0,5,0,5"/>
+                                        <ProgressBar MinWidth="130" Width="300" Value="{x:Bind ViewModel.ToPackProgress,Mode=OneWay}" Margin="5"/>
                                     </StackPanel>
 
                                     <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
