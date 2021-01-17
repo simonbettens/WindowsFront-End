@@ -357,7 +357,10 @@
             </PivotItem>
             <PivotItem Header="Route">
                 <Grid>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer MinHeight="100" Height="650"
+              HorizontalScrollMode="Disabled"
+              VerticalScrollBarVisibility="Auto"
+              VerticalAlignment="Top">
                         <local:AddRoute x:Name="AddRouteChildView"></local:AddRoute>
                     </ScrollViewer>
                 </Grid>
