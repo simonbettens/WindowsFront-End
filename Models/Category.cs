@@ -42,7 +42,6 @@ namespace WindowsFront_end.Models
         {
             Name = dto.Name;
             CategoryId = dto.CategoryId;
-            //Items = dto.Items.Select(i => new Item(i)).ToList();
         }
 
 

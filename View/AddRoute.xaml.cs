@@ -229,15 +229,6 @@ namespace WindowsFront_end.View
             if (size <= 1) return;
             var destArray = ViewModel.GetDestinationsAsArray();
             var path = new List<EnhancedWaypoint>();
-            /*
-            BasicGeoposition point1 = new BasicGeoposition() { Latitude = 47.649693, Longitude = -122.144908 };
-            BasicGeoposition point2 = new BasicGeoposition() { Latitude = 47.6205, Longitude = -122.3493 };
-            BasicGeoposition point3 = new BasicGeoposition() { Latitude = 48.649693, Longitude = -122.144908 };
-
-            path.Add(new EnhancedWaypoint(new Geopoint(point1), WaypointKind.Stop));
-            path.Add(new EnhancedWaypoint(new Geopoint(point2), WaypointKind.Via));
-            path.Add(new EnhancedWaypoint(new Geopoint(point3), WaypointKind.Stop));
-            */
 
             for (var i = 0; i < destArray.Length; i++)
             {

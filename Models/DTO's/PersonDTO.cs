@@ -28,19 +28,6 @@ namespace WindowsFront_end.Models.DTO_s
                 FirstName = person.FirstName;
                 Name = person.Name;
                 Address = person.Address;
-                /*if (person.Trips.Count > 0)
-                {
-                    Trips = person.Trips.Select(i => new TripDTO.Overview(i)).ToList();
-                }
-                if (person.Items.Count > 0)
-                {
-                    Items = person.Items.Select(i => new ItemDTO.ForPersonOverview(i)).ToList();
-                }
-                if (person.Invites.Count > 0)
-                {
-                    Invited = person.Invites.Select(i => new TripDTO.Overview(i)).ToList();
-                }*/
-
             }
         }
 
@@ -81,16 +68,6 @@ namespace WindowsFront_end.Models.DTO_s
             {
 
             }
-
-            /*public OverviewWithItems(Person person)
-            {
-                Email = person.Email;
-                FirstName = person.FirstName;
-                Name = person.Name;
-                Address = person.Address;
-                Trips = person.Trips.Select(t => t.TripId).ToList();
-                Items = person.Items;
-            }*/
         }
 
         public class OverviewWithTrips

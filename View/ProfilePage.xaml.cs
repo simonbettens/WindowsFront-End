@@ -43,15 +43,5 @@ namespace WindowsFront_end.View
             Trip trip = itemPerson.Item.Trip;
             Frame.Navigate(typeof(TripDetailsPage), trip);
         }
-
-        /*private void NaarReis_Click(object sender, RoutedEventArgs e)
-        {
-            var id = ((Button)sender).Tag;
-            
-            Frame.Navigate(typeof(TripDetailsPage), l.ClickedItem);
-        }*/
-
-
-
     }
 }

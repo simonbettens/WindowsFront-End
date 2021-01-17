@@ -95,23 +95,8 @@ namespace WindowsFront_end.ViewModel
             get { return _inviteEmail; }
             set { _inviteEmail = value; RaisePropertyChanged("InviteEmail"); }
         }
-        /*
-        private List<Item> _toDoList;
-        public List<Item> ToDoList
-        {
-            get { return _toDoList; }
-            set { _toDoList = value; RaisePropertyChanged("ToDoList"); }
-        }*/
         public ObservableCollection<ItemDTO.ForOnePersonOverview> ToDoList { get; set; }
         public ObservableCollection<ItemDTO.ForOnePersonOverview> ToPackList { get; set; }
-        //return Trip != null? Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList(): null;
-        /*
-        private List<Item> _toPackList;
-        public List<Item> ToPackList
-        {
-            get { return _toPackList; }
-            set { _toPackList = value; RaisePropertyChanged("ToPackList"); }
-        }*/
 
         private List<string> _categories;
         public List<string> Categories
@@ -126,7 +111,6 @@ namespace WindowsFront_end.ViewModel
 
         public TripDetailViewModel()
         {
-            //ModifyItemCommand = new RelayCommand(async (param) => await ModifyItem((ItemDTO.ForOnePersonOverview)param));
             ToDoList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
             ToPackList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
             _toDoCurrent = 0;

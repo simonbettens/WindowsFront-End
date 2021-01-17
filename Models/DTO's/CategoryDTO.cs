@@ -17,12 +17,6 @@ namespace WindowsFront_end.Models.DTO_s
             public string Name { get; set; }
             public List<int> Items { get; set; } = new List<int>();
 
-           /* public Overview(Category category)
-            {
-                CategoryId = category.CategoryId;
-                Name = category.Name;
-                Items = category.Items.Select(i => i.ItemId).ToList();
-            }*/
         }
 
         public class Basic

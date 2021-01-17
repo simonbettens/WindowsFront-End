@@ -65,7 +65,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        
+
         <RelativePanel>
             <muxc:InfoBar x:Name="infoBar" IsOpen="{x:Bind ViewModel.GotDataNotSuccesfull,Mode=OneWay}" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" 
                     Severity="Warning"
@@ -84,4 +84,4 @@
             </RelativePanel.Background>
         </RelativePanel>
     </Grid>
-    </Page>
+</Page>

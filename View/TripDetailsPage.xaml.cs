@@ -53,49 +53,6 @@ namespace WindowsFront_end.View
             _dataTransferManager = DataTransferManager.GetForCurrentView();
             _dataTransferManager.DataRequested += _dataTransferManager_DataRequested;
 
-            MakeVisible();
-            // TESTING PURPOSES
-            /*var itemLijst = new List<Item>();
-            itemLijst.Add(new Item("item 1"));
-            itemLijst[0].ItemType = ItemType.ToPack;
-            itemLijst.Add(new Item("item 2"));
-            itemLijst.Add(new Item("item 3"));
-            itemLijst.Add(new Item("item 4"));
-            itemLijst.Add(new Item("item 5"));
-            itemLijst.Add(new Item("item 6"));
-            itemLijst.Add(new Item("item 7"));
-            itemLijst.Add(new Item("item 8"));
-
-            Route route = new Route("Route description");
-
-            var destLijst = new List<Destination>();
-           destLijst.Add(new Destination("destination 1", "description 1", "Jos Verdegemstraat 21, 9000 gent, belgie"));
-           destLijst.Add(new Destination("destination 2", "description 2", "Jos Verdegemstraat 22, 9000 gent, belgie"));
-           destLijst.Add(new Destination("destination 3", "description 3", "Jos Verdegemstraat 23, 9000 gent, belgie"));
-           destLijst.Add(new Destination("destination 4", "description 4", "Jos Verdegemstraat 24, 9000 gent, belgie"));
-           destLijst.Add(new Destination("destination 5", "description 5", "Jos Verdegemstraat 25, 9000 gent, belgie"));
-           destLijst.Add(new Destination("destination 6", "description 6", "Jos Verdegemstraat 26, 9000 gent, belgie"));
-           destLijst.Add(new Destination("destination 7", "description 7", "Jos Verdegemstraat 27, 9000 gent, belgie"));
-           destLijst.Add(new Destination("destination 8", "description 8", "Jos Verdegemstraat 28, 9000 gent, belgie"));
-
-            route.Destinations = destLijst;
-
-            trip.Items = itemLijst;
-            trip.Routes.Add(route);
-            ViewModel.Trip = trip;*/
-        }
-
-        public void MakeVisible()
-        {
-            blueItem.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            titel.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            categorieënBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            topack.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            toevoegenItem.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            blueCat.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            categoryName.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            toevoegenCategory.Visibility = Windows.UI.Xaml.Visibility.Visible;
-            todoTo.Visibility = Windows.UI.Xaml.Visibility.Visible;
         }
 
         private void _dataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)

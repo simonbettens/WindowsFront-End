@@ -19,8 +19,6 @@ namespace WindowsFront_end.Models
             set { _name = value; RaisePropertyChanged("ItemName"); }
         }
 
-        //Misschien niet nodig? 
-        //voor mij lijkt het beter da het eenmaal wordt ingesteld en daarna niet meer kan veranderen
         private ItemType _itemType;
         public ItemType ItemType
         {

@@ -41,7 +41,6 @@ namespace WindowsFront_end.ViewModel
             GotDataNotSuccesfull = false;
             IsBusy = true;
             LoadingDone = false;
-            //GetData();
             GetDataAsync();
         }
 
@@ -65,7 +64,6 @@ namespace WindowsFront_end.ViewModel
             {
                 //test
                 //https://localhost:5001/api/Trip/GetAllTrips
-                //json = await client.GetStringAsync(new Uri(UrlUtil.PorjectURL + "Trip"));
                 var list = await TripController.GetAllAsync();
                 foreach (var trip in list)
                 {
@@ -77,17 +75,6 @@ namespace WindowsFront_end.ViewModel
             {
                 GotDataNotSuccesfull = true;
             }
-            /*
-            if (!GotDataNotSuccesfull)
-            {
-                ///https://localhost:44372/api/Trip/GetAllTrips
-                var lst = JsonConvert.DeserializeObject<List<TripDTO.Overview>>(json);
-                foreach (var tripdto in lst)
-                {
-                    var trip = new Trip(tripdto);
-                    this.TripList.Add(trip);
-                }
-            }*/
             IsBusy = false;
             LoadingDone = true;
         }

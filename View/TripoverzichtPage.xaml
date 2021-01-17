@@ -14,9 +14,9 @@
         <converter:ColorConverter x:Key="ColorConverter" />
         <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
     </Page.Resources>
-    
+
     <ScrollViewer>
-            <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical">
             <Grid Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                     <muxc:InfoBar IsOpen="{x:Bind ViewModel.GotDataNotSuccesfull,Mode=OneWay}"
@@ -38,7 +38,7 @@
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                 </GridView>
-                
+
             </Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding LoadingDone , Converter={StaticResource bool2vis}}">
                 <Button Margin="50" CornerRadius="5,5,5,5" Click="AddButton_Click">

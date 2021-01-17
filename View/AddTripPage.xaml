@@ -12,32 +12,32 @@
 
     <Grid>
         <VisualStateManager.VisualStateGroups>
-        <VisualStateGroup>
-            <VisualState x:Name="narrowView">
-                <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
+            <VisualStateGroup>
+                <VisualState x:Name="narrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
                         <Setter Target="tripColorViewBox.Width" Value="200"/>
                         <Setter Target="tripColorViewBox.Height" Value="150"/>
                         <Setter Target="txtcolorpicker.Margin" Value="0,0,0,50"/>
                         <Setter Target="stkcolorpicker.Orientation" Value="Vertical"/>
                         <Setter Target="stkpDatePicker.Orientation" Value="Vertical"/>
                     </VisualState.Setters>
-            </VisualState>
-            <VisualState x:Name="wideView">
-                <VisualState.StateTriggers >
-                    <AdaptiveTrigger MinWindowWidth="1100"></AdaptiveTrigger>
-                </VisualState.StateTriggers>
-                <VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers >
+                        <AdaptiveTrigger MinWindowWidth="1100"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
                         <Setter Target="tripColorViewBox.Width" Value="300"/>
                         <Setter Target="tripColorViewBox.Height" Value="250"/>
                         <Setter Target="txtcolorpicker.Margin" Value="0,0,25,0"/>
                         <Setter Target="stkcolorpicker.Orientation" Value="Horizontal"/>
                         <Setter Target="stkpDatePicker.Orientation" Value="Horizontal"/>
                     </VisualState.Setters>
-            </VisualState>
-        </VisualStateGroup>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
@@ -63,7 +63,7 @@
                    VerticalAlignment="Center" Style="{StaticResource ColorTextBlock}">
             </TextBlock>
         </StackPanel>
-        
+
         <!--Name trip-->
         <StackPanel Grid.Column="0"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" >
             <TextBox Text="{x:Bind AddTripViewModel.Trip.Name ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="TripName"  Header="Geef de naam van de reis in:"
