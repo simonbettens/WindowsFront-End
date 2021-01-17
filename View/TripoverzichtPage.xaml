@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="LightBlue">
+    Background="LightBlue" RequestedTheme="Light">
     <Page.Resources>
         <converter:ColorConverter x:Key="ColorConverter" />
         <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>

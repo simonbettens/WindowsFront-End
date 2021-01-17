@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:model="using:WindowsFront_end.Models" xmlns:viewmodel="using:WindowsFront_end.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ProfileViewModel}"
-    Background="LightBlue">
+    Background="LightBlue" RequestedTheme="Light">
     <Page.Resources>
         <converter:ColorConverter x:Key="ColorConverter" />
         <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>

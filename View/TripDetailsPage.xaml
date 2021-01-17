@@ -10,7 +10,7 @@
     xmlns:model="using:WindowsFront_end.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Background="LightBlue">
+    Background="LightBlue" RequestedTheme="Light">
     <Page.Resources>
         <muxc:StackLayout x:Name="HorizontalStackLayout" Orientation="Horizontal" Spacing="8"></muxc:StackLayout>
         <converter:ColorConverter x:Key="ColorConverter" />

@@ -21,7 +21,9 @@
                 <Setter Property="FontSize" Value="22"/>
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
-            
+            <Style x:Name="ColorTextBlockStyle" TargetType="TextBlock" x:Key="ColorTextBlock" >
+                <Setter Property="Foreground" Value="Black" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
