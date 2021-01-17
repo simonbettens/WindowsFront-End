@@ -204,10 +204,14 @@
 
         <TextBlock Text="{Binding Trip.Name, Mode=OneWay}" Style="{StaticResource Title}" RequestedTheme="Light" FontSize="36" FontWeight="Bold"></TextBlock>
         <Pivot RequestedTheme="Light">
-
-            <PivotItem Header="Voorbereiding" Margin="12,0,12,50">
-                <RelativePanel>
-                    <muxc:InfoBar x:Name="toevoegenFail"
+            <PivotItem Header="Voorbereiding" Margin="12,0,12,50" ScrollViewer.IsVerticalRailEnabled="True">
+                <Grid>
+                    <ScrollViewer MinHeight="100" Height="650"
+              HorizontalScrollMode="Disabled"
+              VerticalScrollBarVisibility="Auto"
+              VerticalAlignment="Top">
+                        <RelativePanel>
+                            <muxc:InfoBar x:Name="toevoegenFail"
                        Severity="Error"
                        Title="Fout"
                        Message="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}"
