@@ -2,17 +2,17 @@
 
 ## inloggegevens
 ### Kanye West
-  email: kanye.west@gmail.com
-  password: KanyeWest1!
+  - email: kanye.west@gmail.com
+  - password: KanyeWest1!
 ### Kim Kardashian
-  email: kim.kardashian@gmail.com
-  password: KimKardashain1!
+  - email: kim.kardashian@gmail.com
+  - password: KimKardashain1!
 ### North West
-  email: north.west@gmail.com
-  password: NorthWest1!
+  - email: north.west@gmail.com
+  - password: NorthWest1!
 ### Aubrey Graham
-  email: aubrey.graham@gmail.com
-  password: AubreyGraham1!
+  - email: aubrey.graham@gmail.com
+  - password: AubreyGraham1!
   
 ## belangrijke features
 ### Profiel
