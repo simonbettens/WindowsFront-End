@@ -26,6 +26,12 @@ namespace WindowsFront_end.ViewModel
             get { return _toDoProgress; }
             set { _toDoProgress = value; RaisePropertyChanged("ToDoProgress"); }
         }
+        private string _toDoProgressFormat;
+        public string ToDoProgressFormat
+        {
+            get { return _toDoProgressFormat; }
+            set { _toDoProgressFormat = value; RaisePropertyChanged("ToDoProgressFormat"); }
+        }
         private int _toPackTotal;
         private int _toPackCurrent;
         private int _toPackProgress;
@@ -34,7 +40,12 @@ namespace WindowsFront_end.ViewModel
             get { return _toPackProgress; }
             set { _toPackProgress = value; RaisePropertyChanged("ToPackProgress"); }
         }
-
+        private string _toPackProgressFormat;
+        public string ToPackProgressFormat
+        {
+            get { return _toPackProgressFormat; }
+            set { _toPackProgressFormat = value; RaisePropertyChanged("ToPackProgressFormat"); }
+        }
         private bool _isBusy;
         public bool IsBusy
         {
@@ -175,6 +186,7 @@ namespace WindowsFront_end.ViewModel
                 });
                 decimal toDoPercent = ((decimal)_toDoCurrent / (decimal)_toDoTotal) * 100;
                 ToDoProgress = Convert.ToInt32(toDoPercent);
+                ToDoProgressFormat = $"{ToDoProgress}%";
 
                 var toPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
                 toPackList.ForEach(i =>
@@ -192,6 +204,7 @@ namespace WindowsFront_end.ViewModel
                 });
                 decimal toPackPercent = ((decimal)_toPackCurrent / (decimal)_toPackTotal) * 100;
                 ToPackProgress = Convert.ToInt32(toPackPercent);
+                ToPackProgressFormat = $"{ToPackProgress}%";
                 GotDataNotSuccesfull = false;
                 BuildShareString();
             }
