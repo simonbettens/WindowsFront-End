@@ -333,5 +333,15 @@ namespace WindowsFront_end.ViewModel
                 GetTripAsync(Trip.TripId);
             }
         }
+
+        public async Task<bool> LeaveTrip()
+        {
+            var response = await TripController.LeaveTrip(Trip.TripId);
+            if(response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

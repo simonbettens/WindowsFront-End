@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using WindowsBackend.Models.DTO_s;
@@ -264,6 +265,15 @@ namespace WindowsFront_end.View
             string email = ((Button)sender).Tag as string;
             await ViewModel.CancelInvite(email);
 
+        }
+
+        private async void leave_trip(object sender, RoutedEventArgs e)
+        {
+            if(await ViewModel.LeaveTrip())
+            {
+                Frame.Navigate(typeof(TripoverzichtPage));
+            }
+            
         }
     }
 }
