@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,18 +18,37 @@ namespace WindowsFront_end.ViewModel
 {
     public class TripDetailViewModel : INotifyPropertyChanged
     {
+        private int _toDoTotal;
+        private int _toDoCurrent;
+        private int _toDoProgress;
+        public int ToDoProgress
+        {
+            get { return _toDoProgress; }
+            set { _toDoProgress = value; RaisePropertyChanged("ToDoProgress"); }
+        }
+        private int _toPackTotal;
+        private int _toPackCurrent;
+        private int _toPackProgress;
+        public int ToPackProgress
+        {
+            get { return _toPackProgress; }
+            set { _toPackProgress = value; RaisePropertyChanged("ToPackProgress"); }
+        }
+
         private bool _isBusy;
         public bool IsBusy
         {
             get { return _isBusy; }
             set { _isBusy = value; RaisePropertyChanged("IsBusy"); }
         }
+
         private bool _gotDataNotSuccesfull;
         public bool GotDataNotSuccesfull
         {
             get { return _gotDataNotSuccesfull; }
             set { _gotDataNotSuccesfull = value; RaisePropertyChanged("GotDataNotSuccesfull"); }
         }
+
         private bool _loadingDone;
         public bool LoadingDone
         {
@@ -98,6 +118,10 @@ namespace WindowsFront_end.ViewModel
             //ModifyItemCommand = new RelayCommand(async (param) => await ModifyItem((ItemDTO.ForOnePersonOverview)param));
             ToDoList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
             ToPackList = new ObservableCollection<ItemDTO.ForOnePersonOverview>();
+            _toDoCurrent = 0;
+            _toDoTotal = 0;
+            _toPackCurrent = 0;
+            _toPackTotal = 0;
         }
 
         public void BuildShareString()
@@ -122,6 +146,10 @@ namespace WindowsFront_end.ViewModel
         {
             try
             {
+                _toDoCurrent = 0;
+                _toDoTotal = 0;
+                _toPackCurrent = 0;
+                _toPackTotal = 0;
                 var email = (string)ApplicationData.Current.LocalSettings.Values["current_user_email"];
                 TripDTO.Detail trip = await TripController.GetTripAsync(tripId);
                 Trip = new Trip(trip);
@@ -141,7 +169,13 @@ namespace WindowsFront_end.ViewModel
                         forOnePersonOverview.PropertyChanged += async (sender, e) => await UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToDoList.Add(forOnePersonOverview);
                     }
+                    _toDoTotal += i.Persons.Count();
+                    _toDoCurrent += i.Persons.Where(p => p.IsDone == true).ToList().Count();
+
                 });
+                decimal toDoPercent = ((decimal)_toDoCurrent / (decimal)_toDoTotal) * 100;
+                ToDoProgress = Convert.ToInt32(toDoPercent);
+
                 var toPackList = Trip.Items.Where(i => i.ItemType == ItemType.ToPack).ToList();
                 toPackList.ForEach(i =>
                 {
@@ -153,7 +187,11 @@ namespace WindowsFront_end.ViewModel
                         forOnePersonOverview.PropertyChanged += async (sender, e) => await UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToPackList.Add(forOnePersonOverview);
                     }
+                    _toPackTotal += i.Persons.Count();
+                    _toPackCurrent += i.Persons.Where(p => p.IsDone == true).ToList().Count();
                 });
+                decimal toPackPercent = ((decimal)_toPackCurrent / (decimal)_toPackTotal) * 100;
+                ToPackProgress = Convert.ToInt32(toPackPercent);
                 GotDataNotSuccesfull = false;
                 BuildShareString();
             }
@@ -237,6 +275,7 @@ namespace WindowsFront_end.ViewModel
         }
         public async Task UpdateItemAsync(ItemDTO.ForOnePersonOverview sender)
         {
+
             var response = await MarkItemAsDoneOrNotDone(sender.ItemId, sender.PersonEmail);
             GetTripAsync(Trip.TripId);
         }
