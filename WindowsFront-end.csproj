@@ -123,6 +123,7 @@
     <Compile Include="Controllers\HttpInterceptorHandler.cs" />
     <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Converters\ItemTypeToStringConverter.cs" />
     <Compile Include="LogIn.xaml.cs">
       <DependentUpon>LogIn.xaml</DependentUpon>
     </Compile>

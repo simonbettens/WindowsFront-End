@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using WindowsFront_end.Models;
+using WindowsFront_end.Models.DTO_s;
 
 namespace WindowsBackend.Models.DTO_s
 {
@@ -26,7 +27,7 @@ namespace WindowsBackend.Models.DTO_s
                 ItemId = item.ItemId;
                 Name = item.Name;
                 ItemType = item.ItemType;
-                Category = item.Category;
+                Category = item.Category.Name;
                 Persons = item.Persons.ToList();
             }
 
@@ -67,6 +68,9 @@ namespace WindowsBackend.Models.DTO_s
             public int ItemId { get; set; }
             public string Name { get; set; }
             public bool IsDone { get; set; }
+            public TripDTO.Overview Trip { get; set; }
+            public CategoryDTO.Overview Category { get; set; }
+            public ItemType ItemType { get; set; }
 
             public ForPersonOverview()
             {

@@ -35,5 +35,23 @@ namespace WindowsFront_end.View
             var id = ((Button)sender).Tag;
             await ViewModel.DeclineInvite((int)id);
         }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+            ItemPerson itemPerson = e.ClickedItem as ItemPerson;
+            Trip trip = itemPerson.Item.Trip;
+            Frame.Navigate(typeof(TripDetailsPage), trip);
+        }
+
+        /*private void NaarReis_Click(object sender, RoutedEventArgs e)
+        {
+            var id = ((Button)sender).Tag;
+            
+            Frame.Navigate(typeof(TripDetailsPage), l.ClickedItem);
+        }*/
+
+
+
     }
 }

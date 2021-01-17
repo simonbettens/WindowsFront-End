@@ -15,20 +15,26 @@
         <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
         <converter:IntToVisibilityConverter x:Key="int2vis"/>
         <converter:IntToVisibilityConverterReverse x:Key="int2visReverse"/>
+        <converter:ItemTypeToStringConverter x:Key="itemType2String"/>
+        <converter:DateFormatter x:Key="dateConverter"/>
         <DataTemplate
             x:Key="InviteList"
             x:DataType="model:Trip"
             >
-            <Grid>
+            <Grid
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                MinWidth="500"
+                >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
-                        Width="auto"/>
+                        Width="*"/>
                     <ColumnDefinition
-                        Width="auto"/>
+                        Width="*"/>
                     <ColumnDefinition
-                        Width="auto"/>
+                        Width="*"/>
                     <ColumnDefinition
-                        Width="auto"/>
+                        Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
@@ -36,7 +42,7 @@
                 </TextBlock>
                 <TextBlock
                     Grid.Column="1"
-                    Text="{x:Bind Start}"
+                    Text="{x:Bind Start, Converter={StaticResource dateConverter}}"
                     />
                 <Button
                     x:Name="accept"
@@ -57,8 +63,12 @@
              x:Key="ItemList"
             x:DataType="model:ItemPerson">
             <Grid
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 MinWidth="500">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="2*"/>
                     <ColumnDefinition
                         Width="1*"/>
                     <ColumnDefinition
@@ -69,15 +79,22 @@
                 <TextBlock
                     Grid.Column="0"
                     Text="{x:Bind Item.Name}"
-                    MaxWidth="166"/>
+                    MaxWidth="170"
+                    TextTrimming="CharacterEllipsis"
+                    TextAlignment="Left"
+                    />
                 <TextBlock
                     Grid.Column="1"
-                    Text="{x:Bind Item.Category}"
+                    Text="{x:Bind Item.Category.Name}"
                     MaxWidth="166"/>
                 <TextBlock
                     Grid.Column="2"
-                    Text="{x:Bind Item.ItemType}"
+                    Text="{x:Bind Item.ItemType, Converter={StaticResource itemType2String}}"
                     MaxWidth="166"/>
+                <TextBlock
+                    Grid.Column="3"
+                    Text="{x:Bind Item.Trip.Name}"
+                    />
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -144,12 +161,13 @@
                 Style="{StaticResource Title}"
                 Text="Uitnodigingen"/>
                     <ListView
+                        IsItemClickEnabled="False"
+                         SelectionMode="None"
                 Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
                 ItemsSource="{Binding Person.Invites}"
                 ItemTemplate="{StaticResource InviteList}"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                BorderThickness="1"
-                BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                Background="AliceBlue"
                 HorizontalAlignment="Stretch"
                 Margin="50, 0, 50, 0">
 
@@ -165,12 +183,13 @@
                 Style="{StaticResource Title}"
                 Text="Te doen"/>
                 <ListView
+                ItemClick="ListView_ItemClick"
+                    IsItemClickEnabled="True"
                 Visibility="{Binding Items.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
                 ItemsSource="{Binding Items}"
                 ItemTemplate="{StaticResource ItemList}"
                 HorizontalAlignment="Stretch"
-                BorderThickness="1"
-                BorderBrush="{ThemeResource SystemControlForegroundBaseMediumLowBrush}"
+                    Background="AliceBlue"
                 Margin="50, 0, 50, 0"
 
 >

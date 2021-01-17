@@ -27,17 +27,30 @@ namespace WindowsFront_end.Models
             get { return _itemType; }
             set { _itemType = value; RaisePropertyChanged("ItemItemType"); }
         }
-        public string Category { get; set; }
+        public Category Category { get; set; }
 
         public List<ItemDTO.ForItemOverview> Persons { get; set; } = new List<ItemDTO.ForItemOverview>();
+
+        public Trip Trip { get; set; }
 
         public Item(ItemDTO.Overview dto)
         {
             ItemId = dto.ItemId;
             Name = dto.Name;
             ItemType = dto.ItemType;
-            Category = dto.Category;
+            Category = new Category(dto.Category);
             Persons = dto.Persons;
+
+        }
+
+        public Item(ItemDTO.ForPersonOverview dto)
+        {
+            ItemId = dto.ItemId;
+            Name = dto.Name;
+            Category = new Category(dto.Category);
+            Trip = new Trip(dto.Trip);
+            ItemType = dto.ItemType;
+
 
         }
 
