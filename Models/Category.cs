@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using WindowsFront_end.Models.DTO_s;
 
-namespace WindowsFront_end.Model
+namespace WindowsFront_end.Models
 {
     public class Category : INotifyPropertyChanged
     {
@@ -30,9 +32,21 @@ namespace WindowsFront_end.Model
 
         }
 
+        public Category(CategoryDTO.Basic dto)
+        {
+            Name = dto.Name;
+            CategoryId = dto.CategoryId;
+        }
+
+        public Category(CategoryDTO.Overview dto)
+        {
+            Name = dto.Name;
+            CategoryId = dto.CategoryId;
+        }
 
 
-        protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

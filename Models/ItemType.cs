@@ -1,4 +1,4 @@
-﻿namespace WindowsFront_end.Model
+﻿namespace WindowsFront_end.Models
 {
     public enum ItemType
     {

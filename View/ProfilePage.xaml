@@ -1,0 +1,211 @@
+﻿<Page
+    x:Class="WindowsFront_end.View.ProfilePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WindowsFront_end.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:WindowsFront_end.Converters"
+    mc:Ignorable="d"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:model="using:WindowsFront_end.Models" xmlns:viewmodel="using:WindowsFront_end.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ProfileViewModel}"
+    Background="LightBlue" RequestedTheme="Light">
+    <Page.Resources>
+        <converter:ColorConverter x:Key="ColorConverter" />
+        <converter:BooleanToVisibilityConverter x:Key="bool2vis"/>
+        <converter:IntToVisibilityConverter x:Key="int2vis"/>
+        <converter:IntToVisibilityConverterReverse x:Key="int2visReverse"/>
+        <converter:ItemTypeToStringConverter x:Key="itemType2String"/>
+        <converter:DateFormatter x:Key="dateConverter"/>
+        <DataTemplate
+            x:Key="InviteList"
+            x:DataType="model:Trip"
+            >
+            <Grid
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                MinWidth="500"
+                >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                    <ColumnDefinition
+                        Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="{x:Bind Name}">
+                </TextBlock>
+                <TextBlock
+                    Grid.Column="1"
+                    Text="{x:Bind Start, Converter={StaticResource dateConverter}}"
+                    />
+                <Button
+                    x:Name="accept"
+                    Content="Accept"
+                    Grid.Column="2"
+                    Click="AcceptInvite"
+                    Tag="{x:Bind TripId}"/>
+                <Button
+                    x:Name="decline"
+                    Content="Decline"
+                    Grid.Column="3"
+                    Click="DeclineInvite"
+                    Tag="{x:Bind TripId}"/>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate
+             x:Key="ItemList"
+            x:DataType="model:ItemPerson">
+            <Grid
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                MinWidth="500">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="2*"/>
+                    <ColumnDefinition
+                        Width="1*"/>
+                    <ColumnDefinition
+                        Width="1*"/>
+                    <ColumnDefinition
+                        Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Text="{x:Bind Item.Name}"
+                    MaxWidth="170"
+                    TextTrimming="CharacterEllipsis"
+                    TextAlignment="Left"
+                    />
+                <TextBlock
+                    Grid.Column="1"
+                    Text="{x:Bind Item.Category.Name}"
+                    MaxWidth="166"/>
+                <TextBlock
+                    Grid.Column="2"
+                    Text="{x:Bind Item.ItemType, Converter={StaticResource itemType2String}}"
+                    MaxWidth="166"/>
+                <TextBlock
+                    Grid.Column="3"
+                    Text="{x:Bind Item.Trip.Name}"
+                    />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="narrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="pnlNames.Orientation" Value="Vertical"></Setter>
+                        <Setter Target="pnlMail_Address.Orientation" Value="Vertical"></Setter>
+                        <Setter Target="txbVoornaam.Width" Value="200"></Setter>
+                        <Setter Target="txbAchtenaam.Width" Value="200"></Setter>
+                        <Setter Target="txbEmail.Width" Value="250"></Setter>
+                        <Setter Target="txbAddress.Width" Value="250"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers >
+                        <AdaptiveTrigger MinWindowWidth="800"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="pnlNames.Orientation" Value="Horizontal"></Setter>
+                        <Setter Target="pnlMail_Address.Orientation" Value="Horizontal"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Margin="10" Text="Profiel overzicht" HorizontalAlignment="Center"  TextWrapping="Wrap" 
+                   VerticalAlignment="Top" FontSize="18"  FontWeight="Bold"></TextBlock>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <muxc:InfoBar IsOpen="{x:Bind ViewModel.GotDataNotSuccesfull,Mode=OneWay}"
+                    Severity="Warning"
+                    Message="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}">
+                    </muxc:InfoBar>
+                </StackPanel>
+                <StackPanel Visibility="{x:Bind ViewModel.LoadingDone,Mode=OneWay, Converter={StaticResource bool2vis} }">
+
+                    <StackPanel x:Name="pnlNames" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBox x:Name="txbVoornaam" Text="{x:Bind ViewModel.Person.FirstName, Mode=TwoWay}" Header="Voornaam" VerticalAlignment="Center" Margin="15" Width="300" MinWidth="50"/>
+                        <TextBox x:Name="txbAchtenaam" Text="{x:Bind ViewModel.Person.Name, Mode=TwoWay}" Header="Achternaam" VerticalAlignment="Center" Margin="15" Width="300" MinWidth="50"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="pnlMail_Address" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBox x:Name="txbEmail" Text="{x:Bind ViewModel.Person.Email, Mode=TwoWay}" Header="Email" VerticalAlignment="Center" Margin="15" Width="350" MinWidth="50"/>
+                        <TextBox x:Name="txbAddress" Text="{x:Bind ViewModel.Person.Address, Mode=TwoWay}" Header="Address" VerticalAlignment="Center" Margin="15" Width="350" MinWidth="50"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Margin="0,0,0,10" Content="Updaten" Command="{x:Bind ViewModel.UpdateProfileCommand}" CornerRadius="5,5,5,5"></Button>
+                    </StackPanel>
+                    <Border BorderBrush="Black" 
+                    BorderThickness="0,0,0,1" Background="{x:Null}" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock
+                Style="{StaticResource Title}"
+                Text="Uitnodigingen"/>
+                    <ListView
+                        IsItemClickEnabled="False"
+                         SelectionMode="None"
+                Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
+                ItemsSource="{Binding Person.Invites}"
+                ItemTemplate="{StaticResource InviteList}"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                Background="AliceBlue"
+                HorizontalAlignment="Stretch"
+                Margin="50, 0, 50, 0">
+
+                    </ListView>
+                    <TextBlock
+                Text="U hebt geen uitnodigingen op dit moment"
+                Style="{ThemeResource SubTitle}"
+                Visibility="{Binding Person.Invites.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
+                />
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock
+                Style="{StaticResource Title}"
+                Text="Te doen"/>
+                    <ListView
+                ItemClick="ListView_ItemClick"
+                    IsItemClickEnabled="True"
+                Visibility="{Binding Items.Count, Mode=OneWay, Converter={StaticResource int2vis}}"
+                ItemsSource="{Binding Items}"
+                ItemTemplate="{StaticResource ItemList}"
+                HorizontalAlignment="Stretch"
+                    Background="AliceBlue"
+                Margin="50, 0, 50, 0"
+
+>
+
+                    </ListView>
+                    <TextBlock
+                Text="U hebt geen TODO's op dit moment"
+                Style="{ThemeResource SubTitle}"
+                Visibility="{Binding Person.Items.Count, Mode=OneWay, Converter={StaticResource int2visReverse}}"
+                />
+                </StackPanel>
+
+                <ProgressRing x:Name="LoadingIndicator" IsActive="{x:Bind ViewModel.IsBusy,Mode=OneWay}"  VerticalAlignment="Center"  Margin="75" Width="70" Height="70" MinWidth="70" MinHeight="70"/>
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+
+</Page>

@@ -1,0 +1,164 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WindowsFront_end.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Custom="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:helpers="using:Microsoft.Toolkit.Uwp.UI.Helpers"
+    x:Class="WindowsFront_end.View.AddRoute"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="LightBlue" RequestedTheme="Light">
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="narrowView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="stkpsearchaddress.Orientation" Value="Vertical"/>
+                        <Setter Target="mapOutput.FontSize" Value="11"/>
+                        <Setter Target="txtAddress.FontSize" Value="11"/>
+                        <Setter Target="mapOutput.Margin" Value="0,20,0,0"/>
+                        <Setter Target="btnBack.Margin" Value="20,0,20,0"/>
+                        <Setter Target="btnGo.Margin" Value="20,0,20,0"/>
+                        <Setter Target="btnaddress.Margin" Value="5,5,0,0"/>
+                        <Setter Target="SetFontSize.FontSize" Value="7" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers >
+                        <AdaptiveTrigger MinWindowWidth="800"></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="stkpsearchaddress.Orientation" Value="Horizontal"/>
+                        <Setter Target="mapOutput.FontSize" Value="14"/>
+                        <Setter Target="txtAddress.FontSize" Value="15"/>
+                        <Setter Target="mapOutput.Margin" Value="0,0,0,0"/>
+                        <Setter Target="btnBack.Margin" Value="50,0,50,0"/>
+                        <Setter Target="btnGo.Margin" Value="50,0,50,0"/>
+                        <Setter Target="btnaddress.Margin" Value="5,10,0,0"/>
+                        <Setter Target="SetFontSize.FontSize" Value="15" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--start grid inside grid-->
+        <Grid Grid.Row="0" Grid.Column="0"  Grid.RowSpan="3" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <muxc:InfoBar IsOpen="{x:Bind ViewModel.IsOpen,Mode=OneWay}"
+                    Severity="{x:Bind ViewModel.InfoBarSeverity, Mode=OneWay}"
+                    Message="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}">
+                </muxc:InfoBar>
+                <TextBlock x:Name="mapOutput" Text="{x:Bind ViewModel.HeaderText, Mode=OneWay}" FontWeight="Bold" FontSize="14" TextWrapping="Wrap" TextAlignment="Center" Margin="0,10,0,0"></TextBlock>
+            </StackPanel>
+            <TextBlock Name="SetFontSize" Visibility="Collapsed"/>
+            <TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind ViewModel.DestinationInMaking.Description ,Mode=TwoWay}" Margin="10,10,10,20" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
+            </TextBox>
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2"  MinWidth="150" Margin="0,0,0,0" MinHeight="100">
+                <Button 
+                     Content="Sla bestemming op" Command="{x:Bind ViewModel.SaveDestinationCommand}" IsEnabled="{x:Bind ViewModel.ValidationSucces,Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    CornerRadius="5,5,5,5">
+                </Button>
+            </StackPanel>
+
+            <Border Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" BorderBrush="Black"  
+            BorderThickness="0,0,0,1" Background="{x:Null}" />
+        </Grid>
+        <StackPanel  Grid.Column="0" Grid.Row="3" >
+            <TextBlock Text="Uw route:" VerticalAlignment="Center" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"></TextBlock>
+            <!-- end grid inside grid-->
+            <ListView x:Name="ItemClass_ListView" BorderBrush="DarkBlue" Background="Azure" Margin="25,10,25,25" BorderThickness="2" MinHeight="300"
+                     ItemsSource="{Binding DestinationsList}" Grid.RowSpan="2" SelectionMode="None">
+                <ListView.Resources>
+                    <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="Aquamarine" />
+                    <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="Aquamarine" />
+                </ListView.Resources>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid  HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                <TextBlock x:Name="itemAddress" Text="{Binding Address}" FontSize="{Binding Path=FontSize, ElementName=SetFontSize}" TextWrapping="Wrap" Foreground="Black" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                <Button 
+                                    Command="{Binding ElementName=ItemClass_ListView, Path=DataContext.RemoveDestinationCommand}"
+                                    CommandParameter="{Binding Address}"
+                                    Foreground="Black"
+                                    VerticalAlignment="Top" 
+                                    HorizontalAlignment="Right"
+                                    CornerRadius="5,5,5,5"
+                                    >
+                                    <SymbolIcon Symbol="Remove" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnBack" Grid.Column="0" Content="Ga terug" Margin="50,0,50,0" CornerRadius="5,5,5,5" Click="GoBack" ></Button>
+                <Button x:Name="btnGo" Grid.Column="2" Content="Ga verder" Margin="50,0,50,0" HorizontalAlignment="Right" CornerRadius="5,5,5,5" Command="{x:Bind ViewModel.SaveTripCommand}" ></Button>
+            </Grid>
+        </StackPanel>
+
+
+        <Border Grid.Column="1" Grid.RowSpan="4" BorderBrush="Black" 
+            BorderThickness="1,0,0,0" Background="{x:Null}" />
+        <StackPanel Grid.Column="1" Orientation="Vertical" Width="Auto">
+            <TextBlock x:Name="txtAddress" Margin="0,10,0,0" Text="Zoek op een address of klik op de kaart" HorizontalAlignment="Center"></TextBlock>
+            <StackPanel x:Name="stkpsearchaddress" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBox x:Name="txbAddress" Margin="0,10,0,0" MinWidth="200" PlaceholderText="Vul een address in"></TextBox>
+                <Button x:Name="btnaddress" Margin="5,10,0,0" Content="Zoeken" HorizontalAlignment="Center" Click="GeocodeButton_Click" CornerRadius="5,5,5,5" ></Button>
+            </StackPanel>
+        </StackPanel>
+
+        <Custom:MapControl 
+            Grid.Column="1"
+            Grid.Row="1"
+            Margin="15,30,15,15"
+            x:Name="Map"            
+            ZoomInteractionMode="GestureAndControl"
+            TiltInteractionMode="GestureAndControl"   
+            MapServiceToken="JgmWRYIYzmYgbMh4hvWR~OhL3ZDrSPoQeI-PDC3owow~ArOjM7tKkf3GS9Xr45_idgO58fGVP1IXePZHMNlNtDMIbe5xvEzbE9eUbY1VPr31" Grid.RowSpan="3" MapTapped="Map_MapTapped"/>
+    </Grid>
+
+</Page>

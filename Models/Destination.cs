@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using WindowsFront_end.Models.DTO_s;
 
-namespace WindowsFront_end.Model
+namespace WindowsFront_end.Models
 {
     public class Destination : INotifyPropertyChanged
     {
@@ -30,14 +30,35 @@ namespace WindowsFront_end.Model
             get { return _address; }
             set { _address = value; RaisePropertyChanged("DestinationAddress"); }
         }
+        private double _latitude;
+        public double Latitude
+        {
+            get { return _latitude; }
+            set { _latitude = value; RaisePropertyChanged("Latitude"); }
+        }
+        private double _longitude;
+        public double Longitude
+        {
+            get { return _longitude; }
+            set { _longitude = value; RaisePropertyChanged("Longitude"); }
+        }
 
-        public List<Route> Routes { get; set; } = new List<Route>();
-
-        public Destination(string name, string description, string address)
+        public Destination(string name, string description, string address, double latitude, double longitude)
         {
             Name = name;
             Description = description;
             Address = address;
+            Latitude = latitude;
+            Longitude = longitude;
+        }
+        
+        public Destination(DestinationDTO.Overview dto)
+        {
+            Name = dto.Name;
+            Description = dto.Description;
+            Address = dto.Address;
+            Latitude = dto.Latitude;
+            Longitude = dto.Longitude;
         }
 
         public Destination()
@@ -46,9 +67,10 @@ namespace WindowsFront_end.Model
         }
 
 
-        protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }
