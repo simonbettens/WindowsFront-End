@@ -67,10 +67,14 @@ namespace WindowsFront_end.View
 
         private void SetCenter()
         {
-            var start = ViewModel.GetDestinationsAsArray()[0];
-            BasicGeoposition point = new BasicGeoposition() { Latitude = start.Latitude, Longitude = start.Longitude };
-            Geopoint startpoint = new Geopoint(point);
-            Map.Center = startpoint;
+            var array = ViewModel.GetDestinationsAsArray();
+            if (array.Length > 0)
+            {
+                var start = array[0];
+                BasicGeoposition point = new BasicGeoposition() { Latitude = start.Latitude, Longitude = start.Longitude };
+                Geopoint startpoint = new Geopoint(point);
+                Map.Center = startpoint;
+            }
         }
 
         private async void Map_MapTapped(MapControl sender, MapInputEventArgs args)

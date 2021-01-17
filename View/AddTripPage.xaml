@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="LightBlue">
+    Background="LightBlue" RequestedTheme="Light">
 
     <Grid>
         <VisualStateManager.VisualStateGroups>
@@ -60,29 +60,29 @@
             <TextBlock  TextAlignment="Center" Margin="0,10,0,0"
                    Text="Maak een nieuwe reis aan"
                    FontWeight="Bold" FontSize="18"
-                   VerticalAlignment="Center">
+                   VerticalAlignment="Center" Style="{StaticResource ColorTextBlock}">
             </TextBlock>
         </StackPanel>
         
         <!--Name trip-->
         <StackPanel Grid.Column="0"  Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" >
             <TextBox Text="{x:Bind AddTripViewModel.Trip.Name ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="TripName"  Header="Geef de naam van de reis in:"
-                 VerticalAlignment="Center"  Margin="25" />
+                 VerticalAlignment="Center"  Margin="25" Foreground="Black" />
         </StackPanel>
 
 
         <!-- Route description-->
-        <TextBox x:Name="RouteDesc" Text="{x:Bind AddTripViewModel.Trip.Route.Description ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Margin="25,25,25,25" Header="Geef de beschrijving van de route hierin:" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in">
+        <TextBox x:Name="RouteDesc" Text="{x:Bind AddTripViewModel.Trip.Route.Description ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Margin="25,25,25,25" Header="Geef de beschrijving van de route hierin:" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Vul hier een beschrijving in" Foreground="Black">
 
         </TextBox>
 
         <!--Date pickers-->
 
         <StackPanel x:Name="stkpDatePicker" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <CalendarDatePicker x:Name="TripStart" 
+            <CalendarDatePicker x:Name="TripStart" Foreground="Black"
                     Header="Kies start datum " DateChanged="TripStart_DateChanged" Margin="5" Language="nl"
                     DateFormat="{}{day.integer(2)}-{month.abbreviated}-{year.full}" />
-            <CalendarDatePicker x:Name="TripEnd"
+            <CalendarDatePicker x:Name="TripEnd" Foreground="Black"
                     Header="Kies eind datum "  DateChanged="TripEnd_DateChanged" Margin="5" Language="nl"
                                 DateFormat="{}{day.integer(2)}-{month.abbreviated}-{year.full}"
                                 />
@@ -93,7 +93,7 @@
         <!--Color picker-->
 
         <StackPanel x:Name="stkcolorpicker" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,15" >
-            <TextBlock x:Name="txtcolorpicker" Text="Geef deze reis een kleur: "  TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,25,0" />
+            <TextBlock x:Name="txtcolorpicker" Text="Geef deze reis een kleur: "  TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,25,0" Style="{StaticResource ColorTextBlock}"/>
             <Viewbox x:Name="tripColorViewBox"  Stretch="Fill">
                 <ColorPicker x:Name="TripColor" ColorChanged="TripColor_ColorChanged"
                      VerticalAlignment="Center" HorizontalAlignment="Right" 

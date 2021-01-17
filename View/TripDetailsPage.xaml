@@ -10,7 +10,7 @@
     xmlns:model="using:WindowsFront_end.Models"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Background="LightBlue">
+    Background="LightBlue" RequestedTheme="Light">
     <Page.Resources>
         <muxc:StackLayout x:Name="HorizontalStackLayout" Orientation="Horizontal" Spacing="8"></muxc:StackLayout>
         <converter:ColorConverter x:Key="ColorConverter" />
@@ -211,7 +211,7 @@
               VerticalScrollBarVisibility="Auto"
               VerticalAlignment="Top">
                         <RelativePanel>
-                       <muxc:InfoBar x:Name="toevoegenFail"
+                            <muxc:InfoBar x:Name="toevoegenFail"
                        Severity="Error"
                        Title="Fout"
                        Message="{x:Bind ViewModel.ErrorMessage,Mode=OneWay}"
@@ -224,10 +224,12 @@
                     Orientation="Horizontal" Margin="0,20,0,0" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                                 <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }" >
                                     <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
+
                                   <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
                                       <TextBlock Text="{x:Bind ViewModel.ToDoProgressFormat,Mode=OneWay}" Margin="0,5,0,5" />
                                       <ProgressBar MinWidth="130" Width="300" Value="{x:Bind ViewModel.ToDoProgress,Mode=OneWay}" Margin="5" />
                                     </StackPanel>
+
                                     <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                         <controls:DataGrid 
                                     x:Name="toDoGrid" 
@@ -284,10 +286,12 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone , Converter={StaticResource bool2vis}}">
                                     <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
+
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
                                       <TextBlock Text="{x:Bind ViewModel.ToPackProgressFormat,Mode=OneWay}" Margin="5,0,5,0"/>
                                       <ProgressBar MinWidth="130" Width="300" Value="{x:Bind ViewModel.ToPackProgress,Mode=OneWay}"/>
                                     </StackPanel>
+
                                     <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                         <controls:DataGrid 
                                     x:Name="toPackGrid" 
@@ -361,6 +365,7 @@
               HorizontalScrollMode="Disabled"
               VerticalScrollBarVisibility="Auto"
               VerticalAlignment="Top">
+
                         <local:AddRoute x:Name="AddRouteChildView"></local:AddRoute>
                     </ScrollViewer>
                 </Grid>
@@ -443,12 +448,14 @@
                         <TextBlock Text="Deel uw reis met uw vrienden: "></TextBlock>
                         <Button HorizontalAlignment="Left" Content="Share deze reis" Click="Button_Click" Margin="0,10,0,0"></Button>
                     </StackPanel>
-                </StackPanel>
-            </PivotItem>
-            <PivotItem Header="Share">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
-                    <TextBlock Text="Deel uw reis met uw vrienden: "></TextBlock>
-                    <Button HorizontalAlignment="Center" Content="Share deze reis" Click="Button_Click" Margin="0,10,0,0"></Button>
+                    <TextBlock
+                        Text="weggaan uit reis"
+                        Style="{StaticResource Title}"/>
+                    <Button
+                        Content="weggaan"
+                        Click="leave_trip"
+                        HorizontalAlignment="Left"
+                        Margin="20,10,0,0"/>
                 </StackPanel>
             </PivotItem>
         </Pivot>

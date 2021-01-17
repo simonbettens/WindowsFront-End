@@ -17,7 +17,7 @@ namespace WindowsFront_end.Models
 
         public ItemPerson(ItemDTO.ForPersonOverview i)
         {
-            Item = new Item(i.Name);
+            Item = new Item(i);
             IsDone = i.IsDone;
         }
 

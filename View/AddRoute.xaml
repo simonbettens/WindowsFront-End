@@ -9,7 +9,7 @@
     x:Class="WindowsFront_end.View.AddRoute"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="LightBlue">
+    Background="LightBlue" RequestedTheme="Light">
 
     <Grid>
         <VisualStateManager.VisualStateGroups>

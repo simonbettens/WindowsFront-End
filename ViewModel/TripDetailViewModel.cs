@@ -171,11 +171,12 @@ namespace WindowsFront_end.ViewModel
                 var toDoList = Trip.Items.Where(i => i.ItemType == ItemType.ToDo).ToList();
                 toDoList.ForEach(i =>
                 {
+                    
                     var person = i.Persons.FirstOrDefault(p => p.PersonEmail.ToLower() == email.ToLower());
                     if (person != null)
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
-                        var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
+                        var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category.Name, amount, person);
                         forOnePersonOverview.PropertyChanged += async (sender, e) => await UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToDoList.Add(forOnePersonOverview);
                     }
@@ -194,7 +195,7 @@ namespace WindowsFront_end.ViewModel
                     if (person != null)
                     {
                         var amount = i.Persons.Where(p => p.IsDone != true).ToList().Count();
-                        var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category, amount, person);
+                        var forOnePersonOverview = new ItemDTO.ForOnePersonOverview(i.ItemId, i.Name, i.ItemType, i.Category.Name, amount, person);
                         forOnePersonOverview.PropertyChanged += async (sender, e) => await UpdateItemAsync((ItemDTO.ForOnePersonOverview)sender);
                         ToPackList.Add(forOnePersonOverview);
                     }
@@ -331,6 +332,16 @@ namespace WindowsFront_end.ViewModel
             {
                 GetTripAsync(Trip.TripId);
             }
+        }
+
+        public async Task<bool> LeaveTrip()
+        {
+            var response = await TripController.LeaveTrip(Trip.TripId);
+            if(response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
