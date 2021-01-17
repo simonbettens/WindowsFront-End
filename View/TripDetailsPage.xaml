@@ -326,7 +326,11 @@
                         </RelativePanel>
                     </PivotItem>
             <PivotItem Header="Route">
-                <local:AddRoute x:Name="AddRouteChildView"></local:AddRoute>
+                <Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <local:AddRoute x:Name="AddRouteChildView"></local:AddRoute>
+                    </ScrollViewer>
+                </Grid>
                 <!--<StackPanel>
                     <TextBlock 
                     Text="{Binding Trip.Route.Description}"
