@@ -1,5 +1,6 @@
 
 using System;
+using System.Threading;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -29,6 +30,7 @@ namespace WindowsFront_end.View
             ViewModel = new TripDetailViewModel();
             DataContext = ViewModel;
 
+
             ViewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName.Equals("Trip") && ViewModel.Trip != null)
@@ -36,6 +38,7 @@ namespace WindowsFront_end.View
                     AddRouteChildView.SetTrip(ViewModel.Trip);
                 }
             };
+
         }
 
 
@@ -49,6 +52,7 @@ namespace WindowsFront_end.View
             _dataTransferManager = DataTransferManager.GetForCurrentView();
             _dataTransferManager.DataRequested += _dataTransferManager_DataRequested;
 
+            MakeVisible();
             // TESTING PURPOSES
             /*var itemLijst = new List<Item>();
             itemLijst.Add(new Item("item 1"));
@@ -80,6 +84,18 @@ namespace WindowsFront_end.View
             ViewModel.Trip = trip;*/
         }
 
+        public void MakeVisible()
+        {
+            blueItem.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            titel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            categorieënBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            topack.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            toevoegenItem.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            blueCat.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            categoryName.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            toevoegenCategory.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            todoTo.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
 
         private void _dataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
@@ -91,7 +107,7 @@ namespace WindowsFront_end.View
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            _dataTransferManager.DataRequested -= _dataTransferManager_DataRequested;
+            _dataTransferManager.DataRequested -= _dataTransferManager_DataRequested;          
         }
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -113,62 +129,49 @@ namespace WindowsFront_end.View
             }
             else
             {
-                ContentDialog itemfoutDialog = new ContentDialog()
-                {
-                    Title = "Fout",
-                    Content = "Je moet één van de twee opties aanduiden! (to do/to pack)",
-                    CloseButtonText = "Ok"
-                };
-
-                await itemfoutDialog.ShowAsync();
+                ViewModel.ErrorMessage = "Je moet één van de twee opties aanduiden!(to do/ to pack)";
+                toevoegenJuist.IsOpen = false;
+                toevoegenFail.IsOpen = true;
                 return;
             }
 
             string categ = (string)categorieënBox.SelectedItem;
             Category catbasic = ViewModel.Trip.Categories.Find(c => c.Name == categ);
             bool succesful = false;
-            ItemDTO.Create item = null;
             try
             {
-                item = new ItemDTO.Create
+                if (categ == null || titel == null)
                 {
-                    CategoryId = catbasic.CategoryId,
-                    Name = titel.Text,
-                    ItemType = (int)type
-                };
-                succesful = await ViewModel.AddItemAsync(item, tripId);
+                    ViewModel.ErrorMessage = "Het toevoegen van de item is niet gelukt! Zijn alle parameters ingevuld?";
+                    toevoegenJuist.IsOpen = false;
+                    toevoegenFail.IsOpen = true;
+                }
+                else
+                {
+                    ItemDTO.Create item = new ItemDTO.Create
+                    {
+                        CategoryId = catbasic.CategoryId,
+                        Name = titel.Text,
+                        ItemType = (int)type
+                    };
 
-
+                    succesful = await ViewModel.AddItemAsync(item, tripId);
+                }
             }
             catch
             {
-                succesful = false;
+                ViewModel.ErrorMessage = "Het toevoegen van de item is niet gelukt! Zijn alle parameters ingevuld?";
+                toevoegenJuist.IsOpen = false;
+                toevoegenFail.IsOpen = true;
             }
             if (succesful)
             {
-                ContentDialog categoryJustDialog2 = new ContentDialog()
-                {
-                    Title = "Succes",
-                    Content = $"{item.Name} werd succesvol toegevoegd aan de Trip!",
-                    CloseButtonText = "Ok"
-                };
-
-                await categoryJustDialog2.ShowAsync();
                 ViewModel.GetTripAsync(tripId);
+                ViewModel.ErrorMessage = $"{titel.Text} werd succesvol toegevoegd!";
+                toevoegenFail.IsOpen = false;
+                toevoegenJuist.IsOpen = true;
                 titel.Text = "";
-            }
-            else
-            {
-                ContentDialog itemfoutDialog3 = new ContentDialog()
-                {
-                    Title = "Fout",
-                    Content = "Er liep iets mis!",
-                    CloseButtonText = "Ok"
-                };
-
-                await itemfoutDialog3.ShowAsync();
-
-            }
+            }    
         }
 
         private async void Invite_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -181,14 +184,9 @@ namespace WindowsFront_end.View
         {
             if (categoryName.Text.Length == 0)
             {
-                ContentDialog categoryfoutDialog = new ContentDialog()
-                {
-                    Title = "Fout",
-                    Content = "Categorie naam moet ingevuld zijn",
-                    CloseButtonText = "Ok"
-                };
-
-                await categoryfoutDialog.ShowAsync();
+                ViewModel.ErrorMessage = "Categorie naam moet ingevuld zijn";
+                toevoegenJuist.IsOpen = false;
+                toevoegenFail.IsOpen = true;
             }
             else
             {
@@ -200,29 +198,18 @@ namespace WindowsFront_end.View
                 bool succesful = await ViewModel.AddCategoryAsync(category);
                 if (succesful)
                 {
-                    ContentDialog categoryJustDialog = new ContentDialog()
-                    {
-                        Title = "Succes",
-                        Content = $"Categorie {category.Name} werd succesvol toegevoegd aan de Trip!",
-                        CloseButtonText = "Ok"
-                    };
-
-                    await categoryJustDialog.ShowAsync();
                     ViewModel.GetTripAsync(tripId);
-
+                    ViewModel.ErrorMessage = $"Categorie {category.Name} werd succesvol toegevoegd aan de Trip!";
+                    toevoegenFail.IsOpen = false;
+                    toevoegenJuist.IsOpen = true;
                     titel.Text = "";
 
                 }
                 else
                 {
-                    ContentDialog categoryfoutDialog2 = new ContentDialog()
-                    {
-                        Title = "Fout",
-                        Content = "Er is iets misgelopen!",
-                        CloseButtonText = "Ok"
-                    };
-
-                    await categoryfoutDialog2.ShowAsync();
+                    ViewModel.ErrorMessage = "Er is iets misgelopen!";
+                    toevoegenJuist.IsOpen = false;
+                    toevoegenFail.IsOpen = true;
                 }
             }
         }
@@ -235,27 +222,17 @@ namespace WindowsFront_end.View
             bool succesful = await ViewModel.DeleteItemAsync(id);
             if (succesful)
             {
-                ContentDialog categoryJustDialog3 = new ContentDialog()
-                {
-                    Title = "Succes",
-                    Content = $" {item.Name} werd succesvol verwijderd aan de Trip!",
-                    CloseButtonText = "Ok"
-                };
-
-                await categoryJustDialog3.ShowAsync();
                 ViewModel.GetTripAsync(tripId);
+                ViewModel.ErrorMessage = $" {item.Name} werd succesvol verwijderd aan de Trip!";
+                toevoegenFail.IsOpen = false;
+                toevoegenJuist.IsOpen = true;
 
             }
             else
             {
-                ContentDialog categoryfoutDialog3 = new ContentDialog()
-                {
-                    Title = "Fout",
-                    Content = "Er is iets misgelopen!",
-                    CloseButtonText = "Ok"
-                };
-
-                await categoryfoutDialog3.ShowAsync();
+                ViewModel.ErrorMessage = "Er is iets misgelopen!";
+                toevoegenJuist.IsOpen = false;
+                toevoegenFail.IsOpen = true;
             }
         }
 
@@ -270,28 +247,16 @@ namespace WindowsFront_end.View
             bool succesful = await ViewModel.ModifyItem(itemoverview);
             if (succesful)
             {
-                ContentDialog categoryJustDialog4 = new ContentDialog()
-                {
-                    Title = "Succes",
-                    Content = $" {item.Name} werd succesvol aangepast!",
-                    CloseButtonText = "Ok"
-                };
-
-                await categoryJustDialog4.ShowAsync();
                 ViewModel.GetTripAsync(tripId);
-
-
+                ViewModel.ErrorMessage = $" {item.Name} werd succesvol aangepast!";
+                toevoegenFail.IsOpen = false;
+                toevoegenJuist.IsOpen = true;
             }
             else
             {
-                ContentDialog categoryfoutDialog4 = new ContentDialog()
-                {
-                    Title = "Fout",
-                    Content = "Er is iets misgelopen!",
-                    CloseButtonText = "Ok"
-                };
-
-                await categoryfoutDialog4.ShowAsync();
+                ViewModel.ErrorMessage = "Er is iets misgelopen!";
+                toevoegenJuist.IsOpen = false;
+                toevoegenFail.IsOpen = true;
             }
         }
         private async void cancel_invite(object sender, Windows.UI.Xaml.RoutedEventArgs e)

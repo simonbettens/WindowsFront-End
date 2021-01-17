@@ -67,6 +67,13 @@ namespace WindowsFront_end.ViewModel
             set { _loadingDone = value; RaisePropertyChanged("LoadingDone"); }
         }
 
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set { _errorMessage = value; RaisePropertyChanged("ErrorMessage"); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private Trip _trip;
         public Trip Trip
@@ -217,10 +224,12 @@ namespace WindowsFront_end.ViewModel
 
             if (response.IsSuccessStatusCode)
             {
+                GotDataNotSuccesfull = false;
                 return true;
             }
             else
             {
+                GotDataNotSuccesfull = true;
                 return false;
             }
         }
