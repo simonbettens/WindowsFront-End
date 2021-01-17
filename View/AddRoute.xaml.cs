@@ -61,7 +61,16 @@ namespace WindowsFront_end.View
                 ViewModel.DestinationsList.Clear();
                 trip.Route.Destinations.ForEach((dest) => ViewModel.DestinationsList.Add(dest));
                 AddLine();
+                SetCenter();
             }
+        }
+
+        private void SetCenter()
+        {
+            var start = ViewModel.GetDestinationsAsArray()[0];
+            BasicGeoposition point = new BasicGeoposition() { Latitude = start.Latitude, Longitude = start.Longitude };
+            Geopoint startpoint = new Geopoint(point);
+            Map.Center = startpoint;
         }
 
         private async void Map_MapTapped(MapControl sender, MapInputEventArgs args)
