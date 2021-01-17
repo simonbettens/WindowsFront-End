@@ -191,8 +191,13 @@
 
         <TextBlock Text="{Binding Trip.Name, Mode=OneWay}" Style="{StaticResource Title}" RequestedTheme="Light" FontSize="36" FontWeight="Bold"></TextBlock>
         <Pivot RequestedTheme="Light">
-            <PivotItem Header="Voorbereiding" Margin="12,0,12,50">
-                <RelativePanel>
+            <PivotItem Header="Voorbereiding" Margin="12,0,12,50" ScrollViewer.IsVerticalRailEnabled="True">
+                <Grid>
+                    <ScrollViewer MinHeight="100" Height="600"
+              HorizontalScrollMode="Disabled"
+              VerticalScrollBarVisibility="Auto"
+              VerticalAlignment="Top">
+                        <RelativePanel>
                     <!--<StackPanel Orientation="Vertical">
                         <muxc:InfoBar x:Name="toevoegenFail"
                        Severity="Error"
@@ -205,7 +210,7 @@
                        IsClosable="True" />
                     </StackPanel>-->
                     <StackPanel x:Name="stackToDo"
-                    Orientation="Horizontal" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
+                        Orientation="Horizontal" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                         <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                             <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
                             <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
@@ -326,9 +331,15 @@
                     <TextBox x:Name="categoryName" Header="naam categorie" PlaceholderText="naam Categorie"     Width="300" Margin="201,-35,0,0" FontSize="25" RelativePanel.RightOf="todoTo" RelativePanel.Below="stackToDo" Visibility="Collapsed"/>
                     <Button x:Name="toevoegenCategory" Style="{StaticResource AccentButtonStyle}" Click="AddCategory_Click" Content="Voeg toe" RelativePanel.RightOf="todoTo" RelativePanel.Below="categoryName" Margin="310,11,0,0" Visibility="Collapsed"/>
                 </RelativePanel>
+                    </ScrollViewer>
+                </Grid>
             </PivotItem>
             <PivotItem Header="Route">
-                <local:AddRoute x:Name="AddRouteChildView"></local:AddRoute>
+                <Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <local:AddRoute x:Name="AddRouteChildView"></local:AddRoute>
+                    </ScrollViewer>
+                </Grid>
                 <!--<StackPanel>
                     <TextBlock 
                     Text="{Binding Trip.Route.Description}"
