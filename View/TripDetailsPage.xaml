@@ -208,6 +208,7 @@
                     Orientation="Horizontal" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                         <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                             <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
+                            <ProgressBar MinWidth="130" Width="300" Value="{x:Bind ViewModel.ToDoProgress,Mode=OneWay}" Margin="5" />
                             <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                 <controls:DataGrid 
                                     x:Name="toDoGrid" 
@@ -263,6 +264,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone , Converter={StaticResource bool2vis}}">
                             <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
+                            <ProgressBar MinWidth="130" Width="300" Value="{x:Bind ViewModel.ToPackProgress,Mode=OneWay}" Margin="5" />
                             <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                 <controls:DataGrid 
                                     x:Name="toPackGrid" 
