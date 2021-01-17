@@ -204,6 +204,7 @@
 
         <TextBlock Text="{Binding Trip.Name, Mode=OneWay}" Style="{StaticResource Title}" RequestedTheme="Light" FontSize="36" FontWeight="Bold"></TextBlock>
         <Pivot RequestedTheme="Light">
+
             <PivotItem Header="Voorbereiding" Margin="12,0,12,50">
                 <RelativePanel>
                     <muxc:InfoBar x:Name="toevoegenFail"
@@ -219,6 +220,12 @@
                     Orientation="Horizontal" Margin="0,20,0,0" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }">
                                 <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone, Converter={StaticResource bool2vis} }" >
                                     <TextBlock x:Name="todoText" Text="To-do" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
+
+                                  <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
+                                      <TextBlock Text="{x:Bind ViewModel.ToDoProgressFormat,Mode=OneWay}" Margin="0,5,0,5" />
+                                      <ProgressBar MinWidth="130" Width="300" Value="{x:Bind ViewModel.ToDoProgress,Mode=OneWay}" Margin="5" />
+                                    </StackPanel>
+
                                     <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                         <controls:DataGrid 
                                     x:Name="toDoGrid" 
@@ -275,6 +282,12 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical" Visibility="{Binding LoadingDone , Converter={StaticResource bool2vis}}">
                                     <TextBlock x:Name="topackText" Text="To-pack" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="10,15,0,15" RequestedTheme="Light"></TextBlock>
+
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
+                                      <TextBlock Text="{x:Bind ViewModel.ToPackProgressFormat,Mode=OneWay}" Margin="5,0,5,0"/>
+                                      <ProgressBar MinWidth="130" Width="300" Value="{x:Bind ViewModel.ToPackProgress,Mode=OneWay}"/>
+                                    </StackPanel>
+
                                     <ScrollViewer Height="350" VerticalScrollBarVisibility="Auto">
                                         <controls:DataGrid 
                                     x:Name="toPackGrid" 
@@ -335,14 +348,20 @@
                             <CheckBox x:Name="topack" RelativePanel.Below="todoTo" RelativePanel.RightOf="titel" Content="To Pack" Width="100" Margin="20,10,0,0" RequestedTheme="Dark" Visibility="Collapsed"/>
                             <Button x:Name="toevoegenItem" Style="{StaticResource AccentButtonStyle}" Click="AddItem_Click" Content="Voeg toe" RelativePanel.Below="categorieënBox" Margin="236,10,0,0" Visibility="Collapsed"/>
 
-                            <Rectangle x:Name="blueCat" Fill="DarkBlue" Height="150" Width="400" RelativePanel.Below="stackToDo" RelativePanel.RightOf="todoTo" Margin="150,-50,0,12" StrokeThickness="0" RadiusX="40" RadiusY="40" Opacity="0.802" Visibility="Collapsed"/>
-                            <TextBox x:Name="categoryName" Header="naam categorie" PlaceholderText="naam Categorie"     Width="300" Margin="201,-35,0,0" FontSize="25" RelativePanel.RightOf="todoTo" RelativePanel.Below="stackToDo" Visibility="Collapsed"/>
-                            <Button x:Name="toevoegenCategory" Style="{StaticResource AccentButtonStyle}" Click="AddCategory_Click" Content="Voeg toe" RelativePanel.RightOf="todoTo" RelativePanel.Below="categoryName" Margin="310,11,0,0" Visibility="Collapsed"/>
-                        </RelativePanel>
-                    </PivotItem>
+                    <Rectangle x:Name="blueCat" Fill="DarkBlue" Height="150" Width="400" RelativePanel.Below="stackToDo" RelativePanel.RightOf="todoTo" Margin="150,-50,0,12" StrokeThickness="0" RadiusX="40" RadiusY="40" Opacity="0.802" Visibility="Collapsed"/>
+                    <TextBox x:Name="categoryName" Header="naam categorie" PlaceholderText="naam Categorie"     Width="300" Margin="201,-35,0,0" FontSize="25" RelativePanel.RightOf="todoTo" RelativePanel.Below="stackToDo" Visibility="Collapsed"/>
+                    <Button x:Name="toevoegenCategory" Style="{StaticResource AccentButtonStyle}" Click="AddCategory_Click" Content="Voeg toe" RelativePanel.RightOf="todoTo" RelativePanel.Below="categoryName" Margin="310,11,0,0" Visibility="Collapsed"/>
+                </RelativePanel>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
             <PivotItem Header="Route">
                 <Grid>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer MinHeight="100" Height="650"
+              HorizontalScrollMode="Disabled"
+              VerticalScrollBarVisibility="Auto"
+              VerticalAlignment="Top">
+
                         <local:AddRoute x:Name="AddRouteChildView"></local:AddRoute>
                     </ScrollViewer>
                 </Grid>
